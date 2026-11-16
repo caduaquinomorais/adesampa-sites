@@ -40,7 +40,16 @@ export interface Site {
  * producao → endereço definitivo. Decisão de 16/11/2026: por enquanto também fica em
  *            oranilom.com.br/homolog/. Quando houver domínio definitivo, troque só `producao`.
  */
-export const SITES = {
+/** Congela o objeto inteiro: nenhum site consegue alterar estes dados durante o build. */
+function congelar<T>(obj: T): T {
+  if (obj && typeof obj === 'object') {
+    for (const v of Object.values(obj)) congelar(v);
+    Object.freeze(obj);
+  }
+  return obj;
+}
+
+export const SITES = congelar({
   home: {
     rotulo: 'Home (ADE SAMPA)',
     url: {
@@ -59,7 +68,7 @@ export const SITES = {
     pastaFtp: { teste: 'homolog/exemplo', producao: 'homolog/exemplo' },
     publicar: false,
   },
-} as const satisfies Record<string, Site>;
+} as const satisfies Record<string, Site>);
 
 export type NomeSite = keyof typeof SITES;
 
@@ -129,7 +138,7 @@ export interface Cabecalho {
   botaoLink: Destino;
 }
 
-export const CABECALHO: Cabecalho = {
+export const CABECALHO: Cabecalho = congelar({
   logoLink: '', // TODO-LINK: Home institucional
   logoRotulo: 'ADE SAMPA — página inicial',
   menu: [
@@ -141,7 +150,7 @@ export const CABECALHO: Cabecalho = {
   ],
   botaoTexto: 'Agendamentos',
   botaoLink: 'https://app.adesampa.com.br/welcome',
-};
+});
 
 // ============================================================================
 // 4. Rodapé
@@ -171,7 +180,7 @@ export interface Rodape {
   copyright: string;
 }
 
-export const RODAPE: Rodape = {
+export const RODAPE: Rodape = congelar({
   logoLink: '', // TODO-LINK: Home institucional
   texto:
     'Entidade vinculada à Prefeitura de São Paulo, por meio da Secretaria Municipal de Desenvolvimento Econômico e Trabalho (SMDET), dedicada à aceleração de negócios, inclusão produtiva e redução das desigualdades regionais.',
@@ -245,7 +254,7 @@ export const RODAPE: Rodape = {
   endereco:
     'Sede Administrativa: Rua Líbero Badaró, 425 - 11º andar - Centro Histórico, São Paulo - SP, CEP 01009-000',
   copyright: '© 2026 ADE SAMPA • Prefeitura de São Paulo. Todos os direitos reservados.',
-};
+});
 
 /** Todos os destinos do cabeçalho e do rodapé (usado pelos testes). */
 export function todosOsDestinos(): Destino[] {

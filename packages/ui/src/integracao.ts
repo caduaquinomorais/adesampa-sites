@@ -12,8 +12,12 @@ import { fileURLToPath } from 'node:url';
 
 const HTACCESS_ASTRO = `# Gerado no build por packages/ui/src/integracao.ts — não edite.
 # Arquivos em /_astro/ têm hash no nome: podem ficar em cache por 1 ano.
+# Dentro de <FilesMatch> de propósito: no Apache, seções <Files> são aplicadas depois das diretivas
+# soltas; assim esta regra não é anulada pelo <FilesMatch> de 1 dia do .htaccess do site.
 <IfModule mod_headers.c>
-    Header set Cache-Control "public, max-age=31536000, immutable"
+    <FilesMatch ".">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
 </IfModule>
 `;
 

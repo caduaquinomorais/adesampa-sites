@@ -43,7 +43,7 @@ ErrorDocument 404 __BASE__404.html
         Header set Cache-Control "no-cache"
     </FilesMatch>
     <FilesMatch "\.(css|js|mjs|woff2|svg|png|jpe?g|webp|avif|gif|ico|pdf)$">
-        Header set Cache-Control "public, max-age=86400"
+        Header set Cache-Control "public, max-age=86400" "expr=%{REQUEST_URI} !~ m#/_astro/#"
     </FilesMatch>
     # SVG aberto direto no navegador não executa scripts.
     <FilesMatch "\.svg$">

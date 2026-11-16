@@ -57,6 +57,11 @@ const CORRECOES_REF = `.site-header { color: #262930; }
 const INJETAR_CORRECOES = `(() => { const s = document.createElement('style'); s.textContent = ${JSON.stringify(CORRECOES_REF)}; document.head.append(s); return new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => r(true)))); })()`;
 const carregarRef = async (largura) => { await carregar(cdp, urlRef, largura); await cdp.avaliar(INJETAR_CORRECOES); };
 
+// Imagens do topo/rodapé que não carregaram (404, SVG inválido…). Com width/height fixos, uma imagem
+// quebrada ocupa a mesma caixa: só esta verificação a pega com certeza.
+const IMAGENS_QUEBRADAS = `[...document.querySelectorAll('.site-header img, .submenu img, .site-footer img')]
+  .filter((i) => !i.complete || i.naturalWidth === 0).map((i) => i.getAttribute('src'))`;
+
 const resultado = { site: NOME, larguras: [], falhas: [] };
 const falhar = (msg) => { resultado.falhas.push(msg); console.log('  ✗ ' + msg); };
 const ok = (msg) => console.log('  ✓ ' + msg);
@@ -183,9 +188,32 @@ try {
     console.log(`\n${largura}px`);
     await carregarRef(largura);
     const mRef = await cdp.avaliar(MEDIR); const imgRef = decodePng(await capturar(cdp));
+    const quebradasRef = await cdp.avaliar(IMAGENS_QUEBRADAS);
     await carregar(cdp, urlSite, largura);
     const mSite = await cdp.avaliar(MEDIR); const imgSite = decodePng(await capturar(cdp));
+    const quebradasSite = await cdp.avaliar(IMAGENS_QUEBRADAS);
+    if (quebradasRef.length) falhar(`${largura}px: imagens que não carregaram na REFERÊNCIA: ${quebradasRef.join(', ')}`);
+    if (quebradasSite.length) falhar(`${largura}px: imagens que não carregaram no Astro: ${quebradasSite.join(', ')}`);
     if (!comSubmenu) { delete mRef.geo['.submenu']; for (const s of SELETORES) if (s.startsWith('.submenu')) { mRef.geo[s] = []; mSite.geo[s] = []; } mRef.submenu = null; }
+
+    // Cada imagem comparada isoladamente: um ícone pequeno diferente não se perde na região inteira.
+    const IMGS = SELETORES.filter((s) => /img$|__arrow$|__logo-(ade|pref)$/.test(s));
+    for (const s of IMGS) {
+      const noRodape = s.startsWith('.site-footer');
+      mRef.geo[s].forEach((ra, i) => {
+        const rb = mSite.geo[s][i]; if (!rb) return;
+        const a = recortar(imgRef, Math.floor(ra.x), Math.floor(ra.y), Math.ceil(ra.w), Math.ceil(ra.h));
+        const b = recortar(imgSite, Math.floor(rb.x), Math.floor(rb.y), Math.ceil(rb.w), Math.ceil(rb.h));
+        const c = comparar(a, b);
+        if (c.porcentagem > 2) falhar(`${largura}px: imagem ${s}[${i}]${noRodape ? ' (rodapé)' : ''} difere ${c.porcentagem.toFixed(1)}%`);
+      });
+    }
+    // Ícones das redes (o <img> fica dentro do botão).
+    for (const [i, ra] of (mRef.geo['.social-btn'] ?? []).entries()) {
+      const rb = mSite.geo['.social-btn'][i]; if (!rb) continue;
+      const c = comparar(recortar(imgRef, Math.floor(ra.x), Math.floor(ra.y), Math.ceil(ra.w), Math.ceil(ra.h)), recortar(imgSite, Math.floor(rb.x), Math.floor(rb.y), Math.ceil(rb.w), Math.ceil(rb.h)));
+      if (c.porcentagem > 2) falhar(`${largura}px: botão de rede social [${i}] difere ${c.porcentagem.toFixed(1)}%`);
+    }
 
     const rRef = regioes(mRef, largura); const rSite = regioes(mSite, largura);
     const linha = { largura, regioes: {} };
