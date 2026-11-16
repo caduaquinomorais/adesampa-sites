@@ -1,0 +1,86 @@
+---
+/*
+ * Rodapé institucional ADE SAMPA ("Rodapé/Redapé V1"). IDÊNTICO nos 7 sites, sem props.
+ * Textos e links: src/data/institucional.ts (RODAPE).
+ * Origem da marcação: adesampa-header-footer/partials/footer.php.
+ */
+import { RODAPE, ambienteAtual, resolverDestino, type Destino, type RedeSocial } from '../data/institucional';
+import { atributosLink } from '../lib/links';
+import logoRodape from '../../assets/icons/logo-adesampa-rodape.svg?url';
+import logoAssinatura from '../../assets/icons/logo-adesampa-rodape-assinatura.svg?url';
+import logoPrefeitura from '../../assets/icons/logo-prefeitura-rodape.svg?url';
+import redeInstagram from '../../assets/icons/rede-instagram.svg?url';
+import redeLinkedin from '../../assets/icons/rede-linkedin.svg?url';
+import redeYoutube from '../../assets/icons/rede-youtube.svg?url';
+import redeFacebook from '../../assets/icons/rede-facebook.svg?url';
+
+// Sem props: nenhum site pode personalizar o rodapé.
+type Props = Record<string, never>;
+
+const ICONES: Record<RedeSocial, string> = {
+  instagram: redeInstagram,
+  linkedin: redeLinkedin,
+  youtube: redeYoutube,
+  facebook: redeFacebook,
+};
+
+const ambiente = ambienteAtual();
+const href = (destino: Destino) => atributosLink(resolverDestino(destino, ambiente));
+---
+<footer class="site-footer">
+    <div class="site-footer__top hf-container">
+        <div class="site-footer__about">
+            <a class="site-footer__logo" {...href(RODAPE.logoLink)} aria-label="ADE SAMPA">
+                <img src={logoRodape} alt="ADE SAMPA" width="199" height="34" loading="lazy">
+            </a>
+            <p class="site-footer__text">{RODAPE.texto}</p>
+        </div>
+        <div class="site-footer__social">
+            <p class="site-footer__heading">{RODAPE.redesTitulo}</p>
+            <ul class="site-footer__social-list">
+                {RODAPE.redes.map((r) => (
+                    <li>
+                        <a class="social-btn" {...href(r.link)} aria-label={r.nome}>
+                            <img src={ICONES[r.rede]} alt="" width="15" height="15" loading="lazy">
+                        </a>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    </div>
+
+    <nav class="site-footer__columns hf-container" aria-label="Mapa do site ADE SAMPA">
+        {RODAPE.colunas.map((col) => (
+            <div class="site-footer__col">
+                <p class="site-footer__col-title"><span class={`site-footer__bar site-footer__bar--${col.cor}`} aria-hidden="true"></span>{col.titulo}</p>
+                <ul class="site-footer__links">
+                    {col.links.map((l) => (
+                        <li><a class="site-footer__link" {...href(l.link)}>{l.rotulo}</a></li>
+                    ))}
+                </ul>
+            </div>
+        ))}
+    </nav>
+
+    <div class="site-footer__bottom hf-container">
+        <div class="site-footer__legal">
+            <ul class="site-footer__legal-links">
+                {RODAPE.legais.map((l, i) => (
+                    <>
+                        {i > 0 && <li class="site-footer__dot" aria-hidden="true">•</li>}
+                        <li><a class="site-footer__link" {...href(l.link)}>{l.rotulo}</a></li>
+                    </>
+                ))}
+            </ul>
+            <p class="site-footer__info">
+                <strong>{RODAPE.empresa}</strong> <span>| {RODAPE.cnpj}</span><br>
+                {RODAPE.endereco}<br>
+                {RODAPE.copyright}
+            </p>
+        </div>
+        <div class="site-footer__logos">
+            <img class="site-footer__logo-ade" src={logoAssinatura} alt="ADE SAMPA" width="133" height="23" loading="lazy">
+            <img class="site-footer__logo-pref" src={logoPrefeitura} alt="Prefeitura de São Paulo" width="161" height="51" loading="lazy">
+        </div>
+    </div>
+</footer>

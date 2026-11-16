@@ -1,0 +1,17 @@
+{
+  "name": "@adesampa/site-exemplo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site de teste: só o cabeçalho e o rodapé compartilhados (comparado com o exemplo.html de referência). Nunca é publicado.",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@adesampa/ui": "1.0.0",
+    "astro": "7.4.12"
+  }
+}

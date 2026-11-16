@@ -1,0 +1,29 @@
+---
+/*
+ * Reproduz referencia/header-footer/exemplo.html (o resultado esperado) com os componentes
+ * compartilhados: "Programas" ativo e o submenu do Teia. O teste visual compara as duas páginas.
+ */
+import BaseLayout from '@adesampa/ui/BaseLayout.astro';
+import logoTeia from '@adesampa/ui/assets/icons/logo-teia.svg?url';
+import '../styles/site.css';
+
+const submenu = {
+  rotulo: 'Teia',
+  logo: logoTeia,
+  logoLargura: 47,
+  logoAltura: 14,
+  links: [
+    { rotulo: 'Coworking', link: '#coworking' },
+    { rotulo: 'Podcast', link: '#podcast' },
+    { rotulo: 'Fotografia', link: '#fotografia' },
+    { rotulo: 'Música', link: '#musica' },
+    { rotulo: 'Mapa de unidades', link: '#mapa' },
+    { rotulo: 'Dúvidas', link: '#duvidas' },
+    { rotulo: 'Normas de uso', link: '#normas' },
+  ],
+};
+---
+<BaseLayout titulo="Exemplo — cabeçalho e rodapé ADE SAMPA" ativo="programas" submenu={submenu} semIndexacao>
+    <h1>Conteúdo do subdomínio</h1>
+    <p>O cabeçalho e o rodapé acima/abaixo vêm de packages/ui (Header.astro e Footer.astro).</p>
+</BaseLayout>

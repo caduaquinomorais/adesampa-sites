@@ -1,0 +1,23 @@
+{
+  "name": "@adesampa/ui",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cabeçalho, rodapé, submenu e layout base compartilhados pelos sites da ADE SAMPA.",
+  "type": "module",
+  "exports": {
+    "./config": "./src/config.ts",
+    "./institucional": "./src/data/institucional.ts",
+    "./links": "./src/lib/links.ts",
+    "./caminhos": "./src/lib/caminhos.ts",
+    "./BaseLayout.astro": "./src/layouts/BaseLayout.astro",
+    "./Header.astro": "./src/components/Header.astro",
+    "./Footer.astro": "./src/components/Footer.astro",
+    "./Submenu.astro": "./src/components/Submenu.astro",
+    "./SkipLink.astro": "./src/components/SkipLink.astro",
+    "./styles/*": "./src/styles/*",
+    "./assets/*": "./assets/*"
+  },
+  "peerDependencies": {
+    "astro": "7.4.12"
+  }
+}

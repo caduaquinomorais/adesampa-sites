@@ -1,0 +1,60 @@
+---
+/*
+ * Layout de TODAS as páginas de TODOS os sites: <html>, <head>, fonte, cabeçalho, submenu
+ * (opcional), <main id="conteudo"> e rodapé.
+ *
+ * Uso numa página:
+ *   <BaseLayout titulo="Sobre" ativo="sobre"> …conteúdo… </BaseLayout>
+ *
+ * Sem CSS ou JS inline (a CSP do .htaccess bloqueia): os estilos são importados aqui e o Astro
+ * gera arquivos em /_astro/ (configuração em packages/ui/src/config.ts).
+ */
+import '../styles/tokens.css';
+import '../styles/header-footer.css';
+import geistLatin from '../../assets/fonts/geist-latin.woff2?url';
+import SkipLink from '../components/SkipLink.astro';
+import Header from '../components/Header.astro';
+import Submenu, { type Props as SubmenuProps } from '../components/Submenu.astro';
+import Footer from '../components/Footer.astro';
+import type { ChaveMenu } from '../data/institucional';
+
+interface Props {
+  /** Título da página. O sufixo " | ADE SAMPA" é acrescentado automaticamente. */
+  titulo: string;
+  /** Descrição para buscadores e redes sociais. */
+  descricao?: string;
+  /** Item do menu principal destacado como seção atual. */
+  ativo?: ChaveMenu;
+  /** Submenu do programa (opcional). */
+  submenu?: SubmenuProps;
+  /** true = não indexar (ex.: página 404). */
+  semIndexacao?: boolean;
+}
+
+const { titulo, descricao, ativo, submenu, semIndexacao = false } = Astro.props;
+const tituloCompleto = titulo.includes('ADE SAMPA') ? titulo : `${titulo} | ADE SAMPA`;
+const canonico = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+---
+<!doctype html>
+<html lang="pt-BR" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{tituloCompleto}</title>
+    {descricao && <meta name="description" content={descricao}>}
+    {semIndexacao && <meta name="robots" content="noindex">}
+    {canonico && !semIndexacao && <link rel="canonical" href={canonico}>}
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <link rel="preload" href={geistLatin} as="font" type="font/woff2" crossorigin>
+    <slot name="head" />
+</head>
+<body>
+<SkipLink />
+<Header ativo={ativo} />
+{submenu && <Submenu {...submenu} />}
+<main id="conteudo" tabindex="-1">
+    <slot />
+</main>
+<Footer />
+</body>
+</html>

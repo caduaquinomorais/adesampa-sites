@@ -1,0 +1,48 @@
+---
+/*
+ * Cabeçalho institucional ADE SAMPA ("menu header"). IDÊNTICO nos 7 sites.
+ * Textos e links: src/data/institucional.ts (CABECALHO). Nenhum site passa textos ou links.
+ * A única variação permitida é o item ativo do menu (prop `ativo`).
+ * Origem da marcação: adesampa-header-footer/partials/header.php.
+ */
+import { CABECALHO, ambienteAtual, resolverDestino, type ChaveMenu } from '../data/institucional';
+import { atributosLink } from '../lib/links';
+import logoAdesampa from '../../assets/icons/logo-adesampa.svg?url';
+import setaMenu from '../../assets/icons/seta-menu.svg?url';
+
+interface Props {
+  /** Item do menu destacado como seção atual (sublinhado azul). Omitido = nenhum. */
+  ativo?: ChaveMenu;
+}
+
+const { ativo } = Astro.props;
+const ambiente = ambienteAtual();
+const href = (destino: Parameters<typeof resolverDestino>[0]) => atributosLink(resolverDestino(destino, ambiente));
+---
+<header class="site-header" id="topo">
+    <div class="site-header__inner">
+        <a class="site-header__logo" {...href(CABECALHO.logoLink)} aria-label={CABECALHO.logoRotulo}>
+            <img src={logoAdesampa} alt="ADE SAMPA" width="123" height="21">
+        </a>
+        <button class="site-header__toggle" type="button" aria-expanded="false" aria-controls="menu-principal">
+            <span class="site-header__toggle-icon" aria-hidden="true"></span>
+            <span>Menu</span>
+        </button>
+        <nav class="site-header__nav" id="menu-principal" aria-label="Menu principal">
+            <ul class="site-header__menu">
+                {CABECALHO.menu.map((item) => (
+                    <li class:list={['site-header__item', { 'is-active': item.chave === ativo }]}>
+                        <a class="site-header__link" {...href(item.link)} aria-current={item.chave === ativo ? 'true' : undefined}>
+                            {item.rotulo}
+                            {item.seta && <img class="site-header__arrow" src={setaMenu} alt="" width="7" height="4">}
+                        </a>
+                    </li>
+                ))}
+            </ul>
+            <a class="site-header__cta" {...href(CABECALHO.botaoLink)}>{CABECALHO.botaoTexto}</a>
+        </nav>
+    </div>
+</header>
+<script>
+    import '../scripts/menu';
+</script>

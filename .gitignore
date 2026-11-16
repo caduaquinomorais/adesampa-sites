@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.astro/
+tests/visual/reports/
+*.log
+.env
+.env.*
+.DS_Store
+Thumbs.db

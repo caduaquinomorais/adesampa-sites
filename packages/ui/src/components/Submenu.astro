@@ -1,0 +1,45 @@
+---
+/*
+ * Submenu do programa (faixa cinza abaixo do cabeçalho). OPCIONAL e diferente em cada site:
+ * é a única parte do topo que um site personaliza (logo, rótulo e âncoras).
+ * Fica FORA do <header class="site-header">, por isso não entra no teste de identidade.
+ * Origem da marcação: adesampa-header-footer/partials/header.php (bloco do submenu).
+ */
+import { atributosLink } from '../lib/links';
+
+export interface SubmenuLink {
+  rotulo: string;
+  /** Âncora (#secao), caminho interno ou https://. Vazio = pendente. */
+  link: string;
+}
+
+export interface Props {
+  /** Nome do programa (texto alternativo do logo e rótulo da navegação). Ex.: "Teia". */
+  rotulo: string;
+  /** URL do logo, de preferência importada com ?url (ex.: import logo from '../assets/logo.svg?url'). */
+  logo?: string;
+  logoLargura?: number;
+  logoAltura?: number;
+  /** Para onde o logo leva. Padrão: topo da página. */
+  logoLink?: string;
+  links: SubmenuLink[];
+}
+
+const { rotulo, logo, logoLargura = 47, logoAltura = 14, logoLink = '#topo', links } = Astro.props;
+---
+{links.length > 0 && (
+<nav class="submenu" aria-label={`Seções de ${rotulo}`}>
+    <div class="submenu__inner">
+        {logo && (
+            <a class="submenu__logo" {...atributosLink(logoLink)} aria-label={`${rotulo} — topo da página`}>
+                <img src={logo} alt={rotulo} width={logoLargura} height={logoAltura}>
+            </a>
+        )}
+        <ul class="submenu__list">
+            {links.map((item) => (
+                <li><a class="submenu__link" {...atributosLink(item.link)}>{item.rotulo}</a></li>
+            ))}
+        </ul>
+    </div>
+</nav>
+)}

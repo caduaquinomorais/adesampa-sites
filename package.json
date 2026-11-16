@@ -1,0 +1,25 @@
+{
+  "name": "adesampa-sites",
+  "private": true,
+  "description": "Monorepo Astro com os sites dos subdomínios da ADE SAMPA (cabeçalho e rodapé compartilhados).",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "sites/*"
+  ],
+  "engines": {
+    "node": ">=26.13.1 <27",
+    "npm": ">=11"
+  },
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "check": "npm run check --workspaces --if-present",
+    "test": "node tests/rodar.mjs",
+    "test:visual": "node tests/visual/comparar.mjs"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.12",
+    "@types/node": "26.6.6",
+    "typescript": "6.0.3"
+  }
+}

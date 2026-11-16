@@ -1,0 +1,9 @@
+---
+import BaseLayout from '@adesampa/ui/BaseLayout.astro';
+import { caminho } from '@adesampa/ui/caminhos';
+import '../styles/site.css';
+---
+<BaseLayout titulo="Página não encontrada" semIndexacao>
+    <h1>Página não encontrada</h1>
+    <p><a href={caminho()}>Voltar ao início</a></p>
+</BaseLayout>

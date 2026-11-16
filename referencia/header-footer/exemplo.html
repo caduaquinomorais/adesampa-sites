@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="pt-BR" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Exemplo — cabeçalho e rodapé ADE SAMPA</title>
+    <link rel="preload" href="assets/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="assets/css/header-footer.css">
+    <script src="assets/js/header-footer.js" defer></script>
+    <style>body { margin: 0; font-family: "Geist", system-ui, sans-serif; } main { padding: 64px 24px; max-width: 1110px; margin: 0 auto; min-height: 50vh; }</style>
+</head>
+<body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header class="site-header" id="topo">
+    <div class="site-header__inner">
+        <a class="site-header__logo" data-link-pendente="true" aria-label="ADE SAMPA — página inicial">
+            <img src="assets/icons/logo-adesampa.svg" alt="ADE SAMPA" width="123" height="21">
+        </a>
+        <button class="site-header__toggle" type="button" aria-expanded="false" aria-controls="menu-principal">
+            <span class="site-header__toggle-icon" aria-hidden="true"></span>
+            <span>Menu</span>
+        </button>
+        <nav class="site-header__nav" id="menu-principal" aria-label="Menu principal">
+            <ul class="site-header__menu">
+                                    <li class="site-header__item">
+                        <a class="site-header__link" data-link-pendente="true">
+                            Home                                                    </a>
+                    </li>
+                                    <li class="site-header__item">
+                        <a class="site-header__link" data-link-pendente="true">
+                            Sobre                                                    </a>
+                    </li>
+                                    <li class="site-header__item is-active">
+                        <a class="site-header__link" data-link-pendente="true" aria-current="true">
+                            Programas                                                            <img class="site-header__arrow" src="assets/icons/seta-menu.svg" alt="" width="7" height="4">
+                                                    </a>
+                    </li>
+                                    <li class="site-header__item">
+                        <a class="site-header__link" data-link-pendente="true">
+                            Comunicação                                                            <img class="site-header__arrow" src="assets/icons/seta-menu.svg" alt="" width="7" height="4">
+                                                    </a>
+                    </li>
+                                    <li class="site-header__item">
+                        <a class="site-header__link" data-link-pendente="true">
+                            Transparência                                                    </a>
+                    </li>
+                            </ul>
+            <a class="site-header__cta" href="https://app.adesampa.com.br/welcome" rel="noopener noreferrer">Agendamentos</a>
+        </nav>
+    </div>
+</header>
+<nav class="submenu" aria-label="Seções de Teia">
+    <div class="submenu__inner">
+                    <a class="submenu__logo" href="#topo" aria-label="Teia — topo da página">
+                <img src="assets/icons/logo-teia.svg" alt="Teia" width="47" height="14">
+            </a>
+                <ul class="submenu__list">
+                            <li><a class="submenu__link" href="#coworking">Coworking</a></li>
+                            <li><a class="submenu__link" href="#podcast">Podcast</a></li>
+                            <li><a class="submenu__link" href="#fotografia">Fotografia</a></li>
+                            <li><a class="submenu__link" href="#musica">Música</a></li>
+                            <li><a class="submenu__link" href="#mapa">Mapa de unidades</a></li>
+                            <li><a class="submenu__link" href="#duvidas">Dúvidas</a></li>
+                            <li><a class="submenu__link" href="#normas">Normas de uso</a></li>
+                    </ul>
+    </div>
+</nav>
+<main id="conteudo" tabindex="-1">
+    <h1>Conteúdo do subdomínio</h1>
+    <p>O cabeçalho e o rodapé acima/abaixo vêm de partials/header.php e partials/footer.php.</p>
+</main>
+<footer class="site-footer">
+    <div class="site-footer__top hf-container">
+        <div class="site-footer__about">
+            <a class="site-footer__logo" data-link-pendente="true" aria-label="ADE SAMPA">
+                <img src="assets/icons/logo-adesampa-rodape.svg" alt="ADE SAMPA" width="199" height="34" loading="lazy">
+            </a>
+            <p class="site-footer__text">Entidade vinculada à Prefeitura de São Paulo, por meio da Secretaria Municipal de Desenvolvimento Econômico e Trabalho (SMDET), dedicada à aceleração de negócios, inclusão produtiva e redução das desigualdades regionais.</p>
+        </div>
+        <div class="site-footer__social">
+            <p class="site-footer__heading">Redes sociais</p>
+            <ul class="site-footer__social-list">
+                                    <li>
+                        <a class="social-btn" data-link-pendente="true" aria-label="Instagram">
+                            <img src="assets/icons/rede-instagram.svg" alt="" width="15" height="15" loading="lazy">
+                        </a>
+                    </li>
+                                    <li>
+                        <a class="social-btn" data-link-pendente="true" aria-label="LinkedIn">
+                            <img src="assets/icons/rede-linkedin.svg" alt="" width="15" height="15" loading="lazy">
+                        </a>
+                    </li>
+                                    <li>
+                        <a class="social-btn" data-link-pendente="true" aria-label="YouTube">
+                            <img src="assets/icons/rede-youtube.svg" alt="" width="15" height="15" loading="lazy">
+                        </a>
+                    </li>
+                                    <li>
+                        <a class="social-btn" data-link-pendente="true" aria-label="Facebook">
+                            <img src="assets/icons/rede-facebook.svg" alt="" width="15" height="15" loading="lazy">
+                        </a>
+                    </li>
+                            </ul>
+        </div>
+    </div>
+
+    <nav class="site-footer__columns hf-container" aria-label="Mapa do site ADE SAMPA">
+                    <div class="site-footer__col">
+                <p class="site-footer__col-title"><span class="site-footer__bar site-footer__bar--empreende" aria-hidden="true"></span>ADE SAMPA</p>
+                <ul class="site-footer__links">
+                                            <li><a class="site-footer__link" data-link-pendente="true">Início</a></li>
+                                            <li><a class="site-footer__link" data-link-pendente="true">Sobre nós</a></li>
+                                            <li><a class="site-footer__link" data-link-pendente="true">Transparência</a></li>
+                                    </ul>
+            </div>
+                    <div class="site-footer__col">
+                <p class="site-footer__col-title"><span class="site-footer__bar site-footer__bar--empreende" aria-hidden="true"></span>Sampa Empreende</p>
+                <ul class="site-footer__links">
+                                            <li><a class="site-footer__link" data-link-pendente="true">Atendimenro ao empreendedor</a></li>
+                                            <li><a class="site-footer__link" data-link-pendente="true">Orientação empresarial</a></li>
+                                            <li><a class="site-footer__link" data-link-pendente="true">Curso fábrica de negócios</a></li>
+                                            <li><a class="site-footer__link" data-link-pendente="true">Curso de gestão de negócios</a></li>
+                                            <li><a class="site-footer__link" data-link-pendente="true">Linhas de crédito</a></li>
+                                            <li><a class="site-footer__link" data-link-pendente="true">Consultoria em gestão financeira</a></li>
+                                            <li><a class="site-footer__link" data-link-pendente="true">Educação financeira</a></li>
+                                    </ul>
+            </div>
+                    <div class="site-footer__col">
+                <p class="site-footer__col-title"><span class="site-footer__bar site-footer__bar--tech" aria-hidden="true"></span>Sampa Tech</p>
+                <ul class="site-footer__links">
+                                            <li><a class="site-footer__link" data-link-pendente="true">Aceleração Vai Tec</a></li>
+                                    </ul>
+            </div>
+                    <div class="site-footer__col">
+                <p class="site-footer__col-title"><span class="site-footer__bar site-footer__bar--games" aria-hidden="true"></span>Sampa Games</p>
+                <ul class="site-footer__links">
+                                            <li><a class="site-footer__link" data-link-pendente="true">Aceleração de estúdios</a></li>
+                                            <li><a class="site-footer__link" data-link-pendente="true">Curso de game dev</a></li>
+                                            <li><a class="site-footer__link" data-link-pendente="true">Hub de educação</a></li>
+                                    </ul>
+            </div>
+                    <div class="site-footer__col">
+                <p class="site-footer__col-title"><span class="site-footer__bar site-footer__bar--verde" aria-hidden="true"></span>Sampa Verde</p>
+                <ul class="site-footer__links">
+                                            <li><a class="site-footer__link" data-link-pendente="true">Aceleração de negócios rurais</a></li>
+                                            <li><a class="site-footer__link" data-link-pendente="true">Aceleração de hortas</a></li>
+                                            <li><a class="site-footer__link" data-link-pendente="true">Aceleração de negócios verdes</a></li>
+                                            <li><a class="site-footer__link" data-link-pendente="true">Hub de inovação</a></li>
+                                    </ul>
+            </div>
+                    <div class="site-footer__col">
+                <p class="site-footer__col-title"><span class="site-footer__bar site-footer__bar--criativa" aria-hidden="true"></span>Sampa Criativa</p>
+                <ul class="site-footer__links">
+                                            <li><a class="site-footer__link" data-link-pendente="true">Aceleração de audiovisual</a></li>
+                                            <li><a class="site-footer__link" data-link-pendente="true">Aceleração de moda</a></li>
+                                    </ul>
+            </div>
+                    <div class="site-footer__col">
+                <p class="site-footer__col-title"><span class="site-footer__bar site-footer__bar--empreende" aria-hidden="true"></span>Outros programas</p>
+                <ul class="site-footer__links">
+                                            <li><a class="site-footer__link" data-link-pendente="true">Teia: coworkings e estúdios públicos</a></li>
+                                            <li><a class="site-footer__link" data-link-pendente="true">Sampa Ensina</a></li>
+                                            <li><a class="site-footer__link" data-link-pendente="true">Gestão Sampa</a></li>
+                                            <li><a class="site-footer__link" data-link-pendente="true">Data Sampa</a></li>
+                                            <li><a class="site-footer__link" data-link-pendente="true">Praça Victor Civita</a></li>
+                                    </ul>
+            </div>
+                    <div class="site-footer__col">
+                <p class="site-footer__col-title"><span class="site-footer__bar site-footer__bar--empreende" aria-hidden="true"></span>Comunicação</p>
+                <ul class="site-footer__links">
+                                            <li><a class="site-footer__link" data-link-pendente="true">Notícias</a></li>
+                                            <li><a class="site-footer__link" data-link-pendente="true">Publicações</a></li>
+                                            <li><a class="site-footer__link" data-link-pendente="true">Manual de marca</a></li>
+                                            <li><a class="site-footer__link" data-link-pendente="true">Manual de redação</a></li>
+                                            <li><a class="site-footer__link" data-link-pendente="true">Contato</a></li>
+                                    </ul>
+            </div>
+            </nav>
+
+    <div class="site-footer__bottom hf-container">
+        <div class="site-footer__legal">
+            <ul class="site-footer__legal-links">
+                                                        <li><a class="site-footer__link" data-link-pendente="true">Termos de uso</a></li>
+                                    <li class="site-footer__dot" aria-hidden="true">•</li>                    <li><a class="site-footer__link" data-link-pendente="true">Privacidade (LGPD)</a></li>
+                                    <li class="site-footer__dot" aria-hidden="true">•</li>                    <li><a class="site-footer__link" data-link-pendente="true">Acessibilidade</a></li>
+                            </ul>
+            <p class="site-footer__info">
+                <strong>ADE SAMPA – Agência São Paulo de Desenvolvimento</strong> <span>| CNPJ: 21.154.061/0001-83</span><br>
+                Sede Administrativa: Rua Líbero Badaró, 425 - 11º andar - Centro Histórico, São Paulo - SP, CEP 01009-000<br>
+                © 2026 ADE SAMPA • Prefeitura de São Paulo. Todos os direitos reservados.            </p>
+        </div>
+        <div class="site-footer__logos">
+            <img class="site-footer__logo-ade" src="assets/icons/logo-adesampa-rodape-assinatura.svg" alt="ADE SAMPA" width="133" height="23" loading="lazy">
+            <img class="site-footer__logo-pref" src="assets/icons/logo-prefeitura-rodape.svg" alt="Prefeitura de São Paulo" width="161" height="51" loading="lazy">
+        </div>
+    </div>
+</footer>
+</body>
+</html>
