@@ -55,10 +55,10 @@ return [
         'texto' => 'Entidade vinculada à Prefeitura de São Paulo, por meio da Secretaria Municipal de Desenvolvimento Econômico e Trabalho (SMDET), dedicada à aceleração de negócios, inclusão produtiva e redução das desigualdades regionais.',
         'redes_titulo' => 'Redes sociais',
         'redes' => [
-            'instagram' => '', // TODO-LINK
-            'linkedin' => '',  // TODO-LINK
-            'youtube' => '',   // TODO-LINK
-            'facebook' => '',  // TODO-LINK
+            'instagram' => 'https://www.instagram.com/adesampa/',
+            'linkedin' => 'https://br.linkedin.com/company/adesampa',
+            'youtube' => 'https://www.youtube.com/@Adesampa',
+            'facebook' => 'https://www.facebook.com/adesampaoficial/?locale=pt_BR',
         ],
         // Colunas de links (todas TODO-LINK). Textos copiados exatamente do Figma.
         'colunas' => [

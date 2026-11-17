@@ -226,6 +226,17 @@
     display: flex; flex-direction: column; gap: 16px; height: 100%; min-height: 312px; padding: 40px;
     background: var(--azul-900); border: 1px solid var(--borda-escura); border-radius: 10px;
 }
+/* Hover dos cards de números e de produtos (Figma: variantes "Cards (big numbers)" e "Cards (produtos
+   digitais)"): fundo #001B4D → #042F80 e borda clara → #327CFE. Só em telas com mouse (no toque o
+   hover ficaria "preso"). No produto, vale também quando o link do card recebe foco pelo teclado. */
+.numeros__item, .card-produto { transition: background-color .2s ease, border-color .2s ease; }
+@media (hover: hover) {
+    .numeros__item:hover, .card-produto:hover { background: var(--azul-800); border-color: var(--azul-500); }
+}
+.card-produto:focus-within { background: var(--azul-800); border-color: var(--azul-500); }
+@media (prefers-reduced-motion: reduce) {
+    .numeros__item, .card-produto { transition: none; }
+}
 .card-produto img.icone { width: 64px; height: 64px; }
 .card-produto .h-card { line-height: 24px; }
 .card-produto .texto-2 { flex: 1; }

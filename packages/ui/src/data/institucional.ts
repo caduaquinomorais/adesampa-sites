@@ -187,10 +187,10 @@ export const RODAPE: Rodape = congelar({
   redesTitulo: 'Redes sociais',
   /** A ordem aqui é a ordem dos botões. */
   redes: [
-    { rede: 'instagram', nome: 'Instagram', link: '' }, // TODO-LINK
-    { rede: 'linkedin', nome: 'LinkedIn', link: '' }, // TODO-LINK
-    { rede: 'youtube', nome: 'YouTube', link: '' }, // TODO-LINK
-    { rede: 'facebook', nome: 'Facebook', link: '' }, // TODO-LINK
+    { rede: 'instagram', nome: 'Instagram', link: 'https://www.instagram.com/adesampa/' },
+    { rede: 'linkedin', nome: 'LinkedIn', link: 'https://br.linkedin.com/company/adesampa' },
+    { rede: 'youtube', nome: 'YouTube', link: 'https://www.youtube.com/@Adesampa' },
+    { rede: 'facebook', nome: 'Facebook', link: 'https://www.facebook.com/adesampaoficial/?locale=pt_BR' },
   ],
   /** Colunas do mapa do site (links vazios = TODO-LINK). Textos copiados exatamente do Figma. */
   colunas: [
