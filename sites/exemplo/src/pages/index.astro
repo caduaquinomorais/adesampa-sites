@@ -26,4 +26,6 @@ const submenu = {
 <BaseLayout titulo="Exemplo — cabeçalho e rodapé ADE SAMPA" ativo="programas" submenu={submenu} semIndexacao>
     <h1>Conteúdo do subdomínio</h1>
     <p>O cabeçalho e o rodapé acima/abaixo vêm de packages/ui (Header.astro e Footer.astro).</p>
+    {/* Destinos das âncoras do submenu (o teste de links confere que existem). */}
+    {submenu.links.map((l) => <section id={l.link.slice(1)}><h2>{l.rotulo}</h2></section>)}
 </BaseLayout>

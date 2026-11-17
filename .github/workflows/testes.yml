@@ -1,0 +1,86 @@
+# Testes dos sites da ADE SAMPA (monorepo Astro).
+#
+# Roda em todo Pull Request, em todo push no main e pelo botão "Run workflow" (aba Actions):
+#   1. npm ci (versões exatas do package-lock.json)
+#   2. astro check de todos os sites
+#   3. build de todos os sites (ambiente "teste") — falha se sobrar script/estilo inline
+#   4. testes unitários, identidade do cabeçalho/rodapé, links e assets
+#   5. testes visuais no Chrome headless (referência, Figma, responsividade e acessibilidade)
+# Os relatórios com as capturas ficam em "Artifacts" no resumo da execução.
+# Deploy: .github/workflows/deploy.yml (só no main, depois deste workflow).
+
+name: Testes
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: testes-${{ github.ref }}
+  # Em PR, um push novo cancela a execução anterior. No main, nunca cancela.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  ASTRO_TELEMETRY_DISABLED: '1'
+  ADESAMPA_AMBIENTE: teste
+
+jobs:
+  testes:
+    name: Check, build e testes
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Instalar o Node (versão do .nvmrc)
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Instalar dependências (exatas do package-lock.json)
+        run: npm ci
+
+      - name: Verificar tipos (astro check)
+        run: npm run check
+
+      - name: Build de todos os sites
+        run: npm run build
+
+      - name: Build em ambiente de produção (só confere que funciona)
+        env:
+          ADESAMPA_AMBIENTE: producao
+        run: |
+          for site in sites/*/; do
+            nome=$(basename "$site")
+            echo "::group::$nome (producao)"
+            (cd "$site" && npx astro build --outDir "$RUNNER_TEMP/dist-producao-$nome")
+            echo "::endgroup::"
+          done
+
+      - name: Testes unitários, identidade do cabeçalho/rodapé e links
+        run: |
+          node --test tests/unit/
+          node tests/build/identidade.mjs
+          node tests/build/links.mjs
+
+      - name: Testes visuais (Chrome headless)
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+          ADESAMPA_TESTES_CONTINUAR: '1'
+        run: npm test -- visual
+
+      - name: Guardar relatórios e capturas
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorios-visuais
+          path: tests/visual/reports/
+          retention-days: 14
+          if-no-files-found: ignore
