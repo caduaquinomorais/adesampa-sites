@@ -84,6 +84,9 @@ export async function abrirChrome() {
   await cdp.abrir();
   await cdp.enviar('Page.enable');
   await cdp.enviar('Runtime.enable');
+  // "Reduzir movimento": a rolagem suave (scroll-behavior: smooth) vira instantânea, e as medições
+  // logo depois de rolar não dependem da velocidade da máquina.
+  await cdp.enviar('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
   return {
     cdp,
     fechar: async () => {

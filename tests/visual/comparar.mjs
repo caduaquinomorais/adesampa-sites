@@ -181,12 +181,19 @@ async function acessibilidade(cdp, url, largura) {
     if (pequenos.length) console.log(`  · ${largura}px (desktop, informativo): alvos < 44px: ${pequenos.length}`);
   }
 
-  // Sem JavaScript: o menu aparece aberto (classe no-js).
+}
+
+// Sem JavaScript: o menu aparece aberto (classe no-js). Roda POR ÚLTIMO: depois de desligar os scripts,
+// o Chrome às vezes demora a voltar a executá-los na página seguinte e atrapalharia as outras medições.
+async function semJavaScript(cdp, url) {
   await cdp.enviar('Emulation.setScriptExecutionDisabled', { value: true });
-  await carregar(cdp, url, largura, 900, { simples: true });
-  const semJs = await cdp.avaliar(`getComputedStyle(document.getElementById('menu-principal')).display !== 'none' && document.documentElement.classList.contains('no-js')`);
+  for (const largura of LARGURAS) {
+    await carregar(cdp, url, largura, 900, { simples: true });
+    const ok = await cdp.avaliar(`getComputedStyle(document.getElementById('menu-principal')).display !== 'none' && document.documentElement.classList.contains('no-js')`);
+    if (!ok) falhar(`${largura}px: sem JavaScript o menu não fica visível`);
+  }
   await cdp.enviar('Emulation.setScriptExecutionDisabled', { value: false });
-  if (!semJs) falhar(`${largura}px: sem JavaScript o menu não fica visível`);
+  console.log('\n  ✓ sem JavaScript: menu visível em todas as larguras (classe no-js)');
 }
 
 // ---------------------------------------------------------------- execução
@@ -260,6 +267,7 @@ try {
     await acessibilidade(cdp, urlSite, largura);
     resultado.larguras.push(linha);
   }
+  await semJavaScript(cdp, urlSite);
 } finally {
   await chrome.fechar();
   await srv.fechar();
