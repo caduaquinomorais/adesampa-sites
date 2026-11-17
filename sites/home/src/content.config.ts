@@ -69,7 +69,7 @@ const publicacoes = defineCollection({
       titulo: z.string(),
       capa: image(),
       capaAlt: z.string(),
-      /** PDF (https://… ou arquivo em public/) — vazio = ainda sem arquivo (o card não vira link). */
+      /** Link da publicação (https://… — PDF ou livro digital; ou arquivo em public/) — vazio = ainda sem link (o card não vira link). */
       arquivo: link,
     }),
 });
@@ -97,6 +97,19 @@ const inicio = defineCollection({
       mapa: image(),
       mapaAlt: z.string(),
       mapaLink: link,
+      /**
+       * Mapa interativo (Google My Maps), carregado só quando a pessoa clica no botão (LGPD e desempenho).
+       * Link de incorporação: https://www.google.com/maps/d/embed?mid=… — vazio = fica só a imagem.
+       */
+      mapaEmbed: z
+        .string()
+        .trim()
+        .default('')
+        .refine(
+          (v) => v === '' || /^https:\/\/www\.google\.com\/maps\/d\/(u\/\d+\/)?embed\?mid=[\w-]+(&[\w.=-]+)*$/.test(v),
+          'teia.mapaEmbed: use o link de incorporação do Google My Maps (https://www.google.com/maps/d/embed?mid=…)',
+        ),
+      mapaBotao: z.string().default('Ver mapa interativo'),
     }),
     produtos: cabecalhoSecao.extend({
       etiqueta: z.string(),

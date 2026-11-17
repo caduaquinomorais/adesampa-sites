@@ -34,6 +34,10 @@ teia:
   mapa: ../../assets/fotos/teia-mapa.png
   mapaAlt: 'Mapa de São Paulo com a unidade TEIA Parque Novo Mundo (zona Norte), na Av. Ernesto Augusto Lopes, 100 – Parque Vila Maria.'
   mapaLink: 'https://oranilom.com.br/teia/#mapa'
+  # Mapa interativo: cole aqui o link de incorporação do Google My Maps (https://www.google.com/maps/d/embed?mid=…).
+  # Vazio = fica só a imagem acima, com link.
+  mapaEmbed: 'https://www.google.com/maps/d/embed?mid=1VKpbJmE27aZ-ZaMqH6xwHOgXpnaUiWw&ehbc=2E312F'
+  mapaBotao: 'Ver mapa interativo'
 
 produtos:
   etiqueta: 'Plataformas online'

@@ -36,7 +36,7 @@ const temArquivo = (x: Pub) => x.data.arquivo.trim() !== '';
                     <li>
                         <Tag class="card-publicacao" {...(temArquivo(x) ? attrs(x.data.arquivo) : {})}>
                             <Picture src={x.data.capa} alt={x.data.capaAlt} formats={['avif', 'webp']} fallbackFormat="jpg" widths={[354, 708]} sizes="354px" loading="lazy" />
-                            <p class="card-publicacao__titulo">{x.data.titulo}{temArquivo(x) && <span class="sr-only"> (abrir PDF)</span>}</p>
+                            <p class="card-publicacao__titulo">{x.data.titulo}{temArquivo(x) && <span class="sr-only"> (abrir publicação)</span>}</p>
                         </Tag>
                     </li>
                 );

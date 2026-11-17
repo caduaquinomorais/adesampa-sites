@@ -45,9 +45,12 @@ O fundo foi gerado a partir das camadas do Figma: a foto com 80% de opacidade, a
 
 No Figma, o mapa é uma imagem: um painel da unidade junto com um trecho do Google Maps. Ela foi usada como está, com uma descrição em texto (alt), e leva ao mapa do site do Teia.
 
-Não há Google Maps ao vivo na Home. Isso evita carregar serviços do Google na página inicial (LGPD) e mantém a CSP fechada.
-
-**Pendência:** se preferirem o mapa interativo, troca-se a imagem por um iframe e libera-se `frame-src` para o Google. É o mesmo caminho do TEIA, decisão D-05.
+**Mapa interativo (Google My Maps), só no clique.** Com `teia.mapaEmbed` preenchido em `paginas/inicio.md`, aparece sobre a imagem o botão "Ver mapa interativo". O clique troca a imagem pelo iframe do My Maps (`src/scripts/mapa.ts`).
+- O Google só carrega quando a pessoa pede: a página inicial não chama serviços do Google sozinha (LGPD) e continua leve.
+- Por que My Maps: a lista salva do Google Maps (`maps.app.goo.gl/…`) não tem código de incorporação. O My Maps tem, e as unidades são editadas lá, sem deploy.
+- A CSP libera só `frame-src https://www.google.com` (o resto continua `'self'`).
+- O build recusa qualquer `mapaEmbed` que não seja `https://www.google.com/maps/d/embed?mid=…`.
+- Sem JavaScript, ou com `mapaEmbed` vazio, fica só a imagem com link (`mapaLink`).
 
 ## H-05 — Carrosséis e galerias
 

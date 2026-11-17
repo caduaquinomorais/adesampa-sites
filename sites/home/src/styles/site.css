@@ -210,7 +210,11 @@
 
 .teia .h-secao { color: var(--azul-800); }
 .teia .texto-1 { color: var(--texto-corpo); }
-.teia__mapa { flex: 0 0 auto; width: 542px; max-width: 100%; }
+.teia__mapa { position: relative; flex: 0 0 auto; width: 542px; max-width: 100%; }
+.teia__mapa-botao { position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%); cursor: pointer; white-space: nowrap; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25); }
+.teia__mapa-botao:hover { background: var(--azul-800); }
+.teia__mapa-botao[hidden] { display: none; }
+.teia__mapa-frame { display: block; width: 100%; height: auto; aspect-ratio: 542 / 367; border: 0; border-radius: 8px; box-shadow: 0 0 0 1.5px var(--azul-200); }
 .teia__mapa a, .teia__mapa > img { display: block; border-radius: 8px; }
 .teia__mapa img { display: block; width: 100%; height: auto; aspect-ratio: 542 / 367; border-radius: 8px; box-shadow: 0 0 0 1.5px var(--azul-200); }
 

@@ -83,11 +83,18 @@ const ICONES_PRODUTOS = { 'sampa-ensina': sampaEnsina, 'gestao-sampa': gestaoSam
                     <Botao texto={p.teia.botaoPrincipal.texto} link={p.teia.botaoPrincipal.link} />
                 </div>
             </div>
-            <div class="teia__mapa">
+            {/* Com mapaEmbed: o botão (exibido pelo JavaScript) troca a imagem pelo Google My Maps. Sem JS, fica a imagem com link. */}
+            <div class="teia__mapa" data-mapa={p.teia.mapaEmbed || undefined} data-mapa-titulo="Mapa interativo das unidades do Teia (Google Maps)">
                 <a {...attrs(p.teia.mapaLink)}>
                     <Picture src={p.teia.mapa} alt={p.teia.mapaAlt} formats={['avif', 'webp']} fallbackFormat="jpg" widths={[542, 1084]} sizes="(max-width: 1023px) 100vw, 542px" loading="lazy" />
                 </a>
+                {p.teia.mapaEmbed && (
+                    <button type="button" class="botao teia__mapa-botao" data-mapa-botao hidden>
+                        {p.teia.mapaBotao}<span class="sr-only"> (carrega o Google Maps)</span>
+                    </button>
+                )}
             </div>
+            {p.teia.mapaEmbed && <script>import '../scripts/mapa';</script>}
         </div>
     </section>
 
