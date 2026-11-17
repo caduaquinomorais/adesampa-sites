@@ -1,4 +1,4 @@
-# Testes dos sites da ADE SAMPA (monorepo Astro).
+# Testes e deploy dos sites da ADE SAMPA (monorepo Astro).
 #
 # Roda em todo Pull Request, em todo push no main e pelo botão "Run workflow" (aba Actions):
 #   1. npm ci (versões exatas do package-lock.json)
@@ -7,15 +7,20 @@
 #   4. testes unitários, identidade do cabeçalho/rodapé, links e assets
 #   5. testes visuais no Chrome headless (referência, Figma, responsividade e acessibilidade)
 # Os relatórios com as capturas ficam em "Artifacts" no resumo da execução.
-# Deploy: .github/workflows/deploy.yml (só no main, depois deste workflow).
+# Deploy: jobs "planejar" e "deploy" abaixo (só no main, depois dos testes).
 
-name: Testes
+name: Testes e deploy
 
 on:
   pull_request:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      site:
+        description: 'Site a publicar (nome da pasta em sites/, ex.: home) ou "todos"'
+        required: true
+        default: todos
 
 permissions:
   contents: read
@@ -36,10 +41,10 @@ jobs:
     timeout-minutes: 45
     steps:
       - name: Baixar o código
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Instalar o Node (versão do .nvmrc)
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version-file: .nvmrc
           cache: npm
@@ -78,9 +83,225 @@ jobs:
 
       - name: Guardar relatórios e capturas
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: relatorios-visuais
           path: tests/visual/reports/
           retention-days: 14
           if-no-files-found: ignore
+
+  # ---------------------------------------------------------------------------------------------
+  # DEPLOY (KingHost, FTPS) — só no main, só depois dos testes, nunca em Pull Request.
+  # Detalhes, segredos e diagnóstico: docs/DEPLOY.md.
+  # ---------------------------------------------------------------------------------------------
+  planejar:
+    name: Planejar o deploy
+    needs: testes
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      matriz: ${{ steps.plano.outputs.matriz }}
+      quantidade: ${{ steps.plano.outputs.quantidade }}
+    steps:
+      - name: Baixar o código (com histórico, para comparar commits)
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Instalar o Node
+        uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+      - name: Decidir quais sites publicar
+        id: plano
+        env:
+          EVENTO: ${{ github.event_name }}
+          SITE_ESCOLHIDO: ${{ inputs.site }}
+          ANTES: ${{ github.event.before }}
+          DEPOIS: ${{ github.sha }}
+          ADESAMPA_AMBIENTE: ${{ vars.ADESAMPA_AMBIENTE || 'teste' }}
+        run: node scripts/deploy-plano.mjs
+
+  deploy:
+    name: Deploy ${{ matrix.site.nome }}
+    needs: planejar
+    if: needs.planejar.outputs.quantidade != '0'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      # Um site por vez: várias conexões FTP seguidas bloqueiam o IP na KingHost.
+      max-parallel: 1
+      fail-fast: false
+      matrix:
+        site: ${{ fromJSON(needs.planejar.outputs.matriz) }}
+    environment:
+      name: ${{ vars.ADESAMPA_AMBIENTE || 'teste' }}
+      url: ${{ matrix.site.url }}
+    concurrency:
+      # Nunca cancela um deploy em andamento.
+      group: deploy-kinghost-${{ matrix.site.nome }}
+      cancel-in-progress: false
+    env:
+      ADESAMPA_AMBIENTE: ${{ vars.ADESAMPA_AMBIENTE || 'teste' }}
+      # web1160.kinghost.net, e NÃO ftp.<domínio>: o certificado TLS da KingHost só vale para *.kinghost.net.
+      FTP_SERVER: ${{ vars.FTP_SERVER || 'web1160.kinghost.net' }}
+      SITE: ${{ matrix.site.nome }}
+      PASTA: ${{ matrix.site.pasta }}
+      URL_SITE: ${{ matrix.site.url }}
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v5
+
+      - name: Instalar o Node
+        uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Build do site ${{ matrix.site.nome }}
+        run: npm run build -w "sites/$SITE"
+
+      # O servidor FTP da KingHost envia só o próprio certificado, sem o intermediário. O Linux não
+      # busca o intermediário sozinho e recusa a conexão ("unable to get local issuer certificate").
+      # Ele é baixado do endereço oficial indicado no próprio certificado (AIA) e a cadeia é validada
+      # contra as autoridades do sistema. A verificação TLS continua LIGADA. (Igual ao TEIA.)
+      - name: Completar a cadeia do certificado FTPS
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP"
+          echo | timeout 30 openssl s_client -connect "$FTP_SERVER:21" -starttls ftp -servername "$FTP_SERVER" 2>/dev/null \
+            | openssl x509 -out ftp-servidor.pem
+          aia=$(openssl x509 -in ftp-servidor.pem -noout -ext authorityInfoAccess \
+            | grep -oE 'CA Issuers - URI:[^ ]+' | head -1 | sed 's/CA Issuers - URI://')
+          echo "Certificado: $(openssl x509 -in ftp-servidor.pem -noout -subject)"
+          echo "Intermediário: $aia"
+          curl -sSf --max-time 30 -o ftp-intermediario.crt "$aia"
+          openssl x509 -inform DER -in ftp-intermediario.crt -out ftp-intermediario.pem 2>/dev/null \
+            || openssl x509 -in ftp-intermediario.crt -out ftp-intermediario.pem
+          openssl verify -untrusted ftp-intermediario.pem ftp-servidor.pem
+          cat /etc/ssl/certs/ca-certificates.crt ftp-intermediario.pem > ftp-ca.pem
+          echo "FTP_CA_BUNDLE=$RUNNER_TEMP/ftp-ca.pem" >> "$GITHUB_ENV"
+          echo "NODE_EXTRA_CA_CERTS=$RUNNER_TEMP/ftp-intermediario.pem" >> "$GITHUB_ENV"
+
+      # Só publica numa pasta que já tenha o arquivo-marcador .adesampa-site com o nome do site.
+      # Assim, um engano no mapa SITES nunca sobrescreve outro site. (Criar: docs/DEPLOY.md.)
+      - name: Conferir a pasta de destino (marcador .adesampa-site)
+        env:
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          set -uo pipefail
+          if [ -z "$FTP_USERNAME" ] || [ -z "$FTP_PASSWORD" ]; then
+            echo "::error::Cadastre os segredos FTP_USERNAME e FTP_PASSWORD em Settings → Secrets and variables → Actions (aba Secrets)."
+            exit 1
+          fi
+          case "$PASTA" in ''|/*|*..*) echo "::error::Pasta FTP inválida: '$PASTA'"; exit 1 ;; esac
+          umask 077
+          netrc="$RUNNER_TEMP/netrc"
+          printf 'machine %s login %s password %s\n' "$FTP_SERVER" "$FTP_USERNAME" "$FTP_PASSWORD" > "$netrc"
+          trap 'rm -f "$netrc"' EXIT
+          # ftp://host/pasta/ é RELATIVO à pasta onde o FTP abre (www/).
+          if ! marcador=$(curl -sS --ssl-reqd --cacert "$FTP_CA_BUNDLE" --netrc-file "$netrc" --max-time 60 \
+                "ftp://$FTP_SERVER/$PASTA/.adesampa-site" 2>"$RUNNER_TEMP/erro"); then
+            erro=$(tr -d '\n' < "$RUNNER_TEMP/erro")
+            echo "::error::Não encontrei o marcador ./$PASTA/.adesampa-site ($erro). Erro 67/530 = usuário ou senha incorretos (uma falha de login bloqueia o IP por alguns minutos). Erro 78 = arquivo ou pasta inexistente: crie a pasta $PASTA com o arquivo .adesampa-site contendo só a palavra \"$SITE\" (docs/DEPLOY.md)."
+            exit 1
+          fi
+          marcador=$(printf '%s' "$marcador" | tr -d '\r\n\t ')
+          if [ "$marcador" != "$SITE" ]; then
+            echo "::error::A pasta ./$PASTA/ pertence ao site \"$marcador\", não a \"$SITE\". Deploy cancelado para não sobrescrever outro site."
+            exit 1
+          fi
+          echo "::notice::Pasta ./$PASTA/ confirmada para o site $SITE."
+
+      # A KingHost limita conexões seguidas do mesmo IP: pausa antes do envio.
+      - name: Pausa antes do envio
+        run: sleep 20
+
+      - name: Enviar por FTPS
+        id: envio1
+        continue-on-error: true
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ env.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./sites/${{ matrix.site.nome }}/dist/
+          # RELATIVO ("./homolog/"): o FTP da KingHost abre dentro de www, que não é a raiz "/".
+          server-dir: ./${{ matrix.site.pasta }}/
+          # Arquivos removidos do build também são removidos do servidor (só os que este deploy enviou;
+          # o marcador e as pastas dos outros sites nunca são tocados).
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .adesampa-site
+
+      - name: Aguardar antes da segunda tentativa
+        if: steps.envio1.outcome == 'failure'
+        run: sleep 60
+
+      - name: Enviar por FTPS (2ª tentativa)
+        if: steps.envio1.outcome == 'failure'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ env.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./sites/${{ matrix.site.nome }}/dist/
+          server-dir: ./${{ matrix.site.pasta }}/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .adesampa-site
+
+      - name: Conferir o site publicado
+        run: |
+          set -euo pipefail
+          sleep 5
+          status=$(curl -s --retry 3 --retry-delay 5 -o pagina.html -D cabecalhos.txt -w '%{http_code}' "$URL_SITE")
+          echo "GET $URL_SITE → $status"
+          test "$status" = 200
+          css=$(grep -oE '<link rel="stylesheet" href="[^"]+"' pagina.html | head -1 | sed -E 's/.*href="([^"]+)"/\1/')
+          origem=$(echo "$URL_SITE" | grep -oE '^https?://[^/]+')
+          status_css=$(curl -s -o /dev/null -w '%{http_code}' "$origem$css")
+          echo "CSS $css → $status_css"
+          test "$status_css" = 200
+          grep -q '21.154.061/0001-83' pagina.html || { echo "::error::A página não tem o rodapé (CNPJ)."; exit 1; }
+          status404=$(curl -s -o pagina404.html -w '%{http_code}' "${URL_SITE}esta-pagina-nao-existe/")
+          echo "Página inexistente → $status404"
+          if [ "$status404" != 404 ] || ! grep -q '21.154.061/0001-83' pagina404.html; then
+            echo "::warning::A página 404 do site não foi servida (ErrorDocument do .htaccess)."
+          fi
+          echo "Site no ar com CSS e rodapé."
+
+      - name: Conferir os cabeçalhos de segurança e de cache
+        run: |
+          set -uo pipefail
+          faltando=""
+          for h in content-security-policy strict-transport-security x-content-type-options referrer-policy x-frame-options; do
+            grep -qi "^$h:" cabecalhos.txt || faltando="$faltando $h"
+          done
+          grep -i -E '^(content-security-policy|strict-transport-security|x-content-type-options|referrer-policy|x-frame-options|permissions-policy|cache-control):' cabecalhos.txt || true
+          if [ -n "$faltando" ]; then
+            echo "::warning::Cabeçalhos de segurança AUSENTES no ar:$faltando — o mod_headers pode estar desativado na KingHost (ver docs/DEPLOY.md)."
+          else
+            echo "::notice::Cabeçalhos de segurança presentes em $URL_SITE."
+          fi
+          css=$(grep -oE '<link rel="stylesheet" href="[^"]+"' pagina.html | head -1 | sed -E 's/.*href="([^"]+)"/\1/')
+          origem=$(echo "$URL_SITE" | grep -oE '^https?://[^/]+')
+          cache=$(curl -sI "$origem$css" | grep -i '^cache-control:' || true)
+          echo "Cache do CSS (/_astro/): ${cache:-ausente}"
+          echo "$cache" | grep -q 'immutable' || echo "::warning::/_astro/ sem cache longo (immutable)."
+          oculto=$(curl -s -o /dev/null -w '%{http_code}' "${URL_SITE}.adesampa-site")
+          echo "Arquivo oculto .adesampa-site → $oculto"
+          [ "$oculto" = 404 ] || [ "$oculto" = 403 ] || echo "::warning::Arquivos ocultos estão acessíveis (.htaccess sem mod_rewrite?)."
+
+      # Pausa entre sites (o próximo da matriz só começa depois desta).
+      - name: Pausa antes do próximo site
+        if: always()
+        run: sleep 30

@@ -34,7 +34,15 @@ const BATERIAS = [
 let falhas = 0;
 for (const b of BATERIAS.filter((x) => x.nome.includes(filtro))) {
   console.log(`\n=== ${b.nome}`);
-  const r = spawnSync(process.execPath, b.args, { cwd: RAIZ, stdio: 'inherit', timeout: 15 * 60 * 1000, killSignal: 'SIGKILL' });
+  // No GitHub Actions, cada linha de falha (✗) vira uma anotação (visível no resumo, sem abrir o log).
+  const noCI = !!process.env.GITHUB_ACTIONS;
+  const r = spawnSync(process.execPath, b.args, { cwd: RAIZ, stdio: noCI ? ['ignore', 'pipe', 'pipe'] : 'inherit', timeout: 15 * 60 * 1000, killSignal: 'SIGKILL', encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+  if (noCI) {
+    const saida = `${r.stdout ?? ''}${r.stderr ?? ''}`;
+    process.stdout.write(saida);
+    const erros = saida.split('\n').filter((l) => /✗|Error|FALHA/.test(l)).map((l) => l.trim()).filter(Boolean);
+    for (const l of erros.slice(0, 8)) console.log(`::error title=${b.nome.replace(/[:,]/g, ' ')}::${l.replace(/%/g, '%25').slice(0, 900)}`);
+  }
   if (r.error?.code === 'ETIMEDOUT') console.log(`✗ ${b.nome}: passou de 15 minutos (travou?)`);
   if (r.status !== 0) { falhas++; console.log(`✗ ${b.nome}`); if (!process.env.ADESAMPA_TESTES_CONTINUAR) break; continue; }
   console.log(`✓ ${b.nome}`);
