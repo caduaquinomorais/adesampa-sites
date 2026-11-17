@@ -60,26 +60,57 @@ class Cdp {
   }
 }
 
-/** Abre o Chrome headless e devolve { cdp, fechar }. */
-export async function abrirChrome() {
-  const porta = 9300 + Math.floor(Math.random() * 600);
+/**
+ * Inicia o Chrome e devolve { proc, perfil, ws } (ou null se o DevTools não responder a tempo).
+ * Porta 0: o próprio Chrome escolhe uma porta livre e a informa no stderr ("DevTools listening on
+ * ws://127.0.0.1:<porta>/…"). Uma porta sorteada às vezes já estava ocupada no runner do CI.
+ */
+async function iniciarChrome(limiteMs) {
   const perfil = mkdtempSync(join(tmpdir(), 'adesampa-chrome-'));
   const proc = spawn(acharChrome(), [
-    '--headless=new', `--remote-debugging-port=${porta}`, `--user-data-dir=${perfil}`,
+    '--headless=new', '--remote-debugging-port=0', `--user-data-dir=${perfil}`,
     '--no-first-run', '--no-default-browser-check', '--disable-gpu', '--hide-scrollbars',
     '--force-device-scale-factor=1', '--disable-extensions', '--lang=pt-BR', '--font-render-hinting=none',
-    ...(process.platform === 'linux' ? ['--no-sandbox'] : []),
+    ...(process.platform === 'linux' ? ['--no-sandbox', '--disable-dev-shm-usage'] : []),
     'about:blank',
-  ], { stdio: 'ignore' });
+  ], { stdio: ['ignore', 'ignore', 'pipe'] });
+  let porta = null;
+  let saiu = false;
+  let stderr = '';
+  proc.stderr.on('data', (d) => {
+    stderr = (stderr + d).slice(-4000);
+    const m = /DevTools listening on ws:\/\/[^:]+:(\d+)\//.exec(stderr);
+    if (m) porta = m[1];
+  });
+  proc.on('exit', () => { saiu = true; });
   let ws;
-  for (let i = 0; i < 150 && !ws; i++) {
-    try {
-      const lista = await (await fetch(`http://127.0.0.1:${porta}/json/list`)).json();
-      ws = lista.find((t) => t.type === 'page')?.webSocketDebuggerUrl;
-    } catch { /* aguardando */ }
+  const fim = Date.now() + limiteMs;
+  while (!ws && !saiu && Date.now() < fim) {
+    if (porta) {
+      try {
+        const lista = await (await fetch(`http://127.0.0.1:${porta}/json/list`)).json();
+        ws = lista.find((t) => t.type === 'page')?.webSocketDebuggerUrl;
+      } catch { /* aguardando */ }
+    }
     if (!ws) await sleep(100);
   }
-  if (!ws) { proc.kill(); throw new Error('Chrome não iniciou o DevTools.'); }
+  if (ws) return { proc, perfil, ws };
+  proc.kill();
+  try { rmSync(perfil, { recursive: true, force: true }); } catch { /* ignora */ }
+  const ultima = stderr.trim().split('\n').slice(-3).join(' | ');
+  console.error(`  (Chrome não respondeu${saiu ? ': o processo terminou' : ''}${ultima ? ` — ${ultima}` : ''})`);
+  return null;
+}
+
+/** Abre o Chrome headless e devolve { cdp, fechar }. Tenta até 3 vezes (runner do CI lento ou ocupado). */
+export async function abrirChrome() {
+  let iniciado = null;
+  for (let tentativa = 1; tentativa <= 3 && !iniciado; tentativa++) {
+    iniciado = await iniciarChrome(30000);
+    if (!iniciado && tentativa < 3) { console.error(`  Chrome não abriu (tentativa ${tentativa} de 3); tentando de novo…`); await sleep(1000); }
+  }
+  if (!iniciado) throw new Error('Chrome não iniciou o DevTools (3 tentativas).');
+  const { proc, perfil, ws } = iniciado;
   const cdp = new Cdp(ws);
   await cdp.abrir();
   await cdp.enviar('Page.enable');
