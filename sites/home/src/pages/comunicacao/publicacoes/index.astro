@@ -1,0 +1,46 @@
+---
+/* Publicações — Figma: frame "Publicações" (654:15568). Itens: src/content/publicacoes.yaml. */
+import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
+import { Picture } from 'astro:assets';
+import BaseLayout from '@adesampa/ui/BaseLayout.astro';
+import { caminho } from '@adesampa/ui/caminhos';
+import Hero from '../../../components/Hero.astro';
+import Carrossel from '../../../components/Carrossel.astro';
+import { attrs } from '../../../lib/conteudo';
+import '../../../styles/site.css';
+
+const entrada = await getEntry('paginaPublicacoes', 'publicacoes');
+if (!entrada) throw new Error('Falta src/content/paginas/publicacoes.md');
+const p = entrada.data;
+const todas = (await getCollection('publicacoes')).sort((a, b) => a.data.ordem - b.data.ordem);
+const revistas = todas.filter((x) => x.data.tipo === 'revista');
+const cartilhas = todas.filter((x) => x.data.tipo === 'cartilha');
+type Pub = CollectionEntry<'publicacoes'>;
+const temArquivo = (x: Pub) => x.data.arquivo.trim() !== '';
+---
+<BaseLayout titulo={p.titulo} descricao={p.descricao} ativo="comunicacao">
+    <Hero
+        fundo="royal"
+        trilha={[{ rotulo: 'Início', href: caminho() }, { rotulo: 'Comunicação', href: caminho('comunicacao/') }, { rotulo: p.hero.titulo }]}
+        titulo={p.hero.titulo}
+        texto={p.hero.texto}
+    />
+    {[
+        { id: 'revistas', secao: p.revistas, itens: revistas, classe: 'publicacoes-lista secao--clara-sem-borda' },
+        { id: 'cartilhas', secao: p.cartilhas, itens: cartilhas, classe: 'publicacoes-lista' },
+    ].map(({ id, secao, itens, classe }) => (
+        <Carrossel id={id} titulo={secao.titulo} texto={secao.texto} classe={classe}>
+            {itens.map((x) => {
+                const Tag = temArquivo(x) ? 'a' : 'div';
+                return (
+                    <li>
+                        <Tag class="card-publicacao" {...(temArquivo(x) ? attrs(x.data.arquivo) : {})}>
+                            <Picture src={x.data.capa} alt={x.data.capaAlt} formats={['avif', 'webp']} fallbackFormat="jpg" widths={[354, 708]} sizes="354px" loading="lazy" />
+                            <p class="card-publicacao__titulo">{x.data.titulo}{temArquivo(x) && <span class="sr-only"> (abrir PDF)</span>}</p>
+                        </Tag>
+                    </li>
+                );
+            })}
+        </Carrossel>
+    ))}
+</BaseLayout>

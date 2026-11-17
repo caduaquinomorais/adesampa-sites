@@ -1,0 +1,32 @@
+# Cards de "Destaques e oportunidades" (carrossel do Início). Textos do Figma.
+# programa: empreende | tech | games | verde | criativa (define as cores da etiqueta e do botão)
+# botao.link: '' = pendente; https://…; ou caminho deste site sem barra inicial (ex.: 'comunicacao/').
+- id: vai-tec
+  ordem: 1
+  programa: tech
+  etiqueta: 'Sampa Tech'
+  titulo: 'Aceleração Vai Tec: edital aberto'
+  # PENDÊNCIA: o Figma traz "xx de janeiro" — confirmar a data antes de publicar em produção.
+  texto: 'O programa oferece aporte financeiro de R$ 52 mil, mentorias e oficinas. Inscrições abertas até xx de janeiro.'
+  botao: { texto: 'Inscreva-se agora!', link: '' } # TODO-LINK
+- id: game-dev
+  ordem: 2
+  programa: games
+  etiqueta: 'Sampa Games'
+  titulo: 'Curso de game dev: inscrições abertas'
+  texto: 'Confira os detalhes sobre o curso que tem formado centenas de desenvolvedores de jogos em São Paulo.'
+  botao: { texto: 'Acesse a página do programa', link: '' } # TODO-LINK
+- id: gestao-de-negocios
+  ordem: 3
+  programa: empreende
+  etiqueta: 'Sampa Empreende'
+  titulo: 'Curso de gestão de negócios: inscrições abertas'
+  texto: 'Confira os detalhes sobre o curso de empreendedorismo do Sampa Empreende.'
+  botao: { texto: 'Acesse a página do programa', link: '' } # TODO-LINK
+- id: economia-circular
+  ordem: 4
+  programa: verde
+  etiqueta: 'Sampa Verde'
+  titulo: "Hub de inovação:\nseminário de economia circular"
+  texto: 'Inscreva-se no seminário de economia circular que acontecerá neste mês.'
+  botao: { texto: 'Acesse a página do evento', link: '' } # TODO-LINK

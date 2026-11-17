@@ -1,0 +1,138 @@
+---
+/* Início — Figma: frame "Início" (1:2884). Textos: src/content/paginas/inicio.md e destaques.yaml. */
+import { getEntry, getCollection } from 'astro:content';
+import { Picture } from 'astro:assets';
+import BaseLayout from '@adesampa/ui/BaseLayout.astro';
+import Botao from '../components/Botao.astro';
+import Eixos from '../components/Eixos.astro';
+import Carrossel from '../components/Carrossel.astro';
+import Galeria from '../components/Galeria.astro';
+import { attrs } from '../lib/conteudo';
+import bannerFundo from '../assets/fotos/banner-fundo.jpg';
+import setaLink from '../assets/icones/seta-link.svg?url';
+import sampaEnsina from '../assets/produtos/sampa-ensina.svg?url';
+import gestaoSampa from '../assets/produtos/gestao-sampa.svg?url';
+import dataSampa from '../assets/produtos/data-sampa.svg?url';
+import '../styles/site.css';
+
+const entrada = await getEntry('inicio', 'inicio');
+if (!entrada) throw new Error('Falta src/content/paginas/inicio.md');
+const p = entrada.data;
+const destaques = (await getCollection('destaques')).sort((a, b) => a.data.ordem - b.data.ordem);
+const ICONES_PRODUTOS = { 'sampa-ensina': sampaEnsina, 'gestao-sampa': gestaoSampa, 'data-sampa': dataSampa };
+---
+<BaseLayout titulo={p.titulo} descricao={p.descricao} ativo="home">
+    <section class="banner" aria-labelledby="titulo-pagina">
+        <div class="banner__fundo" aria-hidden="true">
+            <Picture src={bannerFundo} alt="" formats={['avif', 'webp']} fallbackFormat="jpg" widths={[768, 1440, 2880]} sizes="100vw" loading="eager" fetchpriority="high" />
+        </div>
+        <div class="container banner__inner">
+            <div class="banner__textos">
+                <h1 id="titulo-pagina" class="h-display banner__titulo quebras">{p.banner.titulo}</h1>
+                <p class="texto-1 banner__texto">{p.banner.texto}</p>
+            </div>
+            <Botao texto={p.banner.botao.texto} link={p.banner.botao.link} />
+        </div>
+    </section>
+
+    <Eixos titulo={p.eixos.titulo} texto={p.eixos.texto} fundo="clara" />
+
+    <Carrossel id="destaques" titulo={p.destaques.titulo} esmaecido classe="destaques">
+        {destaques.map((d) => (
+            <li>
+                <article class="card-destaque">
+                    <div class="card-destaque__textos">
+                        <span class:list={['etiqueta', `etiqueta--${d.data.programa}`]}>{d.data.etiqueta}</span>
+                        <h3 class="h-card quebras">{d.data.titulo}</h3>
+                        <p class="texto-1">{d.data.texto}</p>
+                    </div>
+                    <Botao texto={d.data.botao.texto} link={d.data.botao.link} variante={d.data.programa} largo />
+                </article>
+            </li>
+        ))}
+    </Carrossel>
+
+    <section class="secao secao--escura numeros" aria-labelledby="titulo-numeros">
+        <div class="container">
+            <div class="numeros__cabecalho">
+                <h2 id="titulo-numeros" class="h-secao">{p.numeros.titulo}</h2>
+                {p.numeros.texto && <p class="texto-1">{p.numeros.texto}</p>}
+            </div>
+            <hr class="divisor divisor--escuro">
+            <ul class="numeros__lista">
+                {p.numeros.itens.map((n) => (
+                    <li class="numeros__item">
+                        <span class="numeros__valor">{n.valor}</span>
+                        <span class="numeros__texto quebras">{n.texto}</span>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    </section>
+
+    <section class="secao secao--clara teia" aria-labelledby="titulo-teia">
+        <div class="container duas-colunas">
+            <div class="coluna-texto">
+                <div class="coluna-texto__bloco">
+                    <span class="etiqueta">{p.teia.etiqueta}</span>
+                    <h2 id="titulo-teia" class="h-secao">{p.teia.titulo}</h2>
+                    <p class="texto-1">{p.teia.texto}</p>
+                </div>
+                <div class="grupo-botoes">
+                    <Botao texto={p.teia.botaoSecundario.texto} link={p.teia.botaoSecundario.link} variante="contorno" />
+                    <Botao texto={p.teia.botaoPrincipal.texto} link={p.teia.botaoPrincipal.link} />
+                </div>
+            </div>
+            <div class="teia__mapa">
+                <a {...attrs(p.teia.mapaLink)}>
+                    <Picture src={p.teia.mapa} alt={p.teia.mapaAlt} formats={['avif', 'webp']} fallbackFormat="jpg" widths={[542, 1084]} sizes="(max-width: 1023px) 100vw, 542px" loading="lazy" />
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="secao secao--escura produtos" aria-labelledby="titulo-produtos">
+        <div class="container">
+            <div class="cabecalho-centro">
+                <span class="etiqueta etiqueta--solida">{p.produtos.etiqueta}</span>
+                <h2 id="titulo-produtos" class="h-secao">{p.produtos.titulo}</h2>
+                {p.produtos.texto && <p class="texto-1 quebras">{p.produtos.texto}</p>}
+            </div>
+            <ul class="produtos__lista">
+                {p.produtos.itens.map((item) => (
+                    <li>
+                        <article class="card-produto">
+                            <img class="icone" src={ICONES_PRODUTOS[item.id]} alt="" width="64" height="64" loading="lazy">
+                            <h3 class="h-card">{item.nome}</h3>
+                            <p class="texto-2">{item.texto}</p>
+                            <a class="link-seta" {...attrs(item.link)}>{p.produtos.textoLink}<span class="sr-only">: {item.nome}</span><img src={setaLink} alt="" width="9" height="9"></a>
+                        </article>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    </section>
+
+    <section class="secao praca" aria-labelledby="titulo-praca">
+        <div class="container duas-colunas">
+            <div class="coluna-texto">
+                <div class="coluna-texto__bloco">
+                    <span class="etiqueta etiqueta--verde-solida">{p.praca.etiqueta}</span>
+                    <h2 id="titulo-praca" class="praca__titulo">{p.praca.titulo}</h2>
+                    <p class="texto-1 praca__texto">{p.praca.texto}</p>
+                </div>
+                <div class="praca__info">
+                    <hr>
+                    <dl class="praca__colunas">
+                        <div><dt>{p.praca.funcionamento.titulo}</dt><dd>{p.praca.funcionamento.texto}</dd></div>
+                        <div><dt>{p.praca.localizacao.titulo}</dt><dd>{p.praca.localizacao.texto}</dd></div>
+                    </dl>
+                </div>
+                <Botao texto={p.praca.botao.texto} link={p.praca.botao.link} variante="branco" />
+            </div>
+            <div class="praca__galeria">
+                <Galeria fotos={p.praca.fotos} rotulo={`Fotos: ${p.praca.titulo}`} larguras={[543, 1086]} sizes="(max-width: 1023px) 100vw, 543px" />
+            </div>
+        </div>
+    </section>
+</BaseLayout>

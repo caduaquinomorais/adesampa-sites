@@ -1,0 +1,54 @@
+{
+  "_comentario": "Geometria do Figma (arquivo r1NdYceMw9ocdyDDrVQUGW) a 1440 px, extraída pela API em 17/11/2026. y = topo da seção na página (o cabeçalho ocupa 0–68/69). altura null = depende do conteúdo (ex.: quantidade de notícias) e só a diferença de pixels é medida.",
+  "paginas": [
+    {
+      "nome": "inicio", "url": "", "referencia": "inicio-1440.png", "frame": "1:2884",
+      "secoes": [
+        { "nome": "banner", "seletor": "main > section:nth-of-type(1)", "y": 68, "altura": 592 },
+        { "nome": "eixos", "seletor": "main > section:nth-of-type(2)", "y": 660, "altura": 529 },
+        { "nome": "destaques", "seletor": "main > section:nth-of-type(3)", "y": 1189, "altura": 604 },
+        { "nome": "numeros", "seletor": "main > section:nth-of-type(4)", "y": 1793, "altura": 594 },
+        { "nome": "teia", "seletor": "main > section:nth-of-type(5)", "y": 2387, "altura": 513 },
+        { "nome": "produtos", "seletor": "main > section:nth-of-type(6)", "y": 2900, "altura": 639 },
+        { "nome": "praca", "seletor": "main > section:nth-of-type(7)", "y": 3539, "altura": 530 },
+        { "nome": "rodape", "seletor": ".site-footer", "y": 4069, "altura": 679 }
+      ]
+    },
+    {
+      "nome": "sobre", "url": "sobre/", "referencia": "sobre-1440.png", "frame": "306:4533",
+      "secoes": [
+        { "nome": "hero", "seletor": "main > section:nth-of-type(1)", "y": 69, "altura": 519 },
+        { "nome": "quem-somos", "seletor": "main > section:nth-of-type(2)", "y": 588, "altura": 445 },
+        { "nome": "como-operamos", "seletor": "main > section:nth-of-type(3)", "y": 1033, "altura": 395 },
+        { "nome": "eixos", "seletor": "main > section:nth-of-type(4)", "y": 1428, "altura": 529 },
+        { "nome": "pilares", "seletor": "main > section:nth-of-type(5)", "y": 1957, "altura": 584 }
+      ]
+    },
+    {
+      "nome": "comunicacao", "url": "comunicacao/", "referencia": "comunicacao-1440.png", "frame": "264:3552",
+      "secoes": [
+        { "nome": "hero", "seletor": "main > section:nth-of-type(1)", "y": 68, "altura": 422 },
+        { "nome": "noticias", "seletor": "#noticias", "y": 490, "altura": null },
+        { "nome": "publicacoes", "seletor": "#publicacoes", "y": 1510, "altura": 503 },
+        { "nome": "manual-de-marca", "seletor": "#manual-de-marca", "y": 2013, "altura": 576 },
+        { "nome": "manual-de-redacao", "seletor": "#manual-de-redacao", "y": 2589, "altura": 377 },
+        { "nome": "contato", "seletor": "#contato", "y": 2966, "altura": 554 }
+      ]
+    },
+    {
+      "nome": "noticia", "url": "comunicacao/noticias/mais-mulheres-terceira-edicao/", "referencia": "noticia-1440.png", "frame": "574:43625",
+      "secoes": [
+        { "nome": "hero", "seletor": "main > section:nth-of-type(1)", "y": 68, "altura": 360 },
+        { "nome": "cabecalho-da-noticia", "seletor": ".artigo__cabecalho", "y": 492, "altura": 208 }
+      ]
+    },
+    {
+      "nome": "publicacoes", "url": "comunicacao/publicacoes/", "referencia": "publicacoes-1440.png", "frame": "654:15568",
+      "secoes": [
+        { "nome": "hero", "seletor": "main > section:nth-of-type(1)", "y": 68, "altura": 360 },
+        { "nome": "revistas", "seletor": "main > section:nth-of-type(2)", "y": 428, "altura": 810 },
+        { "nome": "cartilhas", "seletor": "main > section:nth-of-type(3)", "y": 1238, "altura": 810 }
+      ]
+    }
+  ]
+}

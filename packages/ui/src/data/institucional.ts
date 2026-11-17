@@ -139,13 +139,13 @@ export interface Cabecalho {
 }
 
 export const CABECALHO: Cabecalho = congelar({
-  logoLink: '', // TODO-LINK: Home institucional
+  logoLink: pagina('home'),
   logoRotulo: 'ADE SAMPA — página inicial',
   menu: [
-    { chave: 'home', rotulo: 'Home', link: '', seta: false }, // TODO-LINK
-    { chave: 'sobre', rotulo: 'Sobre', link: '', seta: false }, // TODO-LINK
-    { chave: 'programas', rotulo: 'Programas', link: '', seta: true }, // TODO-LINK
-    { chave: 'comunicacao', rotulo: 'Comunicação', link: '', seta: true }, // TODO-LINK
+    { chave: 'home', rotulo: 'Home', link: pagina('home'), seta: false },
+    { chave: 'sobre', rotulo: 'Sobre', link: pagina('home', 'sobre/'), seta: false },
+    { chave: 'programas', rotulo: 'Programas', link: '', seta: true }, // TODO-LINK (menu suspenso dos programas ainda não desenhado)
+    { chave: 'comunicacao', rotulo: 'Comunicação', link: pagina('home', 'comunicacao/'), seta: true },
     { chave: 'transparencia', rotulo: 'Transparência', link: '', seta: false }, // TODO-LINK
   ],
   botaoTexto: 'Agendamentos',
@@ -181,7 +181,7 @@ export interface Rodape {
 }
 
 export const RODAPE: Rodape = congelar({
-  logoLink: '', // TODO-LINK: Home institucional
+  logoLink: pagina('home'),
   texto:
     'Entidade vinculada à Prefeitura de São Paulo, por meio da Secretaria Municipal de Desenvolvimento Econômico e Trabalho (SMDET), dedicada à aceleração de negócios, inclusão produtiva e redução das desigualdades regionais.',
   redesTitulo: 'Redes sociais',
@@ -192,9 +192,9 @@ export const RODAPE: Rodape = congelar({
     { rede: 'youtube', nome: 'YouTube', link: '' }, // TODO-LINK
     { rede: 'facebook', nome: 'Facebook', link: '' }, // TODO-LINK
   ],
-  /** Colunas do mapa do site (todas TODO-LINK). Textos copiados exatamente do Figma. */
+  /** Colunas do mapa do site (links vazios = TODO-LINK). Textos copiados exatamente do Figma. */
   colunas: [
-    { titulo: 'ADE SAMPA', cor: 'empreende', links: [link('Início'), link('Sobre nós'), link('Transparência')] },
+    { titulo: 'ADE SAMPA', cor: 'empreende', links: [link('Início', pagina('home')), link('Sobre nós', pagina('home', 'sobre/')), link('Transparência')] },
     {
       titulo: 'Sampa Empreende',
       cor: 'empreende',
@@ -229,7 +229,7 @@ export const RODAPE: Rodape = congelar({
       titulo: 'Outros programas',
       cor: 'empreende',
       links: [
-        link('Teia: coworkings e estúdios públicos'),
+        link('Teia: coworkings e estúdios públicos', 'https://oranilom.com.br/teia/'),
         link('Sampa Ensina'),
         link('Gestão Sampa'),
         link('Data Sampa'),
@@ -240,11 +240,11 @@ export const RODAPE: Rodape = congelar({
       titulo: 'Comunicação',
       cor: 'empreende',
       links: [
-        link('Notícias'),
-        link('Publicações'),
-        link('Manual de marca'),
-        link('Manual de redação'),
-        link('Contato'),
+        link('Notícias', pagina('home', 'comunicacao/noticias/')),
+        link('Publicações', pagina('home', 'comunicacao/publicacoes/')),
+        link('Manual de marca', pagina('home', 'comunicacao/#manual-de-marca')),
+        link('Manual de redação', pagina('home', 'comunicacao/#manual-de-redacao')),
+        link('Contato', pagina('home', 'comunicacao/#contato')),
       ],
     },
   ],

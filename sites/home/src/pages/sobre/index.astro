@@ -1,0 +1,61 @@
+---
+/* Sobre — Figma: frame "Sobre" (306:4533). Textos: src/content/paginas/sobre.md. */
+import { getEntry } from 'astro:content';
+import BaseLayout from '@adesampa/ui/BaseLayout.astro';
+import { caminho } from '@adesampa/ui/caminhos';
+import Hero from '../../components/Hero.astro';
+import Eixos from '../../components/Eixos.astro';
+import { paragrafos } from '../../lib/conteudo';
+import iconeProposito from '../../assets/icones/pilar-proposito.svg?url';
+import iconeGovernamental from '../../assets/icones/pilar-governamental.svg?url';
+import iconeEmpreendedor from '../../assets/icones/pilar-empreendedor.svg?url';
+import '../../styles/site.css';
+
+const entrada = await getEntry('sobre', 'sobre');
+if (!entrada) throw new Error('Falta src/content/paginas/sobre.md');
+const p = entrada.data;
+const ICONES = { governamental: iconeGovernamental, empreendedor: iconeEmpreendedor };
+---
+<BaseLayout titulo={p.titulo} descricao={p.descricao} ativo="sobre">
+    <Hero trilha={[{ rotulo: 'Início', href: caminho() }, { rotulo: 'Sobre' }]} etiqueta={p.hero.etiqueta} titulo={p.hero.titulo} texto={p.hero.texto} formas />
+
+    <section class="secao secao--64 bloco-texto bloco-texto--claro" aria-labelledby="titulo-quem-somos">
+        <div class="container">
+            <h2 id="titulo-quem-somos" class="h-secao">{p.quemSomos.titulo}</h2>
+            <div class="texto-1 paragrafos">{paragrafos(p.quemSomos.texto).map((t) => <p>{t}</p>)}</div>
+        </div>
+    </section>
+
+    <section class="secao secao--64 secao--royal bloco-texto" aria-labelledby="titulo-como-operamos">
+        <div class="container">
+            <h2 id="titulo-como-operamos" class="h-secao">{p.comoOperamos.titulo}</h2>
+            <div class="texto-1 paragrafos">{paragrafos(p.comoOperamos.texto).map((t) => <p>{t}</p>)}</div>
+        </div>
+    </section>
+
+    <Eixos titulo={p.eixos.titulo} texto={p.eixos.texto} fundo="branca" />
+
+    <section class="secao secao--64 secao--clara pilares" aria-labelledby="titulo-pilares">
+        <div class="container">
+            <h2 id="titulo-pilares" class="h-secao">{p.pilares.titulo}</h2>
+            <ul class="pilares__lista">
+                <li class="pilar pilar--largo">
+                    <span class="pilar__icone"><img src={iconeProposito} alt="" width="32" height="32"></span>
+                    <div class="pilar__textos">
+                        <h3 class="pilar__titulo">{p.pilares.proposito.titulo}</h3>
+                        <p class="pilar__texto">{p.pilares.proposito.texto}</p>
+                    </div>
+                </li>
+                {p.pilares.itens.map((item) => (
+                    <li class="pilar">
+                        <span class="pilar__icone"><img src={ICONES[item.icone]} alt="" width="32" height="32"></span>
+                        <div class="pilar__textos">
+                            <h3 class="h-5">{item.titulo}</h3>
+                            <p class="texto-1">{item.texto}</p>
+                        </div>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    </section>
+</BaseLayout>

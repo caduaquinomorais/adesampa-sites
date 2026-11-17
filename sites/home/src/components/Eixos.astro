@@ -1,0 +1,39 @@
+---
+/* "Nossos eixos de atuação": os 5 programas (Início e Sobre). Os cards são imagens do Figma. */
+import { attrs } from '../lib/conteudo';
+import empreende from '../assets/eixos/eixo-empreende.svg?url';
+import tech from '../assets/eixos/eixo-tech.svg?url';
+import games from '../assets/eixos/eixo-games.svg?url';
+import verde from '../assets/eixos/eixo-verde.svg?url';
+import criativa from '../assets/eixos/eixo-criativa.svg?url';
+
+interface Props {
+  titulo: string;
+  texto?: string;
+  fundo?: 'clara' | 'branca';
+}
+const { titulo, texto, fundo = 'clara' } = Astro.props;
+
+// Quando os sites dos programas existirem, troque '' por resolverDestino(pagina('empreende'), …)
+// ou pelo endereço https:// do site (ver docs/NOVO_SITE.md).
+const EIXOS = [
+  { nome: 'Sampa Empreende', img: empreende, link: '' }, // TODO-LINK: site Sampa Empreende
+  { nome: 'Sampa Tech', img: tech, link: '' }, // TODO-LINK
+  { nome: 'Sampa Games', img: games, link: '' }, // TODO-LINK
+  { nome: 'Sampa Verde', img: verde, link: '' }, // TODO-LINK
+  { nome: 'Sampa Criativa', img: criativa, link: '' }, // TODO-LINK
+];
+---
+<section class:list={['secao eixos', fundo === 'clara' ? 'secao--clara' : 'secao--branca-borda']} aria-labelledby="titulo-eixos">
+    <div class="container">
+        <div class="cabecalho-centro">
+            <h2 id="titulo-eixos" class="h-secao">{titulo}</h2>
+            {texto && <p class="texto-1 quebras">{texto}</p>}
+        </div>
+        <ul class="eixos__lista">
+            {EIXOS.map((e) => (
+                <li><a {...attrs(e.link)}><img src={e.img} alt={e.nome} width="206" height="234" loading="lazy"></a></li>
+            ))}
+        </ul>
+    </div>
+</section>

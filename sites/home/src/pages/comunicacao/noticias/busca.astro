@@ -1,0 +1,32 @@
+---
+/* Resultado da busca de notícias. Os resultados são montados no navegador (scripts/busca.ts). */
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '@adesampa/ui/BaseLayout.astro';
+import { caminho } from '@adesampa/ui/caminhos';
+import Hero from '../../../components/Hero.astro';
+import FiltrosNoticias from '../../../components/FiltrosNoticias.astro';
+import '../../../styles/site.css';
+
+const entrada = await getEntry('comunicacao', 'comunicacao');
+if (!entrada) throw new Error('Falta src/content/paginas/comunicacao.md');
+const p = entrada.data;
+const categorias = (await getCollection('categorias')).map((c) => ({ id: c.id, nome: c.data.nome }));
+---
+<BaseLayout titulo="Pesquisar notícias" descricao={p.paginaNoticias.texto} ativo="comunicacao" semIndexacao>
+    <Hero
+        fundo="royal"
+        trilha={[{ rotulo: 'Início', href: caminho() }, { rotulo: 'Comunicação', href: caminho('comunicacao/') }, { rotulo: p.paginaNoticias.titulo, href: caminho('comunicacao/noticias/') }, { rotulo: 'Pesquisa' }]}
+        titulo="Pesquisar notícias"
+        texto={p.paginaNoticias.texto}
+    />
+    <section class="secao secao--64 secao--branca-borda noticias-secao" aria-label="Resultados da pesquisa" data-busca data-indice={caminho('comunicacao/noticias/busca.json')} data-botao={p.noticias.textoBotao}>
+        <div class="container">
+            <FiltrosNoticias categorias={categorias} atual="-" rotuloBusca={p.noticias.rotuloBusca} />
+            <p class="texto-1 sem-noticias" role="status" data-status>A pesquisa precisa de JavaScript. Use os filtros por categoria acima.</p>
+            <ul class="grade-noticias" data-resultados></ul>
+        </div>
+    </section>
+</BaseLayout>
+<script>
+    import '../../../scripts/busca';
+</script>

@@ -1,0 +1,66 @@
+---
+/*
+ * Listas de notícias (estáticas, funcionam sem JavaScript):
+ *   /comunicacao/noticias/                                   todas, página 1
+ *   /comunicacao/noticias/pagina/2/                          todas, página 2…
+ *   /comunicacao/noticias/categoria/<id>/                    uma categoria
+ *   /comunicacao/noticias/categoria/<id>/pagina/2/
+ * Cabeçalho igual ao do Figma "Exemplo de notícia" (Notícias, fundo #042F80).
+ */
+import type { GetStaticPaths } from 'astro';
+import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
+import BaseLayout from '@adesampa/ui/BaseLayout.astro';
+import { caminho } from '@adesampa/ui/caminhos';
+import Hero from '../../../components/Hero.astro';
+import CardNoticia from '../../../components/CardNoticia.astro';
+import FiltrosNoticias from '../../../components/FiltrosNoticias.astro';
+import Paginacao from '../../../components/Paginacao.astro';
+import { noticiasPublicadas, NOTICIAS_POR_PAGINA, totalPaginas, urlLista } from '../../../lib/conteudo';
+import '../../../styles/site.css';
+
+export const getStaticPaths = (async () => {
+  const todas = await noticiasPublicadas();
+  const categorias = await getCollection('categorias');
+  const grupos: { categoria: string; noticias: CollectionEntry<'noticias'>[] }[] = [
+    { categoria: '', noticias: todas },
+    ...categorias.map((c) => ({ categoria: c.id, noticias: todas.filter((n) => n.data.categoria.id === c.id) })),
+  ];
+  return grupos.flatMap(({ categoria, noticias }) => {
+    const total = totalPaginas(noticias.length);
+    return Array.from({ length: total }, (_, i) => {
+      const pagina = i + 1;
+      const partes = [categoria && `categoria/${categoria}`, pagina > 1 && `pagina/${pagina}`].filter(Boolean);
+      return {
+        params: { lista: partes.length ? partes.join('/') : undefined },
+        props: { categoria, pagina, total, noticias: noticias.slice(i * NOTICIAS_POR_PAGINA, pagina * NOTICIAS_POR_PAGINA) },
+      };
+    });
+  });
+}) satisfies GetStaticPaths;
+
+const { categoria, pagina, total, noticias } = Astro.props;
+const entrada = await getEntry('comunicacao', 'comunicacao');
+if (!entrada) throw new Error('Falta src/content/paginas/comunicacao.md');
+const p = entrada.data;
+const categorias = (await getCollection('categorias')).map((c) => ({ id: c.id, nome: c.data.nome }));
+const nomeCategoria = new Map(categorias.map((c) => [c.id, c.nome]));
+const nomeAtual = categoria ? nomeCategoria.get(categoria) : undefined;
+const titulo = [p.paginaNoticias.titulo, nomeAtual, pagina > 1 ? `página ${pagina}` : ''].filter(Boolean).join(' – ');
+---
+<BaseLayout titulo={titulo} descricao={p.paginaNoticias.texto} ativo="comunicacao">
+    <Hero
+        fundo="royal"
+        trilha={[{ rotulo: 'Início', href: caminho() }, { rotulo: 'Comunicação', href: caminho('comunicacao/') }, { rotulo: p.paginaNoticias.titulo }]}
+        titulo={p.paginaNoticias.titulo}
+        texto={p.paginaNoticias.texto}
+    />
+    <section class="secao secao--64 secao--branca-borda noticias-secao" aria-label={nomeAtual ? `Notícias: ${nomeAtual}` : 'Todas as notícias'}>
+        <div class="container">
+            <FiltrosNoticias categorias={categorias} atual={categoria} rotuloBusca={p.noticias.rotuloBusca} />
+            {noticias.length > 0
+                ? <ul class="grade-noticias">{noticias.map((n) => <li><CardNoticia noticia={n} categoria={nomeCategoria.get(n.data.categoria.id) ?? ''} textoBotao={p.noticias.textoBotao} nivel="h2" /></li>)}</ul>
+                : <p class="sem-noticias texto-1">Nenhuma notícia nesta categoria por enquanto.</p>}
+            <Paginacao atual={pagina} total={total} urls={Array.from({ length: total }, (_, i) => urlLista(i + 1, categoria || undefined))} />
+        </div>
+    </section>
+</BaseLayout>

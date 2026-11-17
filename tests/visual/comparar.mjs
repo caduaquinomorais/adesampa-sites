@@ -45,7 +45,7 @@ const MEDIR = `(() => {
   return { header: um('.site-header'), submenu: um('.submenu'), footer: um('.site-footer'), geo };
 })()`;
 
-// Correções intencionais C-1 e C-2 (docs/HEADER_FOOTER.md) aplicadas também à referência, para que a
+// Correções intencionais C-1, C-2 e C-3 (docs/HEADER_FOOTER.md) aplicadas também à referência, para que a
 // comparação continue exata no resto. Sem isso, a referência mostra "Agendamentos" escuro, os links do
 // rodapé brancos (contraste D-12 perdido) e o menu na cor do <body>.
 // (Seletores com 2 classes: precisam vencer a regra ":is(...) a" da referência, de especificidade 0,1,1.)
@@ -53,9 +53,25 @@ const CORRECOES_REF = `.site-header { color: #262930; }
 .site-header .site-header__link { color: #262930; } .site-header .site-header__link[href]:hover { color: #1158D4; }
 .site-header .site-header__cta { color: #FFFFFF; }
 .submenu .submenu__link { color: #3A3E4A; } .submenu .submenu__link[href]:hover { color: #14171F; }
-.site-footer .site-footer__link { color: rgba(207, 230, 255, 0.6); } .site-footer .site-footer__link[href]:hover { color: #FFFFFF; }`;
+.site-footer .site-footer__link { color: rgba(207, 230, 255, 0.6); } .site-footer .site-footer__link[href]:hover { color: #FFFFFF; }
+@media (max-width: 1023px) { .site-footer .site-footer__link { min-height: 44px; min-width: 44px; } .site-footer .site-footer__links { gap: 0; } }`;
 const INJETAR_CORRECOES = `(() => { const s = document.createElement('style'); s.textContent = ${JSON.stringify(CORRECOES_REF)}; document.head.append(s); return new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => r(true)))); })()`;
-const carregarRef = async (largura) => { await carregar(cdp, urlRef, largura); await cdp.avaliar(INJETAR_CORRECOES); };
+// Isola o cabeçalho e o rodapé: esconde o <main> (o conteúdo de cada site tem outra altura, e posições
+// fracionadas mudam a suavização das letras) e, no site, põe o item ativo igual ao da referência
+// ("Programas") — o item ativo é a única variação permitida entre os sites.
+const IGUALAR_ATIVO = `document.querySelectorAll('.site-header__item').forEach((li, i) => {
+  li.classList.toggle('is-active', i === 2);
+  li.querySelector('a').toggleAttribute('aria-current', i === 2);
+});`;
+// esconderSubmenu: quando o site não tem submenu, a referência também fica sem (o painel do menu mobile
+// aberto passa por cima do submenu, que rola na horizontal e muda a composição/suavização do texto).
+const ISOLAR = (igualarAtivo, esconderSubmenu = false) => `(() => {
+  const s = document.createElement('style'); s.textContent = 'main { display: none !important; }' + (${esconderSubmenu} ? ' .submenu { display: none !important; }' : ''); document.head.append(s);
+  ${igualarAtivo ? IGUALAR_ATIVO : ''}
+  return new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => r(true))));
+})()`;
+const carregarRef = async (largura) => { await carregar(cdp, urlRef, largura); await cdp.avaliar(INJETAR_CORRECOES); await cdp.avaliar(ISOLAR(false, !comSubmenu)); };
+const carregarSite = async (largura) => { await carregar(cdp, urlSite, largura); await cdp.avaliar(ISOLAR(true)); };
 
 // Imagens do topo/rodapé que não carregaram (404, SVG inválido…). Com width/height fixos, uma imagem
 // quebrada ocupa a mesma caixa: só esta verificação a pega com certeza.
@@ -167,7 +183,7 @@ async function acessibilidade(cdp, url, largura) {
 
   // Sem JavaScript: o menu aparece aberto (classe no-js).
   await cdp.enviar('Emulation.setScriptExecutionDisabled', { value: true });
-  await carregar(cdp, url, largura);
+  await carregar(cdp, url, largura, 900, { simples: true });
   const semJs = await cdp.avaliar(`getComputedStyle(document.getElementById('menu-principal')).display !== 'none' && document.documentElement.classList.contains('no-js')`);
   await cdp.enviar('Emulation.setScriptExecutionDisabled', { value: false });
   if (!semJs) falhar(`${largura}px: sem JavaScript o menu não fica visível`);
@@ -189,7 +205,7 @@ try {
     await carregarRef(largura);
     const mRef = await cdp.avaliar(MEDIR); const imgRef = decodePng(await capturar(cdp));
     const quebradasRef = await cdp.avaliar(IMAGENS_QUEBRADAS);
-    await carregar(cdp, urlSite, largura);
+    await carregarSite(largura);
     const mSite = await cdp.avaliar(MEDIR); const imgSite = decodePng(await capturar(cdp));
     const quebradasSite = await cdp.avaliar(IMAGENS_QUEBRADAS);
     if (quebradasRef.length) falhar(`${largura}px: imagens que não carregaram na REFERÊNCIA: ${quebradasRef.join(', ')}`);
@@ -233,7 +249,7 @@ try {
     if (largura < 1024) {
       const abrirMenu = `(() => { document.querySelector('.site-header__toggle').click(); const n = document.getElementById('menu-principal').getBoundingClientRect(); return Math.ceil(n.bottom + scrollY); })()`;
       await carregarRef(largura); const fimRef = await cdp.avaliar(abrirMenu); await sleep(80); const aRef = decodePng(await capturar(cdp));
-      await carregar(cdp, urlSite, largura); const fimSite = await cdp.avaliar(abrirMenu); await sleep(80); const aSite = decodePng(await capturar(cdp));
+      await carregarSite(largura); const fimSite = await cdp.avaliar(abrirMenu); await sleep(80); const aSite = decodePng(await capturar(cdp));
       const c = salvarTrio(`${largura}-menu-aberto`, recortar(aRef, 0, 0, largura, fimRef), recortar(aSite, 0, 0, largura, fimSite));
       linha.regioes['menu-aberto'] = { porcentagem: +c.porcentagem.toFixed(3), arquivo: `${largura}-menu-aberto.png` };
       if (fimRef !== fimSite) falhar(`${largura}px menu aberto: altura ${fimRef}px × ${fimSite}px`);

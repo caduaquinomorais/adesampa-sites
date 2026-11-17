@@ -1,0 +1,35 @@
+---
+/*
+ * Cabeçalho das páginas internas (Sobre, Comunicação, Notícias, Publicações).
+ * fundo: 'marinho' (#001B4D, Sobre/Comunicação) ou 'royal' (#042F80, Notícias/Publicações).
+ * tituloNivel: 'h1' na maioria; 'p' na notícia (lá o h1 é o título da notícia).
+ */
+import Breadcrumb from './Breadcrumb.astro';
+import urlFormas from '../assets/icones/formas-sobre.svg?url';
+
+interface Props {
+  trilha: { rotulo: string; href?: string }[];
+  titulo: string;
+  texto: string;
+  etiqueta?: string;
+  fundo?: 'marinho' | 'royal';
+  formas?: boolean;
+  tituloNivel?: 'h1' | 'p';
+}
+
+const { trilha, titulo, texto, etiqueta, fundo = 'marinho', formas = false, tituloNivel = 'h1' } = Astro.props;
+const Titulo = tituloNivel;
+---
+<section class:list={['hero', { 'hero--royal': fundo === 'royal' }]} aria-labelledby={tituloNivel === 'h1' ? 'titulo-pagina' : undefined}>
+    {formas && (
+        <img class="hero__formas" src={urlFormas} aria-hidden="true" alt="" width="204" height="519">
+    )}
+    <div class="container hero__inner">
+        <Breadcrumb itens={trilha} />
+        <div class="hero__conteudo">
+            {etiqueta && <span class="etiqueta etiqueta--solida">{etiqueta}</span>}
+            <Titulo id={tituloNivel === 'h1' ? 'titulo-pagina' : undefined} class="h-display quebras">{titulo}</Titulo>
+            <p class="texto-1 hero__texto quebras">{texto}</p>
+        </div>
+    </div>
+</section>

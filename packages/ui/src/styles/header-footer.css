@@ -4,7 +4,8 @@
    - C-1: ":is(...) a { color: inherit }" virou ":where(...)". Com :is, a regra vencia
      .site-header__cta (texto branco), .site-header__link (#262930) e .site-footer__link
      (60%, decisão D-12 de contraste), que herdavam a cor da página. Agora vale o Figma/TEIA;
-   - C-2: .site-header define a própria cor de texto (o botão "Menu" não depende mais da página).
+   - C-2: .site-header define a própria cor de texto (o botão "Menu" não depende mais da página);
+   - C-3: abaixo de 1024 px, links do rodapé com alvo de toque de 44 × 44 px (eram 32 px de altura).
    Se mudar algo aqui, os 7 sites mudam juntos. */
 
 /* ==========================================================================
@@ -267,7 +268,9 @@
     .site-footer__col { width: calc((100% - 2 * 10px) / 3); }
     .social-btn { width: 44px; height: 44px; }
     .site-footer__logo { display: inline-flex; align-items: center; min-height: 44px; }
-    .site-footer__link { display: inline-flex; align-items: center; min-height: 32px; }
+    /* C-3: alvo de toque de 44 × 44 px (na referência: 32 px de altura, sem largura mínima). */
+    .site-footer__link { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; }
+    .site-footer__links { gap: 0; }
 }
 
 /* Celular: < 768 */

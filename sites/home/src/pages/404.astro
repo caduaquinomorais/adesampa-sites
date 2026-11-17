@@ -1,0 +1,21 @@
+---
+/* Página 404 (Apache: ErrorDocument no .htaccess). Mesmo estilo dos cabeçalhos internos. */
+import BaseLayout from '@adesampa/ui/BaseLayout.astro';
+import { caminho } from '@adesampa/ui/caminhos';
+import Hero from '../components/Hero.astro';
+import Botao from '../components/Botao.astro';
+import '../styles/site.css';
+---
+<BaseLayout titulo="Página não encontrada" semIndexacao>
+    <Hero
+        trilha={[{ rotulo: 'Início', href: caminho() }, { rotulo: 'Erro 404' }]}
+        etiqueta="Erro 404"
+        titulo="Página não encontrada"
+        texto="O endereço pode ter mudado ou não existir mais. Confira se foi digitado corretamente ou volte para a página inicial."
+    />
+    <section class="secao secao--64 erro-404" aria-label="Para onde ir">
+        <div class="container">
+            <Botao texto="Voltar ao início" link={caminho()} />
+        </div>
+    </section>
+</BaseLayout>

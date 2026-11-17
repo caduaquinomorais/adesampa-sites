@@ -1,0 +1,67 @@
+# Publicações: revistas ADE SAMPA News e cartilhas.
+# capa: imagem em src/assets/publicacoes/ (caminho relativo a este arquivo).
+# arquivo: link do PDF (https://… ). Vazio = ainda sem arquivo (o card aparece, mas não vira link).
+# ordem: menor aparece primeiro.
+- id: news-7
+  tipo: revista
+  ordem: 1
+  titulo: '7ª edição'
+  capa: ../assets/publicacoes/ade-sampa-news-7.png
+  capaAlt: 'Capa da revista ADE SAMPA News nº 7: Empreendedorismo — diversidade, inovação e políticas públicas que impulsionam quem faz acontecer.'
+  arquivo: '' # TODO-LINK: PDF
+- id: news-6
+  tipo: revista
+  ordem: 2
+  titulo: '6ª edição'
+  capa: ../assets/publicacoes/ade-sampa-news-6.png
+  capaAlt: 'Capa da revista ADE SAMPA News nº 6: Cadeias produtivas — São Paulo e os novos caminhos da economia sustentável.'
+  arquivo: ''
+- id: news-5
+  tipo: revista
+  ordem: 3
+  titulo: '5ª edição'
+  capa: ../assets/publicacoes/ade-sampa-news-5.png
+  capaAlt: 'Capa da revista ADE SAMPA News nº 5: COP30 e sustentabilidade — economia verde impulsiona negócios e fortalece a inclusão social.'
+  arquivo: ''
+- id: news-4
+  tipo: revista
+  ordem: 4
+  titulo: '4ª edição'
+  capa: ../assets/publicacoes/ade-sampa-news-4.png
+  capaAlt: 'Capa da revista ADE SAMPA News nº 4: Mulheres criam oportunidades e lideram empreendedorismo para o futuro.'
+  arquivo: ''
+- id: news-3
+  tipo: revista
+  ordem: 5
+  titulo: '3ª edição'
+  capa: ../assets/publicacoes/ade-sampa-news-3.png
+  capaAlt: 'Capa da revista ADE SAMPA News nº 3.'
+  arquivo: ''
+- id: news-2
+  tipo: revista
+  ordem: 6
+  titulo: '2ª edição'
+  capa: ../assets/publicacoes/ade-sampa-news-2.png
+  capaAlt: 'Capa da revista ADE SAMPA News nº 2.'
+  arquivo: ''
+- id: news-1
+  tipo: revista
+  ordem: 7
+  titulo: '1ª edição'
+  capa: ../assets/publicacoes/ade-sampa-news-1.png
+  capaAlt: 'Capa da revista ADE SAMPA News nº 1.'
+  arquivo: ''
+- id: cartilha-vitalidade
+  tipo: cartilha
+  ordem: 1
+  titulo: 'Cartilha Vitalidade+'
+  capa: ../assets/publicacoes/cartilha-vitalidade.png
+  capaAlt: 'Capa da Cartilha Vitalidade+ São Paulo: maturidade que impulsiona negócios.'
+  arquivo: ''
+- id: cartilha-ambulante
+  tipo: cartilha
+  ordem: 2
+  titulo: 'Cartilha do Ambulante'
+  capa: ../assets/publicacoes/cartilha-ambulante.png
+  capaAlt: 'Capa da Cartilha do Ambulante, com um vendedor de espetinhos na rua.'
+  arquivo: ''

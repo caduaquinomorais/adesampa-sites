@@ -95,18 +95,30 @@ export async function abrirChrome() {
   };
 }
 
-/** Carrega a URL numa largura, espera fontes e imagens (inclusive as lazy). */
-export async function carregar(cdp, url, largura, altura = 900) {
+/**
+ * Carrega a URL numa largura, espera fontes e imagens (inclusive as lazy).
+ * simples: true = só espera o load (necessário com os scripts desligados, quando timers não rodam).
+ */
+export async function carregar(cdp, url, largura, altura = 900, { simples = false } = {}) {
   await cdp.enviar('Emulation.setDeviceMetricsOverride', { width: largura, height: altura, deviceScaleFactor: 1, mobile: largura < 768 });
   await cdp.enviar('Emulation.setTouchEmulationEnabled', { enabled: largura < 1024 });
   const carregou = cdp.esperar('Page.loadEventFired');
   await cdp.enviar('Page.navigate', { url });
   await carregou;
+  if (simples) return;
   // Rola até o fim e volta: as imagens loading="lazy" do rodapé carregam.
   // (A viewport não é esticada até a altura da página: unidades vh mudariam o layout.)
-  await cdp.avaliar('document.fonts.ready.then(() => { window.scrollTo(0, document.documentElement.scrollHeight); return true; })');
+  // Rola em etapas (como uma pessoa): pular direto para o fim não carrega as imagens do meio.
+  await cdp.avaliar(`document.fonts.ready.then(async () => {
+    for (let y = 0; y < document.documentElement.scrollHeight; y += innerHeight * 0.8) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 40)); }
+    window.scrollTo(0, document.documentElement.scrollHeight); return true;
+  })`);
   await sleep(100);
-  await cdp.avaliar(`Promise.all([document.fonts.ready, ...[...document.images].map((i) => i.complete ? 0 : new Promise((r) => { i.onload = i.onerror = r; }))]).then(() => { window.scrollTo(0, 0); return true; })`);
+  // Imagens lazy fora da tela na horizontal (carrosséis) nunca carregam: limite de 5 s na espera.
+  await cdp.avaliar(`Promise.race([
+    Promise.all([document.fonts.ready, ...[...document.images].map((i) => i.complete ? 0 : new Promise((r) => { i.onload = i.onerror = r; }))]),
+    new Promise((r) => setTimeout(r, 5000)),
+  ]).then(() => { window.scrollTo(0, 0); return true; })`);
   await sleep(150);
 }
 

@@ -1,0 +1,56 @@
+# ADE SAMPA — regras do servidor (Apache, KingHost) para este site.
+# __BASE__ é trocado no build pela pasta do site (ex.: /homolog/ ou /homolog/tech/).
+#
+# ATENÇÃO (KingHost): NUNCA use php_value nem php_flag aqui: causa erro 500.
+# Os cabeçalhos ficam dentro de <IfModule mod_headers.c>: se o módulo não existir, o site
+# continua no ar (sem os cabeçalhos). Conferência no ar: docs/DEPLOY.md.
+
+Options -Indexes -MultiViews
+DirectoryIndex index.html
+AddDefaultCharset UTF-8
+ErrorDocument 404 __BASE__404.html
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # Arquivos e pastas ocultos (.htaccess, .adesampa-site, .ftp-deploy-sync-state.json…) nunca
+    # são servidos. Exceção: /.well-known/ (validação do certificado SSL).
+    RewriteRule (^|/)\.(?!well-known/) - [R=404,L]
+</IfModule>
+
+<IfModule mod_mime.c>
+    AddType font/woff2 .woff2
+    AddType image/svg+xml .svg
+    AddType image/webp .webp
+    AddType image/avif .avif
+    AddType text/javascript .js .mjs
+</IfModule>
+
+<IfModule mod_headers.c>
+    Header always unset X-Powered-By
+
+    # Segurança. CSP sem 'unsafe-inline': o build garante que não há script nem estilo inline.
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; media-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
+    Header always set Strict-Transport-Security "max-age=31536000"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set X-Frame-Options "DENY"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+    Header always set Cross-Origin-Opener-Policy "same-origin"
+
+    # Cache: HTML sempre revalidado (mudanças aparecem na hora); demais arquivos fora de
+    # /_astro/ por 1 dia. /_astro/ (nomes com hash) tem cache de 1 ano em _astro/.htaccess.
+    <FilesMatch "\.html$">
+        Header set Cache-Control "no-cache"
+    </FilesMatch>
+    <FilesMatch "\.(css|js|mjs|woff2|svg|png|jpe?g|webp|avif|gif|ico|pdf)$">
+        Header set Cache-Control "public, max-age=86400" "expr=%{REQUEST_URI} !~ m#/_astro/#"
+    </FilesMatch>
+    # SVG aberto direto no navegador não executa scripts.
+    <FilesMatch "\.svg$">
+        Header always set Content-Security-Policy "default-src 'none'; style-src 'unsafe-inline'; sandbox"
+    </FilesMatch>
+</IfModule>
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript image/svg+xml application/json
+</IfModule>

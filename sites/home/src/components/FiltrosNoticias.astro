@@ -1,0 +1,33 @@
+---
+/*
+ * Filtros por categoria (links para páginas estáticas, funcionam sem JavaScript) e busca.
+ * A busca leva a /comunicacao/noticias/busca/?q=… (precisa de JavaScript; sem ele, fica oculta).
+ */
+import { caminho } from '@adesampa/ui/caminhos';
+import lupa from '../assets/icones/lupa.svg?url';
+import { urlLista } from '../lib/conteudo';
+
+interface Props {
+  categorias: { id: string; nome: string }[];
+  /** id da categoria atual; '' = Todos. */
+  atual: string;
+  rotuloBusca: string;
+  valorBusca?: string;
+}
+const { categorias, atual, rotuloBusca, valorBusca = '' } = Astro.props;
+---
+<div class="filtros">
+    <nav aria-label="Filtrar notícias por categoria">
+        <ul class="filtros__categorias">
+            <li><a class="chip" href={urlLista()} aria-current={atual === '' ? 'page' : undefined}>Todos</a></li>
+            {categorias.map((c) => (
+                <li><a class="chip" href={urlLista(1, c.id)} aria-current={atual === c.id ? 'page' : undefined}>{c.nome}</a></li>
+            ))}
+        </ul>
+    </nav>
+    <form class="busca" role="search" action={caminho('comunicacao/noticias/busca/')} method="get">
+        <label class="sr-only" for="busca-noticias">Pesquisar notícias</label>
+        <input id="busca-noticias" type="search" name="q" placeholder={rotuloBusca} value={valorBusca} maxlength="80" autocomplete="off">
+        <button type="submit"><img src={lupa} alt="Pesquisar" width="22" height="22"></button>
+    </form>
+</div>

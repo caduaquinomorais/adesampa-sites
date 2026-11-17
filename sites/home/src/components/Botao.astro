@@ -1,0 +1,17 @@
+---
+/* Botão-link. Link vazio = pendente (aparece, mas não navega). */
+import { attrs } from '../lib/conteudo';
+
+interface Props {
+  texto: string;
+  link: string;
+  variante?: 'primario' | 'contorno' | 'branco' | 'tech' | 'games' | 'empreende' | 'verde' | 'criativa';
+  largo?: boolean;
+  /** Nome acessível completo, quando o texto sozinho é ambíguo (ex.: "Ler notícia: <título>"). */
+  rotuloAcessivel?: string;
+}
+
+const { texto, link, variante = 'primario', largo = false, rotuloAcessivel } = Astro.props;
+const classe = variante === 'primario' || variante === 'empreende' ? '' : `botao--${variante}`;
+---
+<a class:list={['botao', classe, { 'botao--largo': largo }]} {...attrs(link)}>{texto}{rotuloAcessivel && <span class="sr-only">: {rotuloAcessivel}</span>}</a>

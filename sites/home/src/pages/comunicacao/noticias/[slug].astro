@@ -1,0 +1,81 @@
+---
+/* Uma notícia — Figma: frame "Exemplo de notícia" (574:43625). Conteúdo: src/content/noticias/<slug>.md. */
+import type { GetStaticPaths } from 'astro';
+import { getEntry, render, type CollectionEntry } from 'astro:content';
+import { Picture } from 'astro:assets';
+import BaseLayout from '@adesampa/ui/BaseLayout.astro';
+import { caminho } from '@adesampa/ui/caminhos';
+import Hero from '../../../components/Hero.astro';
+import CardNoticia from '../../../components/CardNoticia.astro';
+import { noticiasPublicadas, formatarData, dataIso } from '../../../lib/conteudo';
+import '../../../styles/site.css';
+
+export const getStaticPaths = (async () => {
+  const todas = await noticiasPublicadas();
+  return todas.map((noticia) => ({
+    params: { slug: noticia.id },
+    props: {
+      noticia,
+      // "Também pode interessar": as 3 mais recentes da mesma categoria; completa com as demais.
+      relacionadas: [
+        ...todas.filter((n) => n.id !== noticia.id && n.data.categoria.id === noticia.data.categoria.id),
+        ...todas.filter((n) => n.id !== noticia.id && n.data.categoria.id !== noticia.data.categoria.id),
+      ].slice(0, 3),
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+interface Props { noticia: CollectionEntry<'noticias'>; relacionadas: CollectionEntry<'noticias'>[] }
+const { noticia, relacionadas } = Astro.props;
+const d = noticia.data;
+const { Content } = await render(noticia);
+const entrada = await getEntry('comunicacao', 'comunicacao');
+if (!entrada) throw new Error('Falta src/content/paginas/comunicacao.md');
+const p = entrada.data;
+const categoria = await getEntry(d.categoria);
+const nomeCategoria = categoria?.data.nome ?? '';
+const nomes = new Map<string, string>();
+for (const r of relacionadas) nomes.set(r.data.categoria.id, (await getEntry(r.data.categoria))?.data.nome ?? '');
+---
+<BaseLayout titulo={d.titulo} descricao={d.resumo} ativo="comunicacao">
+    <Hero
+        fundo="royal"
+        tituloNivel="p"
+        trilha={[{ rotulo: 'Início', href: caminho() }, { rotulo: 'Comunicação', href: caminho('comunicacao/') }, { rotulo: p.paginaNoticias.titulo, href: caminho('comunicacao/noticias/') }]}
+        titulo={p.paginaNoticias.titulo}
+        texto={p.paginaNoticias.texto}
+    />
+    <article class="secao artigo" aria-labelledby="titulo-noticia">
+        <div class="container">
+            <div class="artigo__coluna">
+                <header class="artigo__cabecalho">
+                    <div class="artigo__meta">
+                        <span class="etiqueta">{nomeCategoria}</span>
+                        <time datetime={dataIso(d.data)}>{formatarData(d.data)}</time>
+                    </div>
+                    <h1 id="titulo-noticia" class="artigo__titulo">{d.titulo}</h1>
+                    <hr class="divisor artigo__divisor">
+                </header>
+                <div class="artigo__corpo">
+                    {d.subtitulo && <p class="artigo__subtitulo">{d.subtitulo}</p>}
+                    {d.imagem && (
+                        <figure class="artigo__imagem">
+                            <Picture src={d.imagem} alt={d.imagemAlt ?? ''} formats={['avif', 'webp']} fallbackFormat="jpg" widths={[732, 1464]} sizes="(max-width: 767px) 100vw, 732px" />
+                        </figure>
+                    )}
+                    <div class="artigo__texto"><Content /></div>
+                </div>
+            </div>
+        </div>
+    </article>
+    {relacionadas.length > 0 && (
+        <section class="secao secao--64 secao--clara relacionadas" aria-labelledby="titulo-relacionadas">
+            <div class="container">
+                <h2 id="titulo-relacionadas" class="h-secao">{p.paginaNoticias.relacionadas}</h2>
+                <ul class="grade-noticias">
+                    {relacionadas.map((n) => <li><CardNoticia noticia={n} categoria={nomes.get(n.data.categoria.id) ?? ''} textoBotao={p.noticias.textoBotao} branco /></li>)}
+                </ul>
+            </div>
+        </section>
+    )}
+</BaseLayout>

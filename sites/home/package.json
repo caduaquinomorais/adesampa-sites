@@ -1,0 +1,17 @@
+{
+  "name": "@adesampa/site-home",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site institucional da ADE SAMPA (Home): Início, Sobre, Comunicação, Notícias e Publicações.",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@adesampa/ui": "1.0.0",
+    "astro": "7.4.12"
+  }
+}

@@ -1,0 +1,33 @@
+---
+/*
+ * Galeria de fotos com pontinhos (Praça Victor Civita, capa das publicações). Os pontinhos só
+ * aparecem com 2 fotos ou mais; a linha de 8 px é mantida mesmo vazia (geometria do Figma, como no
+ * TEIA, decisão D-06). Sem rotação automática.
+ */
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  fotos: { imagem: ImageMetadata; alt: string }[];
+  rotulo: string;
+  variante?: 'verde' | 'azul';
+  /** Larguras geradas (px) e o atributo sizes. */
+  larguras: number[];
+  sizes: string;
+}
+const { fotos, rotulo, variante = 'verde', larguras, sizes } = Astro.props;
+const varias = fotos.length > 1;
+---
+<div class:list={['galeria', { 'galeria--azul': variante === 'azul' }]} data-galeria>
+    <ul class="galeria__trilho" aria-label={varias ? rotulo : undefined} tabindex={varias ? 0 : undefined} data-trilho>
+        {fotos.map((f) => (
+            <li><Picture src={f.imagem} alt={f.alt} formats={['avif', 'webp']} fallbackFormat="jpg" widths={larguras} sizes={sizes} loading="lazy" /></li>
+        ))}
+    </ul>
+    <div class="galeria__pontos">
+        {varias && fotos.map((_, i) => (
+            <button class="galeria__ponto" type="button" aria-label={`Foto ${i + 1} de ${fotos.length}`} aria-pressed={i === 0 ? 'true' : 'false'} data-ponto={i}></button>
+        ))}
+    </div>
+</div>
+{varias && <script>import '../scripts/carrossel';</script>}

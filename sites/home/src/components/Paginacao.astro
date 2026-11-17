@@ -1,0 +1,30 @@
+---
+/* Paginação da lista de notícias: ← 1 2 3 →. Só aparece com mais de uma página. */
+import setaEsquerda from '../assets/icones/seta-esquerda.svg?url';
+import setaDireita from '../assets/icones/seta-direita.svg?url';
+
+interface Props {
+  atual: number;
+  total: number;
+  /** Endereço de cada página (índice 0 = página 1). */
+  urls: string[];
+}
+const { atual, total, urls } = Astro.props;
+---
+{total > 1 && (
+<nav class="paginacao" aria-label="Páginas de notícias">
+    <ul>
+        <li>{atual > 1
+            ? <a href={urls[atual - 2]} rel="prev"><img src={setaEsquerda} alt="Página anterior" width="24" height="24"></a>
+            : <span class="desativado" aria-hidden="true"><img src={setaEsquerda} alt="" width="24" height="24"></span>}</li>
+        {urls.map((url, i) => (
+            <li>{i + 1 === atual
+                ? <span aria-current="page"><span class="sr-only">Página </span>{i + 1}</span>
+                : <a href={url}><span class="sr-only">Página </span>{i + 1}</a>}</li>
+        ))}
+        <li>{atual < total
+            ? <a href={urls[atual]} rel="next"><img src={setaDireita} alt="Próxima página" width="24" height="24"></a>
+            : <span class="desativado" aria-hidden="true"><img src={setaDireita} alt="" width="24" height="24"></span>}</li>
+    </ul>
+</nav>
+)}

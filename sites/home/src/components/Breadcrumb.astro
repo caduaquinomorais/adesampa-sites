@@ -1,0 +1,14 @@
+---
+/* Trilha "Início / Comunicação / Notícias". O último item sem link é a página atual. */
+interface Props {
+  itens: { rotulo: string; href?: string }[];
+}
+const { itens } = Astro.props;
+---
+<nav class="breadcrumb" aria-label="Você está em">
+    <ol>
+        {itens.map((item) => (
+            <li>{item.href ? <a href={item.href}>{item.rotulo}</a> : <span aria-current="page">{item.rotulo}</span>}</li>
+        ))}
+    </ol>
+</nav>

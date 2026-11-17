@@ -1,0 +1,11 @@
+# Categorias das notícias. A ordem aqui é a ordem dos filtros na página Comunicação.
+# O "id" (à esquerda) vai no endereço: /comunicacao/noticias/categoria/<id>/ — use letras minúsculas e hífens.
+# Cada notícia escolhe uma categoria pelo id (campo "categoria").
+editais-e-chamadas:
+  nome: 'Editais e chamadas'
+eventos:
+  nome: 'Eventos'
+teia:
+  nome: 'Teia'
+microcredito:
+  nome: 'Microcrédito'

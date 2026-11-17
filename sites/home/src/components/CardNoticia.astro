@@ -1,0 +1,26 @@
+---
+/* Card de notícia (Comunicação, lista de notícias, "Também pode interessar"). */
+import type { CollectionEntry } from 'astro:content';
+import Botao from './Botao.astro';
+import { formatarData, dataIso, urlNoticia } from '../lib/conteudo';
+
+interface Props {
+  noticia: CollectionEntry<'noticias'>;
+  categoria: string;
+  textoBotao: string;
+  branco?: boolean;
+  /** Nível do título (h3 dentro de uma seção com h2). */
+  nivel?: 'h2' | 'h3';
+}
+const { noticia, categoria, textoBotao, branco = false, nivel = 'h3' } = Astro.props;
+const Titulo = nivel;
+const d = noticia.data;
+---
+<article class:list={['card-noticia', { 'card-noticia--branco': branco }]}>
+    <p class="card-noticia__meta"><span>{categoria}</span><time datetime={dataIso(d.data)}>{formatarData(d.data)}</time></p>
+    <div class="card-noticia__textos">
+        <Titulo class="card-noticia__titulo">{d.titulo}</Titulo>
+        <p class="card-noticia__resumo">{d.resumo}</p>
+    </div>
+    <Botao texto={textoBotao} link={urlNoticia(noticia.id)} variante="contorno" rotuloAcessivel={d.titulo} />
+</article>

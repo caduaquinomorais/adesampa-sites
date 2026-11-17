@@ -1,0 +1,109 @@
+---
+/* Comunicação — Figma: frame "Comunicação" (264:3552). Textos: src/content/paginas/comunicacao.md. */
+import { getEntry, getCollection } from 'astro:content';
+import BaseLayout from '@adesampa/ui/BaseLayout.astro';
+import { caminho } from '@adesampa/ui/caminhos';
+import Hero from '../../components/Hero.astro';
+import Botao from '../../components/Botao.astro';
+import CardNoticia from '../../components/CardNoticia.astro';
+import FiltrosNoticias from '../../components/FiltrosNoticias.astro';
+import Paginacao from '../../components/Paginacao.astro';
+import Galeria from '../../components/Galeria.astro';
+import { noticiasPublicadas, NOTICIAS_POR_PAGINA, totalPaginas, urlLista } from '../../lib/conteudo';
+import check from '../../assets/icones/check.svg?url';
+import envelope from '../../assets/icones/envelope.svg?url';
+import '../../styles/site.css';
+
+const entrada = await getEntry('comunicacao', 'comunicacao');
+if (!entrada) throw new Error('Falta src/content/paginas/comunicacao.md');
+const p = entrada.data;
+const categorias = (await getCollection('categorias')).map((c) => ({ id: c.id, nome: c.data.nome }));
+const nomeCategoria = new Map(categorias.map((c) => [c.id, c.nome]));
+const todas = await noticiasPublicadas();
+const recentes = todas.slice(0, NOTICIAS_POR_PAGINA);
+const total = totalPaginas(todas.length);
+---
+<BaseLayout titulo={p.titulo} descricao={p.descricao} ativo="comunicacao">
+    <Hero trilha={[{ rotulo: 'Início', href: caminho() }, { rotulo: 'Comunicação' }]} etiqueta={p.hero.etiqueta} titulo={p.hero.titulo} texto={p.hero.texto} />
+
+    <section id="noticias" class="secao secao--64 secao--branca-borda noticias-secao" aria-labelledby="titulo-noticias">
+        <div class="container">
+            <div class="noticias-secao__topo">
+                <h2 id="titulo-noticias" class="h-secao">{p.noticias.titulo}</h2>
+                <FiltrosNoticias categorias={categorias} atual="" rotuloBusca={p.noticias.rotuloBusca} />
+            </div>
+            {recentes.length > 0
+                ? <ul class="grade-noticias">{recentes.map((n) => <li><CardNoticia noticia={n} categoria={nomeCategoria.get(n.data.categoria.id) ?? ''} textoBotao={p.noticias.textoBotao} /></li>)}</ul>
+                : <p class="sem-noticias texto-1">Nenhuma notícia publicada ainda.</p>}
+            <Paginacao atual={1} total={total} urls={Array.from({ length: total }, (_, i) => urlLista(i + 1))} />
+        </div>
+    </section>
+
+    <section id="publicacoes" class="secao publicacoes-chamada" aria-labelledby="titulo-publicacoes">
+        <div class="container duas-colunas">
+            <div class="coluna-texto">
+                <h2 id="titulo-publicacoes" class="h-secao">{p.publicacoes.titulo}</h2>
+                <p class="texto-1">{p.publicacoes.texto}</p>
+                <ul class="lista-check">
+                    {p.publicacoes.itens.map((i) => <li><img src={check} alt="" width="18" height="17"><span><strong>{i.destaque}</strong> {i.texto}</span></li>)}
+                </ul>
+                <Botao texto={p.publicacoes.botao.texto} link={p.publicacoes.botao.link} />
+            </div>
+            <div class="publicacoes-chamada__capa">
+                <Galeria fotos={p.publicacoes.capas.map((c) => ({ imagem: c.imagem, alt: c.alt }))} rotulo="Capas das publicações" variante="azul" larguras={[285, 570]} sizes="285px" />
+            </div>
+        </div>
+    </section>
+
+    <section id="manual-de-marca" class="secao secao--64 secao--escura manual" aria-labelledby="titulo-manual-marca">
+        <div class="container">
+            <div class="manual__cabecalho">
+                <h2 id="titulo-manual-marca" class="h-secao">{p.manualMarca.titulo}</h2>
+                {p.manualMarca.texto && <p class="texto-1">{p.manualMarca.texto}</p>}
+            </div>
+            <hr class="divisor divisor--escuro">
+            <ul class="grade-2">
+                {p.manualMarca.cards.map((c) => (
+                    <li class="card-escuro">
+                        <div class="card-escuro__textos"><h3 class="h-5">{c.titulo}</h3><p class="texto-1">{c.texto}</p></div>
+                        <Botao texto={c.botao.texto} link={c.botao.link} />
+                    </li>
+                ))}
+            </ul>
+        </div>
+    </section>
+
+    <section id="manual-de-redacao" class="secao secao--64 secao--marinho manual redacao" aria-labelledby="titulo-manual-redacao">
+        <div class="container">
+            <div class="manual__cabecalho">
+                <h2 id="titulo-manual-redacao" class="h-secao">{p.manualRedacao.titulo}</h2>
+                {p.manualRedacao.texto && <p class="texto-1">{p.manualRedacao.texto}</p>}
+            </div>
+            <div class="card-escuro card-escuro--claro-fundo">
+                <div class="card-escuro__textos"><h3 class="h-5">{p.manualRedacao.card.titulo}</h3><p class="texto-1">{p.manualRedacao.card.texto}</p></div>
+                <Botao texto={p.manualRedacao.card.botao.texto} link={p.manualRedacao.card.botao.link} />
+            </div>
+        </div>
+    </section>
+
+    <section id="contato" class="secao secao--64 contato" aria-labelledby="titulo-contato">
+        <div class="container">
+            <div class="manual__cabecalho">
+                <h2 id="titulo-contato" class="h-secao">{p.contato.titulo}</h2>
+                {p.contato.texto && <p class="texto-1">{p.contato.texto}</p>}
+            </div>
+            <hr class="divisor">
+            <ul class="grade-2">
+                {p.contato.emails.map((e) => (
+                    <li class="card-email">
+                        <span class="card-email__icone"><img src={envelope} alt="" width="32" height="32"></span>
+                        <div class="card-email__textos">
+                            <p class="card-email__rotulo">{e.rotulo}</p>
+                            <a href={`mailto:${e.email}`}>{e.email}</a>
+                        </div>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    </section>
+</BaseLayout>

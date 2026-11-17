@@ -1,0 +1,43 @@
+---
+/*
+ * Carrossel horizontal (Destaques do Início, revistas e cartilhas). Sem JavaScript, a faixa rola com
+ * o dedo, o mouse ou o teclado (ela recebe foco); com JavaScript, as setas avançam um card por vez e
+ * ficam desativadas no começo e no fim. Os itens (<li>) vêm pelo slot.
+ */
+interface Props {
+  id: string;
+  titulo: string;
+  texto?: string;
+  /** Esmaece os cards que passam da área do conteúdo (como no Figma dos Destaques). */
+  esmaecido?: boolean;
+  classe?: string;
+}
+const { id, titulo, texto, esmaecido = false, classe = '' } = Astro.props;
+---
+<section class:list={['secao carrossel', classe, { 'carrossel--esmaecido': esmaecido }]} aria-labelledby={`${id}-titulo`} data-carrossel>
+    <div class="container">
+        <div class="pilha carrossel__topo">
+            <div class="carrossel__cabecalho">
+                <div class="pilha">
+                    <h2 id={`${id}-titulo`} class="h-secao">{titulo}</h2>
+                    {texto && <p class="texto-1">{texto}</p>}
+                </div>
+                <div class="carrossel__controles">
+                    <button class="carrossel__botao" type="button" data-anterior aria-controls={id} aria-label="Anterior" disabled>
+                        <svg viewBox="0 0 14 22" aria-hidden="true" focusable="false"><path d="M11.362 2.638L3 11l8.362 8.362" fill="none" stroke="currentColor" stroke-width="5.27602" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <button class="carrossel__botao" type="button" data-proximo aria-controls={id} aria-label="Próximo">
+                        <svg viewBox="0 0 14 22" aria-hidden="true" focusable="false"><path d="M2.638 2.638L11 11 2.638 19.362" fill="none" stroke="currentColor" stroke-width="5.27602" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                </div>
+            </div>
+            <hr class="divisor">
+        </div>
+        <ul class="carrossel__trilho" id={id} tabindex="0" aria-label={titulo} data-trilho>
+            <slot />
+        </ul>
+    </div>
+</section>
+<script>
+    import '../scripts/carrossel';
+</script>
