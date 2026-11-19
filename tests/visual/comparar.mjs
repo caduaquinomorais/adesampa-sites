@@ -75,8 +75,16 @@ const carregarSite = async (largura) => { await carregar(cdp, urlSite, largura);
 
 // Imagens do topo/rodapé que não carregaram (404, SVG inválido…). Com width/height fixos, uma imagem
 // quebrada ocupa a mesma caixa: só esta verificação a pega com certeza.
-const IMAGENS_QUEBRADAS = `[...document.querySelectorAll('.site-header img, .submenu img, .site-footer img')]
-  .filter((i) => !i.complete || i.naturalWidth === 0).map((i) => i.getAttribute('src'))`;
+// Imagens lazy dentro de algo escondido (ex.: logos do Menu de projetos fechado) só carregam quando
+// aparecem: aqui elas são forçadas a carregar (loading="eager") antes da verificação.
+const IMAGENS_QUEBRADAS = `(async () => {
+  const imgs = [...document.querySelectorAll('.site-header img, .submenu img, .site-footer img')];
+  await Promise.race([
+    Promise.all(imgs.map((i) => { if (i.complete) return 0; i.loading = 'eager'; return new Promise((r) => { i.addEventListener('load', r, { once: true }); i.addEventListener('error', r, { once: true }); }); })),
+    new Promise((r) => setTimeout(r, 5000)),
+  ]);
+  return imgs.filter((i) => !i.complete || i.naturalWidth === 0).map((i) => i.getAttribute('src'));
+})()`;
 
 const resultado = { site: NOME, larguras: [], falhas: [] };
 const falhar = (msg) => { resultado.falhas.push(msg); console.log('  ✗ ' + msg); };

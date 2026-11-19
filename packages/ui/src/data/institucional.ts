@@ -144,12 +144,78 @@ export const CABECALHO: Cabecalho = congelar({
   menu: [
     { chave: 'home', rotulo: 'Home', link: pagina('home'), seta: false },
     { chave: 'sobre', rotulo: 'Sobre', link: pagina('home', 'sobre/'), seta: false },
-    { chave: 'programas', rotulo: 'Programas', link: '', seta: true }, // TODO-LINK (menu suspenso dos programas ainda não desenhado)
+    // Abre o "Menu de projetos" (MENU_PROJETOS, abaixo); por isso não tem link próprio.
+    { chave: 'programas', rotulo: 'Programas', link: '', seta: true },
     { chave: 'comunicacao', rotulo: 'Comunicação', link: pagina('home', 'comunicacao/'), seta: true },
     { chave: 'transparencia', rotulo: 'Transparência', link: '', seta: false }, // TODO-LINK
   ],
   botaoTexto: 'Agendamentos',
   botaoLink: 'https://app.adesampa.com.br/welcome',
+});
+
+// ============================================================================
+// 3b. Menu de projetos (menu suspenso do item "Programas")
+// Figma: frame "Menu de projetos" (656:19254), 1008 × 476. Links vazios = TODO-LINK.
+// ============================================================================
+
+export interface EixoMenu {
+  cor: CorPrograma;
+  /** Nome do programa (texto alternativo do logo). */
+  nome: string;
+  links: Link[];
+}
+
+export interface GrupoMenu {
+  titulo: string;
+  links: Link[];
+}
+
+export interface MenuProjetos {
+  eixosTitulo: string;
+  eixos: EixoMenu[];
+  espacosTitulo: string;
+  espacos: GrupoMenu[];
+}
+
+export const MENU_PROJETOS: MenuProjetos = congelar({
+  eixosTitulo: 'Eixos de atuação',
+  eixos: [
+    {
+      cor: 'empreende',
+      nome: 'Sampa Empreende',
+      links: [
+        link('Atendimento ao empreendedor'),
+        link('Orientação empresarial'),
+        link('Curso fábrica de negócios'),
+        link('Curso de gestão de negócios'),
+        link('Linhas de crédito'),
+        link('Consultoria em gestão financeira'),
+        link('Educação financeira'),
+      ],
+    },
+    { cor: 'tech', nome: 'Sampa Tech', links: [link('Aceleração Vai Tec')] },
+    { cor: 'games', nome: 'Sampa Games', links: [link('Aceleração de estúdios'), link('Curso de game dev'), link('Hub de educação')] },
+    {
+      cor: 'verde',
+      nome: 'Sampa Verde',
+      links: [
+        link('Aceleração de negócios rurais'),
+        link('Aceleração de hortas'),
+        link('Aceleração de negócios verdes'),
+        link('Hub de inovação'),
+      ],
+    },
+    { cor: 'criativa', nome: 'Sampa Criativa', links: [link('Aceleração de audiovisual'), link('Aceleração de moda')] },
+  ],
+  espacosTitulo: 'Espaços e plataformas',
+  espacos: [
+    {
+      titulo: 'Teia',
+      links: [link('Coworkings públicos'), link('Estúdios de podcast'), link('Estúdios de fotografia'), link('Estúdios de música')],
+    },
+    { titulo: 'Produtos digitais', links: [link('Sampa Ensina'), link('Gestão Sampa'), link('Data Sampa')] },
+    { titulo: 'Praça Victor Civita', links: [link('Conheça os equipamentos')] },
+  ],
 });
 
 // ============================================================================
@@ -262,6 +328,8 @@ export function todosOsDestinos(): Destino[] {
     CABECALHO.logoLink,
     ...CABECALHO.menu.map((i) => i.link),
     CABECALHO.botaoLink,
+    ...MENU_PROJETOS.eixos.flatMap((e) => e.links.map((l) => l.link)),
+    ...MENU_PROJETOS.espacos.flatMap((g) => g.links.map((l) => l.link)),
     RODAPE.logoLink,
     ...RODAPE.redes.map((r) => r.link),
     ...RODAPE.colunas.flatMap((c) => c.links.map((l) => l.link)),

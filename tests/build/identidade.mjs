@@ -21,7 +21,8 @@ const PARTES = [
 function normalizar(html, base) {
   let ativos = 0;
   const semAtivo = html
-    .replace(/class="site-header__item is-active"/g, () => { ativos++; return 'class="site-header__item"'; })
+    // "is-active" pode vir depois de outras classes (ex.: site-header__item--mega, do item Programas).
+    .replace(/class="(site-header__item(?: site-header__item--[a-z-]+)*) is-active"/g, (_, classes) => { ativos++; return `class="${classes}"`; })
     .replace(/ aria-current="true"/g, '');
   const semBase = semAtivo.replaceAll(`"${base}_astro/`, '"{BASE}_astro/');
   return { html: semBase, ativos };

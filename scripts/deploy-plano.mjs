@@ -5,9 +5,11 @@
 //   - push no main: se mudou algo compartilhado (packages/, package.json, package-lock.json, .nvmrc,
 //     .github/workflows/, scripts/), publica TODOS; senão, só os sites cujos arquivos mudaram
 //     (sites/<nome>/…); primeiro push (sem "antes") = todos.
+//   - A comparação parte do commit do último run BEM-SUCEDIDO no main (ULTIMO_OK). Assim, se um deploy
+//     falhou, o push seguinte publica também as mudanças dele. Sem ULTIMO_OK, usa o push anterior (ANTES).
 //   - Só entram sites com publicar: true no mapa SITES (packages/ui/src/data/institucional.ts).
 //
-// Variáveis: EVENTO, SITE_ESCOLHIDO, ANTES, DEPOIS, ADESAMPA_AMBIENTE. Saída: GITHUB_OUTPUT
+// Variáveis: EVENTO, SITE_ESCOLHIDO, ULTIMO_OK, ANTES, DEPOIS, ADESAMPA_AMBIENTE. Saída: GITHUB_OUTPUT
 //   matriz = [{"nome":"home","pasta":"homolog","url":"https://…/"}], quantidade = N
 //
 // Teste local: EVENTO=workflow_dispatch SITE_ESCOLHIDO=todos node scripts/deploy-plano.mjs
@@ -17,7 +19,7 @@ import { SITES, ambienteAtual, ehNomeSite } from '../packages/ui/src/data/instit
 
 const evento = process.env.EVENTO ?? '';
 const escolhido = (process.env.SITE_ESCOLHIDO ?? 'todos').trim() || 'todos';
-const antes = process.env.ANTES ?? '';
+const antes = (process.env.ULTIMO_OK || process.env.ANTES || '').trim();
 const depois = process.env.DEPOIS ?? 'HEAD';
 const ambiente = ambienteAtual();
 

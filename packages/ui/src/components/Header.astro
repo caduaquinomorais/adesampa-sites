@@ -4,11 +4,18 @@
  * Textos e links: src/data/institucional.ts (CABECALHO). Nenhum site passa textos ou links.
  * A única variação permitida é o item ativo do menu (prop `ativo`).
  * Origem da marcação: adesampa-header-footer/partials/header.php.
+ * "Programas" abre o Menu de projetos (MENU_PROJETOS; Figma 656:19254). Comportamento: scripts/menu.ts
+ * e docs/DECISOES_HOME.md (H-09).
  */
-import { CABECALHO, ambienteAtual, resolverDestino, type ChaveMenu } from '../data/institucional';
+import { CABECALHO, MENU_PROJETOS, ambienteAtual, resolverDestino, type ChaveMenu } from '../data/institucional';
 import { atributosLink } from '../lib/links';
 import logoAdesampa from '../../assets/icons/logo-adesampa.svg?url';
 import setaMenu from '../../assets/icons/seta-menu.svg?url';
+import logoEmpreende from '../../assets/icons/menu-empreende.svg?url';
+import logoTech from '../../assets/icons/menu-tech.svg?url';
+import logoGames from '../../assets/icons/menu-games.svg?url';
+import logoVerde from '../../assets/icons/menu-verde.svg?url';
+import logoCriativa from '../../assets/icons/menu-criativa.svg?url';
 
 interface Props {
   /** Item do menu destacado como seção atual (sublinhado azul). Omitido = nenhum. */
@@ -16,6 +23,14 @@ interface Props {
 }
 
 const { ativo } = Astro.props;
+/** Logos dos eixos no Menu de projetos (Figma "Logos Verticais", 28 px de altura). */
+const LOGOS_EIXOS = {
+  empreende: { src: logoEmpreende, largura: 96 },
+  tech: { src: logoTech, largura: 77 },
+  games: { src: logoGames, largura: 75 },
+  verde: { src: logoVerde, largura: 76 },
+  criativa: { src: logoCriativa, largura: 76 },
+};
 const ambiente = ambienteAtual();
 const href = (destino: Parameters<typeof resolverDestino>[0]) => atributosLink(resolverDestino(destino, ambiente));
 ---
@@ -30,7 +45,40 @@ const href = (destino: Parameters<typeof resolverDestino>[0]) => atributosLink(r
         </button>
         <nav class="site-header__nav" id="menu-principal" aria-label="Menu principal">
             <ul class="site-header__menu">
-                {CABECALHO.menu.map((item) => (
+                {CABECALHO.menu.map((item) => item.chave === 'programas' ? (
+                    <li class:list={['site-header__item', 'site-header__item--mega', { 'is-active': item.chave === ativo }]} data-mega>
+                        <button class="site-header__link site-header__trigger" type="button" aria-expanded="false" aria-controls="menu-projetos">
+                            {item.rotulo}
+                            <img class="site-header__arrow" src={setaMenu} alt="" width="7" height="4">
+                        </button>
+                        <div class="mega" id="menu-projetos">
+                            <div class="mega__eixos">
+                                <p class="mega__titulo" id="mega-eixos">{MENU_PROJETOS.eixosTitulo}</p>
+                                <ul class="mega__eixos-lista" aria-labelledby="mega-eixos">
+                                    {MENU_PROJETOS.eixos.map((eixo) => (
+                                        <li class="mega__eixo">
+                                            <p class="mega__programa" id={`mega-${eixo.cor}`}><img src={LOGOS_EIXOS[eixo.cor].src} alt={eixo.nome} width={LOGOS_EIXOS[eixo.cor].largura} height="28" loading="lazy"></p>
+                                            <ul class="mega__links" aria-labelledby={`mega-${eixo.cor}`}>
+                                                {eixo.links.map((l) => <li><a class="mega__link" {...href(l.link)}>{l.rotulo}</a></li>)}
+                                            </ul>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div class="mega__espacos">
+                                <p class="mega__titulo">{MENU_PROJETOS.espacosTitulo}</p>
+                                {MENU_PROJETOS.espacos.map((grupo, i) => (
+                                    <div class="mega__grupo">
+                                        <p class="mega__grupo-titulo" id={`mega-espaco-${i}`}>{grupo.titulo}</p>
+                                        <ul class="mega__links" aria-labelledby={`mega-espaco-${i}`}>
+                                            {grupo.links.map((l) => <li><a class="mega__link" {...href(l.link)}>{l.rotulo}</a></li>)}
+                                        </ul>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </li>
+                ) : (
                     <li class:list={['site-header__item', { 'is-active': item.chave === ativo }]}>
                         <a class="site-header__link" {...href(item.link)} aria-current={item.chave === ativo ? 'true' : undefined}>
                             {item.rotulo}

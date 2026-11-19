@@ -227,9 +227,9 @@
     background: var(--azul-900); border: 1px solid var(--borda-escura); border-radius: 10px;
 }
 /* Hover dos cards de números e de produtos (Figma: variantes "Cards (big numbers)" e "Cards (produtos
-   digitais)"): fundo #001B4D → #042F80 e borda clara → #327CFE. Só em telas com mouse (no toque o
+   digitais)"): fundo #001B4D → #042F80 e borda clara → #327CFE; transição "dissolve" de 160 ms, ease-out. Só em telas com mouse (no toque o
    hover ficaria "preso"). No produto, vale também quando o link do card recebe foco pelo teclado. */
-.numeros__item, .card-produto { transition: background-color .2s ease, border-color .2s ease; }
+.numeros__item, .card-produto { transition: background-color .16s ease-out, border-color .16s ease-out; }
 @media (hover: hover) {
     .numeros__item:hover, .card-produto:hover { background: var(--azul-800); border-color: var(--azul-500); }
 }

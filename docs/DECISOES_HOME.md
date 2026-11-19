@@ -91,6 +91,35 @@ Estas correções afetam os 7 sites e estão descritas em [HEADER_FOOTER.md](HEA
 - **C-2:** o cabeçalho define a própria cor de texto;
 - **C-3:** links do rodapé com alvo de toque de 44 px abaixo de 1024 px.
 
+## H-09 — Menu de projetos (item "Programas" do cabeçalho)
+
+Figma: frame "Menu de projetos" (656:19254), 1008 × 476. Fica em todos os sites (cabeçalho compartilhado).
+- **Dados:** `MENU_PROJETOS` em `packages/ui/src/data/institucional.ts`. Os links vazios estão pendentes (aparecem, mas não navegam).
+- **Computador:** painel centralizado sob o cabeçalho, com 1008 px de largura (a proporção do Figma; não ocupa a página toda).
+  - Abre ao passar o mouse (fecha 200 ms depois de o mouse sair) e também ao clicar.
+  - Teclado: Enter abre, Esc fecha e devolve o foco, e sair com Tab fecha.
+- **Celular e tablet (< 1024 px):** vira uma sanfona dentro do ☰, numa coluna só, com alvos de toque de 44 px.
+- **Sem JavaScript:** abre com `:hover` / `:focus-within`. No celular, fica sempre expandido.
+- **Fora do Figma:**
+  - sombra leve, para separar o painel do conteúdo branco da página;
+  - seta do "Programas" girando quando o menu está aberto;
+  - "Atendimento" com a grafia corrigida (o rodapé mantém "Atendimenro", como no Figma, pendência P-18).
+- **Logos dos eixos:** SVGs exportados do Figma (`packages/ui/assets/icons/menu-*.svg`, com 28 px de altura) e carregados só quando o menu abre (lazy). O teste visual força o carregamento deles para confirmar que não estão quebrados.
+
+## H-10 — Efeitos de hover (Início e rodapé)
+
+Tirados das interações "ao passar o mouse" do protótipo no Figma.
+- **Cards de "Nosso impacto" e "Nossos produtos digitais":**
+  - fundo de `#001B4D` para `#042F80`;
+  - borda de `rgba(207,230,255,.2)` para `#327CFE`;
+  - transição "dissolve" de 160 ms, ease-out;
+  - só em telas com mouse; no produto, também com foco pelo teclado.
+- **Botões das redes sociais:**
+  - fundo de `#042F80` para `#1158D4`;
+  - ícone de `#BEDDFF` para branco;
+  - troca instantânea, como no protótipo.
+- **Links do Menu de projetos:** de `#262930` para `#1158D4`.
+
 ## Pendências de conteúdo (confirmar com a ADE SAMPA)
 
 | # | Onde | Pendência |
