@@ -122,7 +122,7 @@ const link = (rotulo: string, destino: Destino = ''): Link => ({ rotulo, link: d
 // ============================================================================
 
 /** Chaves do menu principal. É o valor da prop `ativo` do Header/BaseLayout. */
-export type ChaveMenu = 'home' | 'sobre' | 'programas' | 'comunicacao' | 'transparencia';
+export type ChaveMenu = 'home' | 'sobre' | 'programas' | 'comunicacao' | 'transparencia' | 'governamental';
 
 export interface ItemMenu extends Link {
   chave: ChaveMenu;
@@ -148,6 +148,8 @@ export const CABECALHO: Cabecalho = congelar({
     { chave: 'programas', rotulo: 'Programas', link: '', seta: true },
     { chave: 'comunicacao', rotulo: 'Comunicação', link: pagina('home', 'comunicacao/'), seta: true },
     { chave: 'transparencia', rotulo: 'Transparência', link: '', seta: false }, // TODO-LINK
+    // Página provisória (em produção): parcerias-governamentais/ no site Home. Figma: frame "Parcerias Governamentais" (966:21749).
+    { chave: 'governamental', rotulo: 'Governamental', link: pagina('home', 'parcerias-governamentais/'), seta: false },
   ],
   botaoTexto: 'Agendamentos',
   botaoLink: 'https://app.adesampa.com.br/welcome',

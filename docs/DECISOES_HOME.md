@@ -120,6 +120,21 @@ Tirados das interações "ao passar o mouse" do protótipo no Figma.
   - troca instantânea, como no protótipo.
 - **Links do Menu de projetos:** de `#262930` para `#1158D4`.
 
+## H-11 — Parcerias governamentais e item "Governamental" (Figma de 19/11/2026)
+
+O Figma da Início ganhou uma seção nova e o cabeçalho ganhou um item. Comparação feita com a versão de 16/11 (base da Home).
+- **Seção "Parcerias governamentais"** (966:18689), entre "Destaques" e "Nosso impacto":
+  - textos e fotos em `inicio.md` (`parcerias`); as 2 fotos foram baixadas do Figma;
+  - carrossel **manual** com pontinhos (componente `Galeria`), como os outros do site (H-05). No Figma ele passa sozinho a cada 4 s; a passagem automática não foi feita;
+  - o título fica sobre a foto, num degradê azul `#042F80` em "multiplicar" (75%), como no card 1 do Figma. O card 2 do Figma usa um degradê um pouco mais estreito; o site usa o mesmo nos dois;
+  - os pontinhos seguem o número de fotos (2), e não os 4 desenhados no Figma;
+  - contraste do título: medido no print (o teste automático não mede texto sobre foto). Em 90% dos pixels atrás dele fica ≥ 4,9:1 (texto grande exige 3:1), com uma sombra leve no texto para reforçar;
+  - "inteligencia" foi escrito com acento ("inteligência");
+  - a etiqueta continua "Lorem Ipsum Dollor", como no Figma, até o texto ser definido (pendência P-H6).
+- **Item "Governamental" no cabeçalho** (7 sites): leva a `parcerias-governamentais/` no site Home, uma página **provisória** ("Em construção", fora dos buscadores). O botão "Veja nossa atuação em parcerias" leva à mesma página. Quando o frame "Parcerias Governamentais" (966:21749) for implementado, basta substituir essa página.
+- **Não seguido:** as faixas de degradê dos destaques (Rectangle 908/909) saíram do lugar no Figma, aparentemente sem querer. O site as mantém alinhadas ao carrossel.
+- **Teste visual:** a referência `inicio-1440.png` foi montada com a imagem antiga mais a exportação da seção nova, porque a API do Figma estava no limite de uso.
+
 ## Pendências de conteúdo (confirmar com a ADE SAMPA)
 
 | # | Onde | Pendência |
@@ -129,3 +144,4 @@ Tirados das interações "ao passar o mouse" do protótipo no Figma.
 | P-H3 | Início ("13 anos") × Sobre ("Há 14 anos") | Os números divergem no Figma. |
 | P-H4 | Links pendentes | Programas, Transparência, redes sociais, links legais, sites dos 5 programas, produtos digitais, botões dos destaques, "Ver programação completa", manuais (PDF) e PDFs das revistas e cartilhas. |
 | P-H5 | Revistas 1ª a 3ª edição | Os textos alternativos das capas são genéricos. Faltam os temas de cada edição. |
+| P-H6 | Início, "Parcerias governamentais" | Texto da etiqueta (no Figma: "Lorem Ipsum Dollor") e textos alternativos das 2 fotos (escritos por nós). |

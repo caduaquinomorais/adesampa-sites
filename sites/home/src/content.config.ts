@@ -85,6 +85,14 @@ const inicio = defineCollection({
     banner: z.object({ titulo: z.string(), texto: z.string(), botao }),
     eixos: cabecalhoSecao,
     destaques: z.object({ titulo: z.string() }),
+    /** Seção "Parcerias governamentais" (Figma 966:18689). Com 2 ou mais itens, vira carrossel com pontinhos. */
+    parcerias: z.object({
+      etiqueta: z.string(),
+      titulo: z.string(),
+      texto: z.string(),
+      botao,
+      itens: z.array(z.object({ titulo: z.string(), imagem: image(), alt: z.string() })).min(1),
+    }),
     numeros: cabecalhoSecao.extend({
       itens: z.array(z.object({ valor: z.string(), texto: z.string() })).min(1),
     }),

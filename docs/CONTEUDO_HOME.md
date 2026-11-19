@@ -8,7 +8,7 @@ O build confere cada arquivo. Se faltar um campo obrigatório ou um valor estive
 
 | O que mudar | Arquivo |
 |---|---|
-| Textos da página Início (banner, números, Teia, produtos, Praça) | `paginas/inicio.md` |
+| Textos da página Início (banner, parcerias governamentais, números, Teia, produtos, Praça) | `paginas/inicio.md` |
 | Textos da página Sobre | `paginas/sobre.md` |
 | Textos da página Comunicação (manuais, contatos, cabeçalho das notícias) | `paginas/comunicacao.md` |
 | Textos da página Publicações | `paginas/publicacoes.md` |
@@ -16,6 +16,7 @@ O build confere cada arquivo. Se faltar um campo obrigatório ou um valor estive
 | Revistas ADE SAMPA News e cartilhas | `publicacoes.yaml` |
 | Categorias das notícias (os filtros) | `categorias.yaml` |
 | Notícias | `noticias/` (um arquivo por notícia) |
+| Fotos do carrossel "Parcerias governamentais" (foto, título sobre a foto e descrição) | `paginas/inicio.md`, lista `parcerias.itens` (fotos em `src/assets/fotos/`) |
 
 O cabeçalho e o rodapé **não** ficam aqui: eles são iguais em todos os sites e ficam em `packages/ui/src/data/institucional.ts` (ver [HEADER_FOOTER.md](HEADER_FOOTER.md)).
 

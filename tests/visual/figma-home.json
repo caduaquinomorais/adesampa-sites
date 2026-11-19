@@ -1,5 +1,5 @@
 {
-  "_comentario": "Geometria do Figma (arquivo r1NdYceMw9ocdyDDrVQUGW) a 1440 px, extraída pela API em 17/11/2026. y = topo da seção na página (o cabeçalho ocupa 0–68/69). altura null = depende do conteúdo (ex.: quantidade de notícias) e só a diferença de pixels é medida.",
+  "_comentario": "Geometria do Figma (arquivo r1NdYceMw9ocdyDDrVQUGW) a 1440 px, extraída pela API em 17/11/2026; Início atualizada em 19/11/2026 (seção Parcerias governamentais; a referência inicio-1440.png foi montada com a exportação dessa seção). y = topo da seção na página (o cabeçalho ocupa 0–68/69). altura null = depende do conteúdo (ex.: quantidade de notícias) e só a diferença de pixels é medida.",
   "paginas": [
     {
       "nome": "inicio", "url": "", "referencia": "inicio-1440.png", "frame": "1:2884",
@@ -7,11 +7,12 @@
         { "nome": "banner", "seletor": "main > section:nth-of-type(1)", "y": 68, "altura": 592 },
         { "nome": "eixos", "seletor": "main > section:nth-of-type(2)", "y": 660, "altura": 529 },
         { "nome": "destaques", "seletor": "main > section:nth-of-type(3)", "y": 1189, "altura": 604 },
-        { "nome": "numeros", "seletor": "main > section:nth-of-type(4)", "y": 1793, "altura": 594 },
-        { "nome": "teia", "seletor": "main > section:nth-of-type(5)", "y": 2387, "altura": 513 },
-        { "nome": "produtos", "seletor": "main > section:nth-of-type(6)", "y": 2900, "altura": 639 },
-        { "nome": "praca", "seletor": "main > section:nth-of-type(7)", "y": 3539, "altura": 530 },
-        { "nome": "rodape", "seletor": ".site-footer", "y": 4069, "altura": 679 }
+        { "nome": "parcerias", "seletor": "main > section:nth-of-type(4)", "y": 1793, "altura": 530 },
+        { "nome": "numeros", "seletor": "main > section:nth-of-type(5)", "y": 2323, "altura": 594 },
+        { "nome": "teia", "seletor": "main > section:nth-of-type(6)", "y": 2917, "altura": 513 },
+        { "nome": "produtos", "seletor": "main > section:nth-of-type(7)", "y": 3430, "altura": 639 },
+        { "nome": "praca", "seletor": "main > section:nth-of-type(8)", "y": 4069, "altura": 530 },
+        { "nome": "rodape", "seletor": ".site-footer", "y": 4599, "altura": 679 }
       ]
     },
     {

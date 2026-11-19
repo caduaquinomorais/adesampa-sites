@@ -26,6 +26,7 @@ return [
             ['rotulo' => 'Programas', 'link' => '', 'seta' => true, 'ativo' => true],       // TODO-LINK
             ['rotulo' => 'Comunicação', 'link' => '', 'seta' => true, 'ativo' => false],    // TODO-LINK
             ['rotulo' => 'Transparência', 'link' => '', 'seta' => false, 'ativo' => false], // TODO-LINK
+            ['rotulo' => 'Governamental', 'link' => '', 'seta' => false, 'ativo' => false], // TODO-LINK
         ],
         'botao_texto' => 'Agendamentos',
         'botao_link' => 'https://app.adesampa.com.br/welcome',

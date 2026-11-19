@@ -45,8 +45,10 @@ const VERIFICAR = `(() => {
   const temImagemAtras = (el) => { for (let e = el; e; e = e.parentElement) { if (getComputedStyle(e).backgroundImage !== 'none') return true; } return false; };
   const fundo = (el) => { let cor = { r: 255, g: 255, b: 255, a: 1 }; const pilha = []; for (let e = el; e; e = e.parentElement) pilha.push(parse(getComputedStyle(e).backgroundColor)); for (const c of pilha.reverse()) if (c && c.a > 0) cor = mistura(c, cor); return cor; };
   r.fonteMinima = 99; r.contraste = [];
+  // .galeria__titulo (Parcerias governamentais): texto grande sobre FOTO + degradê azul — o fundo não é uma cor de CSS.
+  // Medido no print a 1440 px (19/11/2026): 90% dos pixels atrás do título dão ≥ 4,9:1 (texto grande exige 3:1). Ver DECISOES_HOME H-11.
   for (const el of document.body.querySelectorAll('*')) {
-    if (el.closest('.sr-only, .skip-link, [aria-hidden="true"], .banner')) continue;
+    if (el.closest('.sr-only, .skip-link, [aria-hidden="true"], .banner, .galeria__titulo')) continue;
     const proprio = [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim() !== '');
     if (!proprio || !vis(el)) continue;
     const cs = getComputedStyle(el); const fs = parseFloat(cs.fontSize);

@@ -52,6 +52,22 @@ const ICONES_PRODUTOS = { 'sampa-ensina': sampaEnsina, 'gestao-sampa': gestaoSam
         ))}
     </Carrossel>
 
+    <section class="secao secao--clara-sem-borda parcerias" aria-labelledby="titulo-parcerias">
+        <div class="container duas-colunas">
+            <div class="coluna-texto">
+                <div class="coluna-texto__bloco">
+                    <span class="etiqueta etiqueta--solida">{p.parcerias.etiqueta}</span>
+                    <h2 id="titulo-parcerias" class="h-secao">{p.parcerias.titulo}</h2>
+                    <p class="texto-1">{p.parcerias.texto}</p>
+                </div>
+                <Botao texto={p.parcerias.botao.texto} link={p.parcerias.botao.link} />
+            </div>
+            <div class="parcerias__galeria">
+                <Galeria fotos={p.parcerias.itens.map((i) => ({ imagem: i.imagem, alt: i.alt, titulo: i.titulo }))} rotulo={`Fotos: ${p.parcerias.titulo}`} variante="azul" larguras={[543, 1086]} sizes="(max-width: 1023px) 100vw, 543px" />
+            </div>
+        </div>
+    </section>
+
     <section class="secao secao--escura numeros" aria-labelledby="titulo-numeros">
         <div class="container">
             <div class="numeros__cabecalho">

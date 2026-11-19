@@ -17,6 +17,20 @@ eixos:
 destaques:
   titulo: 'Destaques e oportunidades'
 
+parcerias:
+  etiqueta: 'Lorem Ipsum Dollor' # PROVISÓRIO: texto ainda não definido no Figma
+  titulo: 'Parcerias governamentais'
+  texto: 'A ADE SAMPA também atua como parceira governamental estratégica na implantação e gestão de políticas públicas municipais, estruturando diversos espaços físicos de impacto na cidade de São Paulo.'
+  botao: { texto: 'Veja nossa atuação em parcerias', link: 'parcerias-governamentais/' }
+  # Cada item é uma foto do carrossel, com o título escrito sobre ela.
+  itens:
+    - titulo: 'Smart Sampa: Central de inteligência da cidade'
+      imagem: ../../assets/fotos/parceria-smart-sampa.jpg
+      alt: 'Saguão da central Smart Sampa, com telões circulares de LED azuis suspensos sob a cúpula.'
+    - titulo: 'Espaço Motoboy'
+      imagem: ../../assets/fotos/parceria-espaco-motoboy.jpg
+      alt: 'Espaço Motoboy: construção térrea com grafite colorido de um ciclista na fachada, bancos e lixeiras na calçada.'
+
 numeros:
   titulo: 'Nosso impacto em números'
   texto: 'Resultados consolidados de apoio ao empreendedorismo, inovação e descentralização do desenvolvimento na cidade.'

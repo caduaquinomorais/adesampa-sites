@@ -268,6 +268,28 @@
 .no-js .galeria__pontos button { display: none; }
 .praca .galeria__trilho img { aspect-ratio: 543 / 362; object-fit: cover; box-shadow: inset 0 0 0 1px #3F7725; }
 
+/* Parcerias governamentais (Figma 966:18689) */
+.parcerias .duas-colunas { align-items: center; }
+.parcerias .coluna-texto { width: 410px; }
+.parcerias .texto-1 { color: var(--texto-corpo); line-height: 1.15; }
+.parcerias__galeria { flex: 0 0 auto; width: 543px; max-width: 100%; }
+.parcerias .galeria__trilho img { aspect-ratio: 543 / 362; object-fit: cover; }
+.parcerias .galeria__ponto { background: var(--azul-200); }
+.parcerias .galeria__ponto[aria-pressed="true"] { background: var(--azul-500); }
+/* Título sobre a foto: degradê azul (#042F80) em "multiplicar", à esquerda, como no Figma. */
+.galeria__item--titulo { position: relative; }
+.galeria__item--titulo::before {
+    content: ""; position: absolute; inset: 0 auto 0 0; width: 68%; z-index: 1; pointer-events: none;
+    background: linear-gradient(90deg, #042F80 0%, rgba(6, 65, 176, 0.9) 66%, rgba(4, 47, 128, 0) 100%);
+    mix-blend-mode: multiply; opacity: 0.75;
+}
+.galeria__titulo {
+    position: absolute; z-index: 2; left: 28px; top: 50%; transform: translateY(-50%);
+    width: min(210px, calc(100% - 56px)); margin: 0;
+    font-size: var(--fs-h4); font-weight: 600; line-height: 1.2; color: var(--branco);
+    text-shadow: 0 1px 12px rgba(4, 47, 128, 0.6);
+}
+
 /* ==========================================================================
    Sobre
    ========================================================================== */
@@ -429,7 +451,7 @@ a.card-publicacao:hover .card-publicacao__titulo { text-decoration: underline; }
     .eixos__lista { grid-template-columns: repeat(3, minmax(0, 206px)); }
     .duas-colunas, .redacao .container { flex-direction: column; align-items: stretch; }
     .coluna-texto, .publicacoes-chamada .coluna-texto { width: 100%; }
-    .teia__mapa, .praca__galeria { width: 100%; max-width: 640px; }
+    .teia__mapa, .praca__galeria, .parcerias__galeria { width: 100%; max-width: 640px; }
     .publicacoes-chamada__capa { width: min(285px, 100%); }
     .produtos__lista { grid-template-columns: minmax(0, 560px); }
     .numeros__lista { grid-template-columns: minmax(0, 1fr); }

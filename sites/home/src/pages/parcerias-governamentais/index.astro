@@ -1,0 +1,26 @@
+---
+/*
+ * Parcerias governamentais — página PROVISÓRIA (em produção), destino do item "Governamental" do
+ * cabeçalho e do botão da seção "Parcerias governamentais" do Início.
+ * Figma: frame "Parcerias Governamentais" (966:21749), ainda não implementado.
+ * Fica fora dos buscadores (semIndexacao) até ser concluída.
+ */
+import BaseLayout from '@adesampa/ui/BaseLayout.astro';
+import { caminho } from '@adesampa/ui/caminhos';
+import Hero from '../../components/Hero.astro';
+import Botao from '../../components/Botao.astro';
+import '../../styles/site.css';
+---
+<BaseLayout titulo="Parcerias governamentais" descricao="Atuação da ADE SAMPA como parceira governamental na implantação e gestão de políticas públicas municipais." ativo="governamental" semIndexacao>
+    <Hero
+        trilha={[{ rotulo: 'Início', href: caminho() }, { rotulo: 'Parcerias governamentais' }]}
+        etiqueta="Em construção"
+        titulo="Parcerias governamentais"
+        texto="Esta página está sendo preparada. Em breve, você encontrará aqui os projetos que a ADE SAMPA realiza em parceria com o poder público."
+    />
+    <section class="secao secao--64 erro-404" aria-label="Para onde ir">
+        <div class="container">
+            <Botao texto="Voltar ao início" link={caminho()} />
+        </div>
+    </section>
+</BaseLayout>
