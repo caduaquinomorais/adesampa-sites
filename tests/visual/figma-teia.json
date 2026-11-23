@@ -1,0 +1,20 @@
+{
+  "_comentario": "Geometria do Figma (frame Teia 212:2903, 1440 px), trazida de teia-teste/tests/visual/figma-geometria.json (12/11/2026); referência teia-1440.png do mesmo projeto. Dúvidas tem altura livre: as perguntas sem resposta não são publicadas (pendência P-01 do Teia). Normas também: os botões Baixar PDF só aparecem com o PDF (pendência P-02).",
+  "paginas": [
+    {
+      "nome": "teia", "url": "", "referencia": "teia-1440.png", "frame": "212:2903",
+      "secoes": [
+        { "nome": "submenu", "seletor": ".submenu", "y": 69, "altura": 40 },
+        { "nome": "banner", "seletor": ".hero", "y": 109, "altura": 397 },
+        { "nome": "coworking", "seletor": "#coworking", "y": 506, "altura": 546 },
+        { "nome": "podcast", "seletor": "#podcast", "y": 1052, "altura": 548 },
+        { "nome": "fotografia", "seletor": "#fotografia", "y": 1600, "altura": 546 },
+        { "nome": "musica", "seletor": "#musica", "y": 2146, "altura": 548 },
+        { "nome": "mapa", "seletor": "#mapa", "y": 2694, "altura": 498 },
+        { "nome": "duvidas", "seletor": "#duvidas", "y": 3192, "altura": null },
+        { "nome": "normas", "seletor": "#normas", "y": 4004, "altura": null },
+        { "nome": "rodape", "seletor": ".site-footer", "y": 4710, "altura": 679 }
+      ]
+    }
+  ]
+}

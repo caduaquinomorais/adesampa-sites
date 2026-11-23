@@ -1,0 +1,194 @@
+---
+/*
+ * Teia — Figma: frame "Teia" (212:2903). Migrado do projeto teia-teste (app/views/site/teia.php):
+ * mesma ordem, mesmo layout e mesmos textos. Textos: src/content/paginas/teia.md.
+ */
+import { getEntry } from 'astro:content';
+import { Picture } from 'astro:assets';
+import BaseLayout from '@adesampa/ui/BaseLayout.astro';
+import { caminho } from '@adesampa/ui/caminhos';
+import { ambienteAtual, pagina, resolverDestino } from '@adesampa/ui/institucional';
+import logoTeia from '@adesampa/ui/assets/icons/logo-teia.svg?url';
+import { attrs, paragrafos, urlArquivo } from '../lib/conteudo';
+import fundoBanner from '../assets/fotos/banner-fundo.jpg';
+import fundoMapa from '../assets/fotos/mapa-fundo.jpg';
+import previaMapa from '../assets/fotos/mapa-previa.jpg';
+import logoAde from '../assets/icones/logo-adesampa-branco.svg?url';
+import logoPrefeitura from '../assets/icones/logo-prefeitura-branco.svg?url';
+import iconeSeta from '../assets/icones/caret-circle-down.svg?url';
+import iconePdf from '../assets/icones/file-pdf.svg?url';
+import '../styles/site.css';
+
+const entrada = await getEntry('teia', 'teia');
+if (!entrada) throw new Error('Falta src/content/paginas/teia.md');
+const c = entrada.data;
+const home = resolverDestino(pagina('home'), ambienteAtual());
+const unidades = c.mapa.unidades;
+const primeira = unidades[0];
+const faq = c.duvidas.itens.filter((i) => i.resposta.trim() !== '');
+
+const submenu = {
+  rotulo: 'Teia',
+  logo: logoTeia,
+  logoLargura: 47,
+  logoAltura: 14,
+  logoLink: caminho(),
+  links: [
+    ...c.espacos.map((e) => ({ rotulo: { coworking: 'Coworking', podcast: 'Podcast', fotografia: 'Fotografia', musica: 'Música' }[e.ancora] ?? e.titulo, link: `#${e.ancora}` })),
+    { rotulo: 'Mapa de unidades', link: '#mapa' },
+    { rotulo: 'Dúvidas', link: '#duvidas' },
+    { rotulo: 'Normas de uso', link: '#normas' },
+  ],
+};
+---
+<BaseLayout titulo={c.titulo} descricao={c.descricao} ativo="programas" submenu={submenu}>
+    <section class="hero" aria-labelledby="titulo-pagina">
+        <div class="hero__bg" aria-hidden="true">
+            <Picture src={fundoBanner} alt="" class="hero__bg-img" formats={['avif', 'webp']} fallbackFormat="jpg" widths={[768, 1440, 2880]} sizes="100vw" loading="eager" fetchpriority="high" />
+        </div>
+        <div class="hero__inner container">
+            <div class="hero__content">
+                <nav class="breadcrumb" aria-label="Você está em">
+                    <ol>
+                        <li><a href={home}>Início</a></li>
+                        <li><span>Programas</span></li>
+                        <li aria-current="page">{c.banner.titulo}</li>
+                    </ol>
+                </nav>
+                <div class="hero__text">
+                    <p class="tag tag--medio">{c.banner.etiqueta}</p>
+                    <h1 class="hero__title" id="titulo-pagina">{c.banner.titulo}</h1>
+                    <p class="hero__lead">{c.banner.texto}</p>
+                </div>
+            </div>
+            <p class="hero__logos">
+                <img src={logoAde} alt="ADE SAMPA" width="137" height="24">
+                <img src={logoPrefeitura} alt="Prefeitura de São Paulo" width="166" height="52">
+            </p>
+        </div>
+    </section>
+
+    {c.espacos.map((espaco, i) => (
+        <section class:list={['space', { 'space--alt': i % 2 === 1 }]} id={espaco.ancora} aria-labelledby={`espaco-${espaco.ancora}`}>
+            <div class="space__inner container">
+                <div class="space__text">
+                    <div class="space__copy">
+                        <p class="tag tag--clara">{espaco.etiqueta}</p>
+                        <h2 class="h2" id={`espaco-${espaco.ancora}`}>{espaco.titulo}</h2>
+                        <div class="body1 rich">{paragrafos(espaco.texto).map((t) => <p>{t}</p>)}</div>
+                    </div>
+                    <div class="btn-row">
+                        <a class="btn btn--secondary" href="#mapa">{c.textoBotaoMapa}</a>
+                        <a class="btn btn--primary" {...attrs(c.linkAgendamento)}>{c.textoBotaoAgendamento}</a>
+                    </div>
+                </div>
+                <div class="gallery" data-gallery>
+                    <div class="gallery__frame">
+                        {espaco.fotos.map((foto, f) => (
+                            <figure class="gallery__slide" hidden={f > 0} data-slide>
+                                <Picture src={foto.imagem} alt={foto.alt} class="gallery__img" formats={['avif', 'webp']} fallbackFormat="jpg" widths={[543, 1086]} sizes="(max-width: 1023px) 100vw, 543px" loading={i === 0 && f === 0 ? 'eager' : 'lazy'} decoding="async" />
+                            </figure>
+                        ))}
+                    </div>
+                    <div class="gallery__dots" role="group" aria-label={`Fotos de ${espaco.titulo}`}>
+                        {espaco.fotos.length > 1 && espaco.fotos.map((_, f) => (
+                            <button class="gallery__dot" type="button" data-dot={f} aria-label={`Foto ${f + 1} de ${espaco.fotos.length}`} aria-pressed={f === 0 ? 'true' : 'false'}></button>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </section>
+    ))}
+
+    <section class="map-section" id="mapa" aria-labelledby="mapa-titulo">
+        <div class="map-section__bg" aria-hidden="true">
+            <Picture src={fundoMapa} alt="" class="map-section__bg-img" formats={['avif', 'webp']} fallbackFormat="jpg" widths={[768, 1440, 2880]} sizes="100vw" loading="lazy" />
+        </div>
+        <div class="map-section__inner container">
+            <div class="map-section__text">
+                <h2 class="h2 map-section__title" id="mapa-titulo">{c.mapa.titulo}</h2>
+                <p class="body1">{c.mapa.texto}</p>
+                <a class="btn btn--secondary" {...attrs(c.linkAgendamento)}>{c.mapa.botao}</a>
+            </div>
+            {/* Painel da unidade + prévia do mapa. Com mapa.embed, o botão (exibido pelo JavaScript) troca tudo pelo Google My Maps. */}
+            <div class="map-card" data-mapa={c.mapa.embed || undefined} data-mapa-titulo="Mapa interativo das unidades do Teia (Google Maps)">
+                <div class="map-card__panel">
+                    <p class="map-card__header" data-map-title>{primeira.nome}</p>
+                    {unidades.length > 1 && (
+                        <>
+                            <label class="map-card__select-label" for="mapa-unidade">Escolha a unidade</label>
+                            <select class="map-card__select" id="mapa-unidade" data-map-select>
+                                {unidades.map((u, n) => <option value={n}>{u.nome}</option>)}
+                            </select>
+                        </>
+                    )}
+                    {unidades.map((u, n) => (
+                        <dl class="map-card__details" data-map-unit={n} data-map-name={u.nome} hidden={n > 0}>
+                            <div><dt>{c.mapa.rotulos.unidade}</dt><dd>{u.nome}</dd></div>
+                            {u.zona && <div><dt>{c.mapa.rotulos.zona}</dt><dd>{u.zona}</dd></div>}
+                            {u.classificacao && <div><dt>{c.mapa.rotulos.classificacao}</dt><dd>{u.classificacao}</dd></div>}
+                            {u.status && <div><dt>{c.mapa.rotulos.status}</dt><dd>{u.status}</dd></div>}
+                            <div><dt>{c.mapa.rotulos.endereco}</dt><dd>{u.endereco}</dd></div>
+                        </dl>
+                    ))}
+                </div>
+                <div class="map-card__previa">
+                    <Picture src={previaMapa} alt="Trecho do mapa de São Paulo, da região central até a zona sul." formats={['avif', 'webp']} fallbackFormat="jpg" widths={[320, 640]} sizes="320px" loading="lazy" />
+                    {c.mapa.embed && (
+                        <button type="button" class="btn btn--primary map-card__botao" data-mapa-botao hidden>
+                            {c.mapa.botaoInterativo}<span class="sr-only"> (carrega o Google Maps)</span>
+                        </button>
+                    )}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq" id="duvidas" aria-labelledby="duvidas-titulo">
+        <div class="faq__inner container">
+            <header class="section-head">
+                <h2 class="h2" id="duvidas-titulo">{c.duvidas.titulo}</h2>
+                {c.duvidas.subtitulo && <p class="body1">{c.duvidas.subtitulo}</p>}
+            </header>
+            {faq.length > 0 && (
+                <div class="faq__list">
+                    {faq.map((item, n) => (
+                        <details class="faq__item">
+                            <summary class="faq__question">
+                                <span class="h5">{n + 1}. {item.pergunta}</span>
+                                <img class="faq__icon" src={iconeSeta} alt="" width="32" height="32">
+                            </summary>
+                            <div class="faq__answer body1 rich">{paragrafos(item.resposta).map((t) => <p>{t}</p>)}</div>
+                        </details>
+                    ))}
+                </div>
+            )}
+        </div>
+    </section>
+
+    <section class="rules" id="normas" aria-labelledby="normas-titulo">
+        <div class="rules__inner container">
+            <div class="rules__box">
+                <header class="rules__head">
+                    <h2 class="rules__title" id="normas-titulo">{c.normas.titulo}</h2>
+                    {c.normas.texto && <p class="rules__lead">{c.normas.texto}</p>}
+                </header>
+                <ul class="rules__cards">
+                    {c.normas.documentos.map((doc) => (
+                        <li class="doc-card">
+                            <span class="doc-card__icon" aria-hidden="true"><img src={iconePdf} alt="" width="32" height="32"></span>
+                            <div class="doc-card__text">
+                                <h3 class="h5">{doc.titulo}</h3>
+                                {doc.descricao && <p class="body2">{doc.descricao}</p>}
+                            </div>
+                            {doc.arquivo && (
+                                <a class="btn btn--secondary" href={urlArquivo(doc.arquivo)} download>{doc.botao}<span class="sr-only"> — {doc.titulo} (PDF)</span></a>
+                            )}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </div>
+    </section>
+</BaseLayout>
+<script>import '../scripts/teia';</script>

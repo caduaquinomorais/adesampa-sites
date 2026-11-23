@@ -43,11 +43,11 @@ teia:
   etiqueta: 'Equipamento público'
   titulo: 'Teia: coworkings e estúdios gratuitos em toda a cidade'
   texto: 'Rede de espaços de trabalho públicos com internet, computadores e salas de reunião, além de estúdios profissionais de podcast, música e fotografia em todas as regiões de São Paulo.'
-  botaoSecundario: { texto: 'Saiba mais', link: 'https://oranilom.com.br/teia/' }
+  botaoSecundario: { texto: 'Saiba mais', link: 'https://oranilom.com.br/homolog/teia/' } # Teia novo (homolog). O Teia antigo segue em oranilom.com.br/teia/.
   botaoPrincipal: { texto: 'Agende seu horário', link: 'https://app.adesampa.com.br/welcome' }
   mapa: ../../assets/fotos/teia-mapa.png
   mapaAlt: 'Mapa de São Paulo com a unidade TEIA Parque Novo Mundo (zona Norte), na Av. Ernesto Augusto Lopes, 100 – Parque Vila Maria.'
-  mapaLink: 'https://oranilom.com.br/teia/#mapa'
+  mapaLink: 'https://oranilom.com.br/homolog/teia/#mapa'
   # Mapa interativo: cole aqui o link de incorporação do Google My Maps (https://www.google.com/maps/d/embed?mid=…).
   # Vazio = fica só a imagem acima, com link.
   mapaEmbed: 'https://www.google.com/maps/d/embed?mid=1VKpbJmE27aZ-ZaMqH6xwHOgXpnaUiWw&ehbc=2E312F'

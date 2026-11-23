@@ -1,0 +1,17 @@
+{
+  "name": "@adesampa/site-teia",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Site do Teia (coworkings e estúdios públicos da ADE SAMPA), migrado do projeto teia-teste.",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@adesampa/ui": "1.0.0",
+    "astro": "7.4.12"
+  }
+}

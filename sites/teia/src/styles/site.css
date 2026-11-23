@@ -1,0 +1,299 @@
+/* ==========================================================================
+   Site Teia (ADE SAMPA) — estilos da página. Cabeçalho, submenu e rodapé: packages/ui.
+   Migrado de teia-teste/public/assets/css/site.css (fiel ao Figma, frame "Teia" 212:2903).
+   As classes ficam iguais às do projeto original, para facilitar a comparação.
+   ========================================================================== */
+
+:root {
+    /* Cores — TEIA */
+    --teia-001: #14171F;
+    --teia-100: #3A3E4A;
+    --teia-200: #646B77;
+    --teia-300: #A3AAB6;
+    --teia-400: #E3E6E9; /* #A3AAB6 a 30% sobre branco */
+    --teia-mapa-fundo: #141720;
+    --preto-001: #262930;
+    --preto-100: #8F9299;
+    --preto-200: #D2D3D6;
+    /* Painel de unidade do mapa (cores medidas na imagem do Figma) */
+    --mapa-painel-topo: #6C6C6C;
+    --mapa-painel-fundo: #F5F5F5;
+
+    --ls-nav: -0.02em;
+    --sp-4: 4px; --sp-6: 6px; --sp-8: 8px; --sp-10: 10px; --sp-12: 12px; --sp-14: 14px;
+    --sp-16: 16px; --sp-24: 24px; --sp-28: 28px; --sp-32: 32px; --sp-40: 40px; --sp-48: 48px;
+    --sp-62: 62px; --sp-64: 64px; --sp-72: 72px; --sp-88: 88px;
+    --radius-pill: 9999px;
+    --container-max: 1116px;
+    --gutter-min: var(--gutter);
+    --section-y: var(--sp-64);
+    --hero-y: var(--sp-72);
+}
+
+/* ---------- Base da página (o reset geral fica em packages/ui/tokens.css) ---------- */
+main { font-size: var(--fs-body2); line-height: 1.25; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+main :is(h1, h2, h3, p, ul, ol, dl, dd, figure) { margin: 0; }
+main :is(ul, ol) { padding: 0; list-style: none; }
+main a { color: inherit; text-decoration: none; }
+main a:not([href]) { cursor: default; }
+main :is(img, picture, iframe) { display: block; max-width: 100%; }
+main :is(button, select) { font: inherit; color: inherit; }
+[hidden] { display: none !important; }
+html { scroll-padding-top: 16px; }
+body { overflow-x: clip; }
+.hero :focus-visible, .map-section :focus-visible, .rules__box :focus-visible { outline-color: var(--branco); }
+
+/* ---------- Tipografia ---------- */
+.h2 { font-size: var(--fs-h2); font-weight: 600; line-height: 1.1; }
+.h5 { font-size: var(--fs-h5); font-weight: 700; line-height: 1.2; }
+.body1 { font-size: var(--fs-body1); font-weight: 400; line-height: 1.25; }
+.body2 { font-size: var(--fs-body2); font-weight: 400; line-height: 1.25; }
+.rich p + p { margin-top: 0.75em; }
+.rich a { text-decoration: underline; text-underline-offset: 2px; }
+.rich strong { font-weight: 700; }
+
+/* ---------- Tags ---------- */
+.tag {
+    display: inline-flex; align-items: center; align-self: flex-start;
+    height: 22px; padding: 0 var(--sp-16);
+    border-radius: var(--radius-tag);
+    font-size: var(--fs-tag); font-weight: 700; line-height: 1;
+    text-transform: uppercase; white-space: nowrap;
+}
+.tag--clara { background: var(--branco); color: var(--teia-001); box-shadow: inset 0 0 0 0.5px var(--teia-001); }
+.tag--medio { background: var(--teia-100); color: var(--branco); }
+
+/* ---------- Botões ("Botão (Teia)" 241:4030) ---------- */
+.btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 112px; height: 44px; padding: 0 var(--sp-24);
+    border-radius: var(--radius-btn);
+    font-size: var(--fs-botao); font-weight: 600; line-height: 1;
+    white-space: nowrap; text-align: center; cursor: pointer;
+    transition: background-color .15s ease, color .15s ease, box-shadow .15s ease;
+}
+.btn--primary { background: var(--teia-001); color: var(--branco); }
+.btn--primary[href]:hover { background: var(--teia-300); color: var(--teia-001); }
+.btn--primary[href]:active { background: var(--teia-001); color: var(--branco); }
+.btn--secondary { background: var(--branco); color: var(--teia-001); box-shadow: inset 0 0 0 1px var(--teia-001); }
+.btn--secondary[href]:hover { box-shadow: inset 0 0 0 2px var(--teia-001); }
+.btn:not([href]) { cursor: default; }
+.btn-row { display: flex; flex-wrap: wrap; gap: var(--sp-16); }
+
+/* ==========================================================================
+   Banner (Frame 273)
+   ========================================================================== */
+.hero {
+    position: relative; isolation: isolate;
+    background: var(--teia-001); color: var(--branco);
+    padding-block: var(--hero-y);
+    overflow: hidden;
+}
+.hero__bg, .map-section__bg { position: absolute; inset: 0; z-index: -1; }
+.hero__bg picture, .map-section__bg picture { width: 100%; height: 100%; }
+.hero__bg-img, .map-section__bg-img { width: 100%; height: 100%; object-fit: cover; }
+.hero__inner { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--sp-32); }
+.hero__content { display: flex; flex-direction: column; gap: var(--sp-48); width: 548px; max-width: 620px; flex: 0 1 548px; }
+.hero__text { display: flex; flex-direction: column; gap: var(--sp-16); }
+.hero__title { font-size: var(--fs-display); font-weight: 600; line-height: 1; }
+.hero__lead { font-size: var(--fs-body1); line-height: 1.25; }
+.hero__logos {
+    flex: 0 0 auto;
+    display: flex; align-items: center; justify-content: center; gap: 22.641px;
+    width: 391px; height: 85.245px; padding: 16.466px 32.933px;
+    background: var(--teia-100); border-radius: var(--radius-pill);
+}
+.hero__logos img:first-child { width: 136.6px; height: 23.571px; }
+.hero__logos img:last-child { width: 165.893px; height: 52.312px; }
+.hero--error .hero__content { gap: var(--sp-32); }
+
+.breadcrumb ol { display: flex; flex-wrap: wrap; font-size: var(--fs-caption); line-height: 1.25; }
+.breadcrumb li { display: flex; align-items: center; }
+.breadcrumb li + li::before { content: "/"; padding: 0 var(--sp-8); font-weight: 500; line-height: normal; }
+.breadcrumb li[aria-current] { font-weight: 700; line-height: normal; }
+.breadcrumb a[href]:hover { text-decoration: underline; }
+
+/* ==========================================================================
+   Espaços (Frames 290–293)
+   ========================================================================== */
+.space { background: var(--branco); padding-block: var(--section-y); }
+.space--alt { background: var(--teia-400); border-block: 1px solid var(--preto-200); }
+.space__inner { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sp-40); }
+.space--alt .space__inner { flex-direction: row-reverse; }
+.space__text { flex: 0 1 508px; min-width: 0; display: flex; flex-direction: column; gap: var(--sp-32); }
+.space__copy { display: flex; flex-direction: column; gap: var(--sp-16); }
+
+.gallery { flex: 0 1 543px; min-width: 0; display: flex; flex-direction: column; gap: var(--sp-16); }
+.gallery__frame {
+    position: relative; width: 100%; aspect-ratio: 543 / 392;
+    border-radius: var(--radius-lg); overflow: hidden;
+    box-shadow: inset 0 0 0 1px var(--preto-100);
+    background: var(--preto-200);
+}
+.gallery__slide { position: absolute; inset: 0; }
+.gallery__slide picture { width: 100%; height: 100%; }
+.gallery__img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-lg); }
+/* Borda por cima da foto (como no Figma). */
+.gallery__frame::after { content: ""; position: absolute; inset: 0; border: 1px solid var(--preto-100); border-radius: var(--radius-lg); pointer-events: none; }
+/* A linha de pontos ocupa sempre 8px (mantém a geometria do Figma mesmo com uma foto só). */
+.gallery__dots { display: flex; justify-content: center; align-items: center; gap: var(--sp-12); min-height: 8px; }
+.gallery__dot {
+    position: relative; width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%;
+    background: var(--teia-300); cursor: pointer;
+}
+.gallery__dot::before { content: ""; position: absolute; inset: -6px; } /* área de clique maior */
+.gallery__dot[aria-pressed="true"] { background: var(--teia-001); }
+
+/* ==========================================================================
+   Mapa (Frame 188)
+   ========================================================================== */
+.map-section {
+    position: relative; isolation: isolate;
+    background: var(--teia-mapa-fundo); color: var(--branco);
+    padding-block: var(--hero-y); overflow: hidden;
+}
+.map-section__bg { opacity: 0.7; }
+.map-section__inner { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-40); }
+.map-section__text { flex: 0 1 410px; display: flex; flex-direction: column; align-items: flex-start; gap: var(--sp-28); }
+.map-section__title { min-height: 84px; }
+
+.map-card {
+    flex: 0 1 638px; min-width: 0;
+    display: grid; grid-template-columns: 318fr 320fr;
+    aspect-ratio: 638 / 354;
+    border: 1px solid var(--teia-300); border-radius: var(--radius-md);
+    overflow: hidden; background: var(--mapa-painel-fundo); color: #212121;
+}
+.map-card--full { grid-template-columns: 1fr; }
+.map-card__panel { display: flex; flex-direction: column; min-height: 0; overflow-y: auto; font-size: 13px; }
+.map-card__header {
+    flex: 0 0 auto; display: flex; align-items: center; min-height: 46px; padding: 8px 16px;
+    background: var(--mapa-painel-topo); color: var(--branco); font-size: 14px; font-weight: 500;
+}
+.map-card__select-label { padding: 10px 16px 4px; font-size: 12px; color: #616161; }
+.map-card__select {
+    margin: 0 16px 4px; min-height: 36px; padding: 0 8px;
+    border: 1px solid var(--teia-300); border-radius: var(--radius-btn); background: var(--branco);
+}
+.map-card__details { padding: 8px 16px 12px; }
+.map-card__details > div { padding: 8px 0; }
+.map-card__details dt { font-size: 12px; color: #616161; margin-bottom: 4px; } /* #9E9E9E da imagem não atinge WCAG AA (D-13) */
+.map-card__details dd { font-size: 13px; line-height: 1.35; }
+.map-card__frame { width: 100%; height: 100%; border: 0; background: #E5E3DF; }
+
+/* ==========================================================================
+   Dúvidas frequentes (Frame 296)
+   ========================================================================== */
+.faq { background: var(--teia-400); padding-block: var(--section-y); }
+.faq__inner { display: flex; flex-direction: column; gap: var(--sp-32); }
+.section-head { display: flex; flex-direction: column; gap: var(--sp-8); text-align: center; }
+.faq .section-head { min-height: 85.5px; } /* altura fixa do bloco no Figma (Frame 104) */
+.faq__list { display: flex; flex-direction: column; gap: var(--sp-16); }
+.faq__item {
+    background: var(--branco); border: 1px solid var(--teia-300); border-radius: var(--radius-md);
+    padding: var(--sp-32) var(--sp-24) var(--sp-32) var(--sp-40);
+}
+.faq__question {
+    display: flex; align-items: center; justify-content: space-between; gap: var(--sp-16);
+    min-height: 36px; cursor: pointer; list-style: none;
+}
+.faq__question::-webkit-details-marker { display: none; }
+.faq__icon { flex: 0 0 auto; width: 32px; height: 32px; margin: 2px; transition: transform .2s ease; }
+.faq__item[open] .faq__icon { transform: rotate(180deg); }
+.faq__answer { margin-top: var(--sp-10); max-width: 1020px; }
+
+/* ==========================================================================
+   Normas de uso (Frame 297)
+   ========================================================================== */
+.rules { background: var(--branco); padding-block: var(--section-y); }
+.rules__box {
+    max-width: var(--container-max); margin-inline: auto;
+    display: flex; flex-direction: column; align-items: center; gap: var(--sp-40);
+    padding: var(--sp-48) var(--sp-48) var(--sp-64);
+    background: var(--teia-001); color: var(--branco); border-radius: var(--radius-lg);
+}
+.rules__head { display: flex; flex-direction: column; align-items: center; gap: var(--sp-8); text-align: center; width: 100%; }
+.rules__title { width: 100%; }
+.rules__title { font-size: var(--fs-h2); font-weight: 600; line-height: normal; }
+.rules__lead { font-size: var(--fs-body1); line-height: normal; max-width: 800px; }
+.rules__cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-16); width: 100%; max-width: 600px; }
+.rules__cards:has(> :only-child) { grid-template-columns: minmax(0, 292px); justify-content: center; }
+.doc-card {
+    display: flex; flex-direction: column; align-items: flex-start; gap: var(--sp-16);
+    padding: var(--sp-24); background: var(--teia-100);
+    border: 1px solid var(--teia-200); border-radius: var(--radius-lg);
+}
+.doc-card__icon { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; background: var(--branco); border-radius: var(--radius-sm); }
+.doc-card__icon img { width: 32px; height: 32px; }
+.doc-card__text { display: flex; flex-direction: column; gap: var(--sp-8); min-height: 141px; } /* altura do bloco de texto no Figma */
+.doc-card .btn { min-width: 132px; }
+
+/* ---------- Mapa interativo (novo no monorepo): prévia + botão; o clique troca pelo Google My Maps ---------- */
+.map-card__previa { position: relative; min-height: 0; background: #E5E3DF; }
+.map-card__previa picture, .map-card__previa img { width: 100%; height: 100%; object-fit: cover; }
+.map-card__botao { position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%); box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25); }
+.map-card__botao[hidden] { display: none; }
+.map-card__frame { width: 100%; height: 100%; border: 0; background: #E5E3DF; }
+
+/* ---------- Página 404 ---------- */
+.hero--erro .hero__content { gap: var(--sp-32); }
+.erro-404 { padding-block: var(--section-y); }
+
+/* ==========================================================================
+   Responsividade (decisão D-09 do Teia) — o Figma só tem o desktop de 1440 px
+   ========================================================================== */
+@media (max-width: 1023px) {
+    :root { --section-y: 48px; --hero-y: 56px; }
+    .hero__inner { flex-direction: column; align-items: flex-start; gap: var(--sp-40); }
+    .hero__content { width: 100%; flex: none; }
+    .space__inner, .space--alt .space__inner { flex-direction: column-reverse; gap: var(--sp-32); }
+    .space__text, .gallery { flex: none; width: 100%; }
+    .gallery { max-width: 720px; }
+    .gallery__dots { gap: 0; }
+    .gallery__dot { width: 44px; height: 44px; background: transparent; }
+    .gallery__dot::before { content: ""; position: absolute; inset: 18px; border-radius: 50%; background: var(--teia-300); }
+    .gallery__dot[aria-pressed="true"] { background: transparent; }
+    .gallery__dot[aria-pressed="true"]::before { background: var(--teia-001); }
+    .map-section__inner { flex-direction: column; align-items: stretch; gap: var(--sp-32); }
+    .map-section__text { flex: none; max-width: 640px; }
+    .map-section__title { min-height: 0; }
+    .map-card { flex: none; width: 100%; aspect-ratio: auto; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: 354px; }
+    .map-card--full { grid-template-columns: 1fr; min-height: 420px; }
+    .map-card__select { min-height: 44px; }
+    .faq__question { min-height: 44px; }
+    .doc-card__text { min-height: 0; }
+    /* Alvos de toque de 44 px (mesmas regras da Home) */
+    .breadcrumb a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding-inline: 8px; }
+    .breadcrumb li:first-child a { margin-left: -8px; }
+    .breadcrumb li + li::before { padding-inline: 0; }
+    .breadcrumb li > span, .breadcrumb li[aria-current] { padding-inline: 8px; }
+}
+
+@media (max-width: 767px) {
+    :root {
+        --fs-display: 40px;
+        --fs-h2: 28px;
+        --fs-body1: 18px;
+        --fs-h5: 18px;
+        --section-y: 40px;
+        --hero-y: 40px;
+    }
+    .hero__content { gap: var(--sp-32); }
+    .hero__logos { width: 100%; max-width: 391px; height: auto; padding: 14px 24px; gap: 16px; }
+    .hero__logos img:first-child { width: 37%; height: auto; }
+    .hero__logos img:last-child { width: 45%; height: auto; }
+    .btn-row { flex-direction: column; align-items: stretch; }
+    .btn-row .btn, .map-section__text .btn { width: 100%; }
+    .map-section__text { align-items: stretch; }
+    .map-card { grid-template-columns: 1fr; grid-template-rows: auto 300px; }
+    .map-card--full { grid-template-rows: 420px; }
+    .map-card__panel { overflow: visible; }
+    .faq__item { padding: var(--sp-24) var(--sp-16) var(--sp-24) var(--sp-24); }
+    .rules__box { padding: var(--sp-32) var(--sp-16) var(--sp-40); gap: var(--sp-32); border-radius: var(--radius-md); }
+    .rules__cards, .rules__cards:has(> :only-child) { grid-template-columns: 1fr; }
+    .doc-card .btn { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn, .faq__icon { transition: none !important; }
+}

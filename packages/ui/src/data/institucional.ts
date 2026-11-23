@@ -69,6 +69,17 @@ export const SITES = congelar({
     pastaFtp: { teste: 'homolog/sampa-tech', producao: 'homolog/sampa-tech' },
     publicar: true,
   },
+  teia: {
+    rotulo: 'Teia',
+    // Versão nova (monorepo) em homolog/teia/, para conferência. O Teia atual (www/teia/, projeto teia-teste)
+    // continua no ar sem mudanças até a troca ser aprovada.
+    url: {
+      teste: 'https://oranilom.com.br/homolog/teia/',
+      producao: 'https://oranilom.com.br/homolog/teia/',
+    },
+    pastaFtp: { teste: 'homolog/teia', producao: 'homolog/teia' },
+    publicar: true,
+  },
   exemplo: {
     rotulo: 'Exemplo (só cabeçalho e rodapé, usado nos testes)',
     url: {
@@ -223,7 +234,12 @@ export const MENU_PROJETOS: MenuProjetos = congelar({
   espacos: [
     {
       titulo: 'Teia',
-      links: [link('Coworkings públicos'), link('Estúdios de podcast'), link('Estúdios de fotografia'), link('Estúdios de música')],
+      links: [
+        link('Coworkings públicos', pagina('teia', '#coworking')),
+        link('Estúdios de podcast', pagina('teia', '#podcast')),
+        link('Estúdios de fotografia', pagina('teia', '#fotografia')),
+        link('Estúdios de música', pagina('teia', '#musica')),
+      ],
     },
     { titulo: 'Produtos digitais', links: [link('Sampa Ensina'), link('Gestão Sampa'), link('Data Sampa')] },
     { titulo: 'Praça Victor Civita', links: [link('Conheça os equipamentos')] },
@@ -307,7 +323,7 @@ export const RODAPE: Rodape = congelar({
       titulo: 'Outros programas',
       cor: 'empreende',
       links: [
-        link('Teia: coworkings e estúdios públicos', 'https://oranilom.com.br/teia/'),
+        link('Teia: coworkings e estúdios públicos', pagina('teia')),
         link('Sampa Ensina'),
         link('Gestão Sampa'),
         link('Data Sampa'),

@@ -1,0 +1,39 @@
+---
+/* Página 404 (Apache: ErrorDocument no .htaccess). Mesmo banner da página do Teia. */
+import { Picture } from 'astro:assets';
+import BaseLayout from '@adesampa/ui/BaseLayout.astro';
+import { caminho } from '@adesampa/ui/caminhos';
+import { ambienteAtual, pagina, resolverDestino } from '@adesampa/ui/institucional';
+import fundoBanner from '../assets/fotos/banner-fundo.jpg';
+import '../styles/site.css';
+
+const home = resolverDestino(pagina('home'), ambienteAtual());
+---
+<BaseLayout titulo="Página não encontrada" semIndexacao>
+    <section class="hero hero--erro" aria-labelledby="titulo-pagina">
+        <div class="hero__bg" aria-hidden="true">
+            <Picture src={fundoBanner} alt="" class="hero__bg-img" formats={['avif', 'webp']} fallbackFormat="jpg" widths={[768, 1440]} sizes="100vw" loading="eager" />
+        </div>
+        <div class="hero__inner container">
+            <div class="hero__content">
+                <nav class="breadcrumb" aria-label="Você está em">
+                    <ol>
+                        <li><a href={home}>Início</a></li>
+                        <li><a href={caminho()}>Teia</a></li>
+                        <li aria-current="page">Erro 404</li>
+                    </ol>
+                </nav>
+                <div class="hero__text">
+                    <p class="tag tag--medio">Erro 404</p>
+                    <h1 class="hero__title" id="titulo-pagina">Página não encontrada</h1>
+                    <p class="hero__lead">O endereço pode ter mudado ou não existir mais. Confira se foi digitado corretamente ou volte para a página do Teia.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="erro-404" aria-label="Para onde ir">
+        <div class="container">
+            <a class="btn btn--primary" href={caminho()}>Voltar ao Teia</a>
+        </div>
+    </section>
+</BaseLayout>

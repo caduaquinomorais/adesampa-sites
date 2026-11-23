@@ -5,8 +5,10 @@
 #   2. astro check de todos os sites
 #   3. build de todos os sites (ambiente "teste") — falha se sobrar script/estilo inline
 #   4. testes unitários, identidade do cabeçalho/rodapé, links e assets
-#   5. testes visuais no Chrome headless (referência, Figma, responsividade e acessibilidade)
-# Os relatórios com as capturas ficam em "Artifacts" no resumo da execução.
+#   5. testes visuais no Chrome headless (referência, Figma, responsividade e acessibilidade),
+#      UM JOB POR SITE, em paralelo (job "visuais"): o tempo total é o do site mais demorado,
+#      e não a soma de todos. Um site novo em sites/ entra sozinho na lista.
+# Os relatórios com as capturas ficam em "Artifacts" no resumo da execução (um por site).
 # Deploy: jobs "planejar" e "deploy" abaixo (só no main, depois dos testes).
 
 name: Testes e deploy
@@ -38,7 +40,9 @@ jobs:
   testes:
     name: Check, build e testes
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 20
+    outputs:
+      sites: ${{ steps.sites.outputs.lista }}
     steps:
       - name: Baixar o código
         uses: actions/checkout@v5
@@ -75,17 +79,51 @@ jobs:
           node tests/build/identidade.mjs
           node tests/build/links.mjs
 
+      - name: Listar os sites (para os testes visuais em paralelo)
+        id: sites
+        run: |
+          lista=$(node -e "const fs=require('fs');console.log(JSON.stringify(fs.readdirSync('sites').filter((n)=>fs.existsSync('sites/'+n+'/package.json'))))")
+          echo "Sites: $lista"
+          echo "lista=$lista" >> "$GITHUB_OUTPUT"
+
+  visuais:
+    name: Testes visuais — ${{ matrix.site }}
+    needs: testes
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false # um site com falha não interrompe os outros (dá para ver todos os erros de uma vez)
+      matrix:
+        site: ${{ fromJSON(needs.testes.outputs.sites) }}
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v5
+
+      - name: Instalar o Node (versão do .nvmrc)
+        uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Instalar dependências (exatas do package-lock.json)
+        run: npm ci
+
+      - name: Build do site
+        run: npm run build -w sites/${{ matrix.site }}
+
+      # Roda só as baterias deste site (o nome de cada bateria começa com "visual: <site> ").
       - name: Testes visuais (Chrome headless)
         env:
           CHROME_PATH: /usr/bin/google-chrome
           ADESAMPA_TESTES_CONTINUAR: '1'
-        run: npm test -- visual
+        run: |
+          npm test -- "visual: ${{ matrix.site }} "
 
       - name: Guardar relatórios e capturas
         if: always()
         uses: actions/upload-artifact@v5
         with:
-          name: relatorios-visuais
+          name: relatorios-visuais-${{ matrix.site }}
           path: tests/visual/reports/
           retention-days: 14
           if-no-files-found: ignore
@@ -96,7 +134,7 @@ jobs:
   # ---------------------------------------------------------------------------------------------
   planejar:
     name: Planejar o deploy
-    needs: testes
+    needs: [testes, visuais]
     if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
     timeout-minutes: 5
