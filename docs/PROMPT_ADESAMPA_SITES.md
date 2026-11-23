@@ -1,5 +1,7 @@
 # Prompt: monorepo Astro dos 7 subdomínios da ADE SAMPA
 
+> **Documento histórico.** Este é o pedido original que deu início ao projeto (16/11/2026). Ele descreve o plano, não o estado atual. Para o estado atual, comece pelo [README.md](../README.md).
+
 Prompt para um agente de IA (ex.: Claude Code) aberto numa **pasta vazia**, nesta mesma máquina. Ele cria um repositório único com os 7 subdomínios da ADE SAMPA. O cabeçalho e o rodapé ficam num só lugar e são idênticos em todos os sites. O deploy publica na KingHost por FTPS.
 
 **Como usar:**

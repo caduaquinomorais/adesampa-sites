@@ -31,7 +31,7 @@ Configuração no GitHub: os segredos `FTP_USERNAME` e `FTP_PASSWORD`, e as vari
 
 O Teia antigo (`www/teia/`, projeto teia-teste) e o Sampa Tech antigo (`www/sampa-tech/`) ficam **fora** deste projeto: nunca mexa nessas pastas.
 
-**Site novo:** antes do primeiro deploy, crie a pasta pelo FTP ou pelo gerenciador de arquivos da KingHost e, dentro dela, um arquivo `.adesampa-site` cujo único conteúdo é o nome do site. Sem o marcador, o deploy desse site para com um erro e não envia nada.
+**Site novo:** antes do primeiro deploy, crie a pasta pelo FTP ou pelo gerenciador de arquivos da KingHost e, dentro dela, um arquivo `.adesampa-site` cujo único conteúdo é o nome do site. Sem o marcador, o deploy desse site para com um erro e não envia nada. O passo a passo completo está em [NOVO_SITE.md](NOVO_SITE.md).
 
 ## Problemas conhecidos
 

@@ -2,6 +2,8 @@
 
 Guia rápido para achar o arquivo certo de cada mudança. Os caminhos partem da pasta do projeto (`adesampa-sites/`).
 
+Achou o arquivo e quer o passo a passo com código? Veja [RECEITAS.md](RECEITAS.md).
+
 Cada site fica em `sites/<site>/`:
 
 | Site | Pasta | Endereço de teste |
@@ -129,7 +131,9 @@ Reaproveite as classes que já existem (`secao`, `container`, `h-secao`, `texto-
 
 | Quero… | Onde |
 |---|---|
-| Criar um site novo (ex.: Sampa Games) | Copie `sites/tech/` como modelo, cadastre o site em `SITES` (`institucional.ts`) e crie a pasta com o marcador no FTP ([DEPLOY.md](DEPLOY.md#sites-e-pastas-no-ftp)) |
+| Criar um site novo (ex.: Sampa Games) | Passo a passo em [NOVO_SITE.md](NOVO_SITE.md) |
+| Entender ou consertar um teste que falhou | [TESTES.md](TESTES.md#falhas-comuns-e-como-resolver) |
+| Implementar uma tela do Figma | [FIGMA.md](FIGMA.md) |
 | Regras do servidor (segurança, cache, página 404) | `sites/<site>/public/.htaccess` |
 | Liberar um serviço externo incorporado (ex.: um mapa ou um vídeo de outro site) | `sites/<site>/public/.htaccess`, na linha `Content-Security-Policy` |
 | Como o deploy funciona e o que fazer quando falha | [DEPLOY.md](DEPLOY.md) e `.github/workflows/testes.yml` |
