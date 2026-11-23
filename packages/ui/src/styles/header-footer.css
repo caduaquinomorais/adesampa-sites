@@ -189,6 +189,9 @@
 .mega__programa-link[href]:focus-visible img { transform: scale(1.05); }
 .mega__grupo { display: flex; flex-direction: column; gap: 12px; }
 .mega__grupo-titulo { font-size: 16px; font-weight: 700; line-height: 20px; color: #000; }
+/* Título do grupo (Teia, Produtos digitais) = link para a página. Pendente = texto parado. */
+.mega__grupo-link { color: inherit; text-decoration: none; transition: color .16s ease-out; }
+.mega__grupo-link[href]:hover { color: var(--hf-empreende-001); }
 .mega__links { display: flex; flex-direction: column; gap: 12px; }
 .mega__link { display: inline-block; color: var(--hf-preto-001); transition: color .16s ease-out; }
 .mega__link[href]:hover { color: var(--hf-empreende-001); }
@@ -325,6 +328,7 @@
     .mega__eixo { width: auto; gap: 4px; }
     .mega__links { gap: 0; }
     .mega__link { display: flex; align-items: center; min-height: 44px; font-size: 14px; line-height: 1.25; }
+    .mega__grupo-link[href] { display: inline-flex; align-items: center; min-height: 44px; }
 
     .submenu { padding-inline: 0; }
     .submenu__inner { padding-inline: var(--hf-gutter); overflow-x: auto; scrollbar-width: thin; }

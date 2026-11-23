@@ -69,7 +69,7 @@ const href = (destino: Parameters<typeof resolverDestino>[0]) => atributosLink(r
                                 <p class="mega__titulo">{MENU_PROJETOS.espacosTitulo}</p>
                                 {MENU_PROJETOS.espacos.map((grupo, i) => (
                                     <div class="mega__grupo">
-                                        <p class="mega__grupo-titulo" id={`mega-espaco-${i}`}>{grupo.titulo}</p>
+                                        <p class="mega__grupo-titulo" id={`mega-espaco-${i}`}><a class="mega__grupo-link" {...href(grupo.link)}>{grupo.titulo}</a></p>
                                         <ul class="mega__links" aria-labelledby={`mega-espaco-${i}`}>
                                             {grupo.links.map((l) => <li><a class="mega__link" {...href(l.link)}>{l.rotulo}</a></li>)}
                                         </ul>

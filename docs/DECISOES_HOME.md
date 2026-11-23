@@ -107,6 +107,7 @@ Figma: frame "Menu de projetos" (656:19254), 1008 × 476. Fica em todos os sites
 - **Logos dos eixos:** SVGs exportados do Figma (`packages/ui/assets/icons/menu-*.svg`, com 28 px de altura) e carregados só quando o menu abre (lazy). O teste visual força o carregamento deles para confirmar que não estão quebrados.
 - **Logos como links (23/11/2026):** cada logo leva à página do programa (campo `link` de cada eixo em `MENU_PROJETOS`). Hoje só o Sampa Tech tem página; os outros 4 ficam pendentes (aparecem, mas não clicam).
   - Ao passar o mouse ou focar pelo teclado, o logo com link cresce 5% em 180 ms (fora do Figma, a pedido). Os pendentes ficam parados.
+- **Títulos dos grupos como links (23/11/2026):** em "Espaços e plataformas", o título **Teia** leva ao site do Teia e **Produtos digitais** leva à página nova (H-12). Sampa Ensina, Gestão Sampa e Data Sampa levam à seção de cada um nessa página (`#sampa-ensina`, `#gestao-sampa`, `#data-sampa`). "Praça Victor Civita" continua pendente (campo `link` de cada grupo).
 
 ## H-10 — Efeitos de hover (Início e rodapé)
 
@@ -137,6 +138,18 @@ O Figma da Início ganhou uma seção nova e o cabeçalho ganhou um item. Compar
 - **Não seguido:** as faixas de degradê dos destaques (Rectangle 908/909) saíram do lugar no Figma, aparentemente sem querer. O site as mantém alinhadas ao carrossel.
 - **Teste visual:** a referência `inicio-1440.png` foi montada com a imagem antiga mais a exportação da seção nova, porque a API do Figma estava no limite de uso.
 
+## H-12 — Página Produtos digitais (23/11/2026)
+
+Figma: frame "Produtos Digitais" (685:50101). Endereço: `/comunicacao/produtos-digitais/`, com "Comunicação" ativo no menu, como no Figma.
+- **Textos:** `paginas/produtos-digitais.md`. Uma seção por plataforma, com fundos alternados (claro / branco / claro) e o card de recursos invertido.
+- **Breadcrumb:** "Início / Comunicação / Produtos digitais". O Figma mostra só "Início / Produtos Digitais"; o item do meio foi acrescentado porque a página fica dentro de Comunicação.
+- **Botões "Conheça a plataforma":** pendentes (aparecem, mas não clicam) até chegarem os endereços das plataformas. Os cards "Acesse a plataforma" da Início também.
+- **Logos e ícones:** SVGs exportados do Figma.
+  - logos em `src/assets/produtos/logo-*.svg`. O do Gestão Sampa tem 88 px de altura (o til sobe acima da linha); os outros têm 80;
+  - os 9 ícones estão em `src/assets/icones/produtos/` e são escolhidos pelo campo `icone:` no conteúdo (`components/IconeProduto.astro`).
+- **Medidas:** o limite de uso do Figma acabou no meio da leitura. Vieram a estrutura, os textos, as medidas e o banner; as cores dos fundos e dos cards saíram do print do frame.
+- **Teste:** a página não tem referência no teste de comparação com o Figma; passa pelos testes de responsividade e acessibilidade.
+
 ## Pendências de conteúdo (confirmar com a ADE SAMPA)
 
 | # | Onde | Pendência |
@@ -146,4 +159,5 @@ O Figma da Início ganhou uma seção nova e o cabeçalho ganhou um item. Compar
 | P-H3 | Início ("13 anos") × Sobre ("Há 14 anos") | Os números divergem no Figma. |
 | P-H4 | Links pendentes | Programas, Transparência, redes sociais, links legais, sites dos 5 programas, produtos digitais, botões dos destaques, "Ver programação completa", manuais (PDF) e PDFs das revistas e cartilhas. |
 | P-H5 | Revistas 1ª a 3ª edição | Os textos alternativos das capas são genéricos. Faltam os temas de cada edição. |
+| P-H7 | Produtos digitais | Endereços das 3 plataformas (botões "Conheça a plataforma" e cards "Acesse a plataforma" da Início). |
 | P-H6 | Início, "Parcerias governamentais" | Texto da etiqueta (no Figma: "Lorem Ipsum Dollor") e textos alternativos das 2 fotos (escritos por nós). |

@@ -192,6 +192,8 @@ export interface EixoMenu {
 
 export interface GrupoMenu {
   titulo: string;
+  /** Para onde o título do grupo leva. '' = pendente (o título aparece, mas não clica). */
+  link: Destino;
   links: Link[];
 }
 
@@ -238,6 +240,7 @@ export const MENU_PROJETOS: MenuProjetos = congelar({
   espacos: [
     {
       titulo: 'Teia',
+      link: pagina('teia'),
       links: [
         link('Coworkings públicos', pagina('teia', '#coworking')),
         link('Estúdios de podcast', pagina('teia', '#podcast')),
@@ -245,8 +248,16 @@ export const MENU_PROJETOS: MenuProjetos = congelar({
         link('Estúdios de música', pagina('teia', '#musica')),
       ],
     },
-    { titulo: 'Produtos digitais', links: [link('Sampa Ensina'), link('Gestão Sampa'), link('Data Sampa')] },
-    { titulo: 'Praça Victor Civita', links: [link('Conheça os equipamentos')] },
+    {
+      titulo: 'Produtos digitais',
+      link: pagina('home', 'comunicacao/produtos-digitais/'),
+      links: [
+        link('Sampa Ensina', pagina('home', 'comunicacao/produtos-digitais/#sampa-ensina')),
+        link('Gestão Sampa', pagina('home', 'comunicacao/produtos-digitais/#gestao-sampa')),
+        link('Data Sampa', pagina('home', 'comunicacao/produtos-digitais/#data-sampa')),
+      ],
+    },
+    { titulo: 'Praça Victor Civita', link: '', links: [link('Conheça os equipamentos')] },
   ],
 });
 
@@ -361,7 +372,8 @@ export function todosOsDestinos(): Destino[] {
     ...CABECALHO.menu.map((i) => i.link),
     CABECALHO.botaoLink,
     ...MENU_PROJETOS.eixos.flatMap((e) => e.links.map((l) => l.link)),
-    ...MENU_PROJETOS.espacos.flatMap((g) => g.links.map((l) => l.link)),
+    ...MENU_PROJETOS.eixos.map((e) => e.link),
+    ...MENU_PROJETOS.espacos.flatMap((g) => [g.link, ...g.links.map((l) => l.link)]),
     RODAPE.logoLink,
     ...RODAPE.redes.map((r) => r.link),
     ...RODAPE.colunas.flatMap((c) => c.links.map((l) => l.link)),

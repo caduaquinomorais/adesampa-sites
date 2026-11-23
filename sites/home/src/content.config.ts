@@ -1,7 +1,8 @@
 /*
  * Coleções de conteúdo do site Home. TODO o texto editável fica em src/content/:
  *
- *   paginas/inicio.md, paginas/sobre.md, paginas/comunicacao.md, paginas/publicacoes.md
+ *   paginas/inicio.md, paginas/sobre.md, paginas/comunicacao.md, paginas/publicacoes.md,
+ *   paginas/produtos-digitais.md
  *                         → textos fixos de cada página (no cabeçalho "---" do arquivo)
  *   noticias/*.md         → uma notícia por arquivo (o nome do arquivo vira o endereço)
  *   categorias.yaml       → categorias das notícias (os filtros da página Comunicação)
@@ -193,4 +194,25 @@ const paginaPublicacoes = defineCollection({
   }),
 });
 
-export const collections = { noticias, categorias, destaques, publicacoes, inicio, sobre, comunicacao, paginaPublicacoes };
+/** Página Produtos digitais (Figma 685:50101). Ícones: components/IconeProduto.astro. */
+const produtosDigitais = defineCollection({
+  loader: glob({ pattern: 'produtos-digitais.md', base: './src/content/paginas' }),
+  schema: z.object({
+    titulo: z.string(),
+    descricao: z.string(),
+    hero: z.object({ etiqueta: z.string(), titulo: z.string(), texto: z.string() }),
+    produtos: z.array(z.object({
+      id: z.enum(['sampa-ensina', 'gestao-sampa', 'data-sampa']),
+      nome: z.string(),
+      texto: z.string(),
+      botao,
+      recursos: z.array(z.object({
+        icone: z.enum(['gratuito', 'certificado', 'ampulheta', 'dinheiro', 'caixa', 'vitrine', 'grafico', 'mapa', 'apoio']),
+        titulo: z.string(),
+        texto: z.string(),
+      })).min(1),
+    })).min(1),
+  }),
+});
+
+export const collections = { noticias, categorias, destaques, publicacoes, inicio, sobre, comunicacao, paginaPublicacoes, produtosDigitais };

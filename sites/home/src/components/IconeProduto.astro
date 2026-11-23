@@ -1,0 +1,25 @@
+---
+/*
+ * Ícones dos recursos da página Produtos digitais (círculo azul de 64 px com desenho branco).
+ * SVGs exportados do Figma (frame 685:50101) em src/assets/icones/produtos/. Decorativos: o título ao lado diz tudo.
+ * Ícone novo: coloque o SVG nessa pasta, acrescente aqui e na lista "icone" de src/content.config.ts.
+ */
+import gratuito from '../assets/icones/produtos/gratuito.svg?url';
+import certificado from '../assets/icones/produtos/certificado.svg?url';
+import ampulheta from '../assets/icones/produtos/ampulheta.svg?url';
+import dinheiro from '../assets/icones/produtos/dinheiro.svg?url';
+import caixa from '../assets/icones/produtos/caixa.svg?url';
+import vitrine from '../assets/icones/produtos/vitrine.svg?url';
+import grafico from '../assets/icones/produtos/grafico.svg?url';
+import mapa from '../assets/icones/produtos/mapa.svg?url';
+import apoio from '../assets/icones/produtos/apoio.svg?url';
+
+const ICONES = { gratuito, certificado, ampulheta, dinheiro, caixa, vitrine, grafico, mapa, apoio };
+export type NomeIconeProduto = keyof typeof ICONES;
+
+interface Props {
+  nome: NomeIconeProduto;
+}
+const { nome } = Astro.props;
+---
+<img class="icone-produto" src={ICONES[nome]} alt="" width="64" height="64" loading="lazy">

@@ -1,0 +1,61 @@
+---
+/*
+ * Produtos digitais — Figma: frame "Produtos Digitais" (685:50101). Textos: src/content/paginas/produtos-digitais.md.
+ * Cada plataforma é uma seção com âncora (#sampa-ensina, #gestao-sampa, #data-sampa), usada pelo Menu de projetos.
+ * Fundos alternados (Figma): claro / branco / claro; o card de recursos inverte (branco / claro / branco).
+ * Logos: SVGs "Logo Produtos Digitais" exportados do Figma (src/assets/produtos/logo-*.svg).
+ */
+import { getEntry } from 'astro:content';
+import BaseLayout from '@adesampa/ui/BaseLayout.astro';
+import { caminho } from '@adesampa/ui/caminhos';
+import Hero from '../../../components/Hero.astro';
+import Botao from '../../../components/Botao.astro';
+import IconeProduto from '../../../components/IconeProduto.astro';
+import logoSampaEnsina from '../../../assets/produtos/logo-sampa-ensina.svg?url';
+import logoGestaoSampa from '../../../assets/produtos/logo-gestao-sampa.svg?url';
+import logoDataSampa from '../../../assets/produtos/logo-data-sampa.svg?url';
+import '../../../styles/site.css';
+
+const entrada = await getEntry('produtosDigitais', 'produtos-digitais');
+if (!entrada) throw new Error('Falta src/content/paginas/produtos-digitais.md');
+const p = entrada.data;
+
+/** Logo de cada plataforma (tamanho do arquivo do Figma; o do Gestão Sampa é mais alto por causa do til). */
+const LOGOS = {
+  'sampa-ensina': { src: logoSampaEnsina, largura: 271, altura: 80 },
+  'gestao-sampa': { src: logoGestaoSampa, largura: 272, altura: 88 },
+  'data-sampa': { src: logoDataSampa, largura: 272, altura: 80 },
+} as const;
+---
+<BaseLayout titulo={p.titulo} descricao={p.descricao} ativo="comunicacao">
+    <Hero
+        trilha={[{ rotulo: 'Início', href: caminho() }, { rotulo: 'Comunicação', href: caminho('comunicacao/') }, { rotulo: p.hero.titulo }]}
+        etiqueta={p.hero.etiqueta}
+        titulo={p.hero.titulo}
+        texto={p.hero.texto}
+    />
+    {p.produtos.map((produto, i) => (
+        <section id={produto.id} class:list={['secao produto', i % 2 === 0 ? 'secao--clara-sem-borda' : 'produto--branco']} aria-labelledby={`titulo-${produto.id}`}>
+            <div class="container produto__grade">
+                <div class="produto__descricao">
+                    <h2 id={`titulo-${produto.id}`} class="produto__logo">
+                        <img src={LOGOS[produto.id].src} alt={produto.nome} width={LOGOS[produto.id].largura} height={LOGOS[produto.id].altura}>
+                    </h2>
+                    <p class="texto-1">{produto.texto}</p>
+                    <Botao texto={produto.botao.texto} link={produto.botao.link} rotuloAcessivel={produto.nome} />
+                </div>
+                <ul class="produto__recursos" aria-label={`Recursos do ${produto.nome}`}>
+                    {produto.recursos.map((r) => (
+                        <li class="produto__recurso">
+                            <IconeProduto nome={r.icone} />
+                            <div>
+                                <h3 class="h-5">{r.titulo}</h3>
+                                <p class="texto-2">{r.texto}</p>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </section>
+    ))}
+</BaseLayout>

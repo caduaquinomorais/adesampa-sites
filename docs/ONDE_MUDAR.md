@@ -18,7 +18,7 @@ O que é **igual em todos os sites** (cabeçalho, menu, rodapé, fonte) fica em 
 
 | Quero mudar… | Arquivo |
 |---|---|
-| Um texto de uma página da Home | `sites/home/src/content/paginas/` → `inicio.md`, `sobre.md`, `comunicacao.md` ou `publicacoes.md` |
+| Um texto de uma página da Home | `sites/home/src/content/paginas/` → `inicio.md`, `sobre.md`, `comunicacao.md`, `publicacoes.md` ou `produtos-digitais.md` |
 | Cards "Destaques e oportunidades" (Início) | `sites/home/src/content/destaques.yaml` |
 | Notícias (criar, editar, apagar) | `sites/home/src/content/noticias/`, um arquivo `.md` por notícia |
 | Categorias das notícias (filtros) | `sites/home/src/content/categorias.yaml` |

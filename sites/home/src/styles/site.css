@@ -430,6 +430,25 @@
 .card-publicacao__titulo { font-size: var(--fs-h5); font-weight: 700; line-height: 1.2; color: var(--azul-800); text-align: center; margin: 0; }
 a.card-publicacao:hover .card-publicacao__titulo { text-decoration: underline; }
 
+/* Página Produtos digitais (Figma 685:50101): uma seção por plataforma, 638 px de altura no Figma. */
+.produto { --secao-py: 72px; display: flex; align-items: center; min-height: 638px; scroll-margin-top: 16px; }
+.produto--branco { background: var(--branco); border-block: 1px solid var(--azul-100); }
+.produto__grade { display: grid; grid-template-columns: minmax(0, 540px) minmax(0, 543px); justify-content: space-between; align-items: center; gap: 25px; }
+.produto__descricao { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; color: var(--texto-corpo); }
+.produto__descricao .botao { margin-top: 8px; }
+/* Logo da plataforma (o próprio título h2: o texto alternativo é o nome). */
+.produto__logo { margin: 0; line-height: 0; }
+.produto__logo img { display: block; max-width: 100%; height: auto; }
+.produto__recursos {
+    display: flex; flex-direction: column; margin: 0; padding: 41px; list-style: none;
+    background: var(--branco); border: 1px solid var(--azul-100); border-radius: 10px;
+}
+.produto--branco .produto__recursos { background: var(--azul-50); }
+.produto__recurso { display: flex; gap: 16px; align-items: flex-start; color: var(--texto-corpo); }
+.produto__recurso + .produto__recurso { margin-top: 16px; padding-top: 26px; border-top: 1px solid var(--azul-100); }
+.produto__recurso .icone-produto { flex: 0 0 64px; }
+.produto__recurso .h-5 { color: var(--azul-900); margin-bottom: 8px; }
+
 /* 404 */
 .erro-404 .container { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; }
 
@@ -454,6 +473,9 @@ a.card-publicacao:hover .card-publicacao__titulo { text-decoration: underline; }
     .teia__mapa, .praca__galeria, .parcerias__galeria { width: 100%; max-width: 640px; }
     .publicacoes-chamada__capa { width: min(285px, 100%); }
     .produtos__lista { grid-template-columns: minmax(0, 560px); }
+    .produto { min-height: 0; }
+    .produto__grade { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+    .produto__descricao, .produto__recursos { max-width: 640px; }
     .numeros__lista { grid-template-columns: minmax(0, 1fr); }
     .numeros__item { height: auto; padding: 40px 24px; }
     .grade-noticias { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -497,4 +519,8 @@ a.card-publicacao:hover .card-publicacao__titulo { text-decoration: underline; }
     .card-email a { font-size: 17px; }
     .praca__colunas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .hero__formas { display: none; }
+    .produto__recursos { padding: 24px; }
+    .produto__recurso { gap: 12px; }
+    .produto__recurso .icone-produto { flex-basis: 48px; width: 48px; height: 48px; }
+    .produto__logo img { width: 220px; }
 }
