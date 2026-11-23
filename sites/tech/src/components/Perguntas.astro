@@ -1,0 +1,34 @@
+---
+/*
+ * Perguntas que abrem e fecham ("Quem pode se inscrever?" e "Dúvidas"). Usa <details>/<summary>:
+ * funciona sem JavaScript, com teclado e leitor de tela. A primeira vem aberta, como no Figma.
+ * variante 'escura' = fundo com imagem azul; 'clara' = fundo azul-claro.
+ */
+interface Props {
+  id: string;
+  titulo: string;
+  texto: string;
+  perguntas: { pergunta: string; resposta: string }[];
+  variante: 'escura' | 'clara';
+}
+const { id, titulo, texto, perguntas, variante } = Astro.props;
+---
+<section class:list={['secao perguntas', `perguntas--${variante}`]} id={id} aria-labelledby={`titulo-${id}`}>
+    <div class="container perguntas__inner">
+        <div class="cabecalho-centro">
+            <h2 id={`titulo-${id}`} class="h-secao">{titulo}</h2>
+            <p class="texto-1">{texto}</p>
+        </div>
+        <div class="perguntas__lista">
+            {perguntas.map((p, i) => (
+                <details class="pergunta" open={i === 0}>
+                    <summary class="pergunta__titulo">
+                        <span>{i + 1}. {p.pergunta}</span>
+                        <svg class="pergunta__icone" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" focusable="false"><circle cx="16" cy="16" r="12" fill="none" stroke="currentColor" stroke-width="2"/><path d="M11 14l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <p class="pergunta__resposta texto-1">{p.resposta}</p>
+                </details>
+            ))}
+        </div>
+    </div>
+</section>

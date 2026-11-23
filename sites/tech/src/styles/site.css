@@ -1,0 +1,298 @@
+/* ==========================================================================
+   Site Sampa Tech (ADE SAMPA) — estilos das páginas. Cabeçalho/rodapé: packages/ui.
+   Medidas do Figma (frames "Sampa Tech" 468:12857 e "Aceleração Vai Tec" 64:2150; 1440 px).
+   Desvios de cor por acessibilidade (WCAG AA) estão marcados com "AA:" e em docs/DECISOES_TECH.md.
+   ========================================================================== */
+
+:root {
+    --tech-900: #125070;   /* Tech/200: títulos, hero, cronograma */
+    --tech-800: #1A6A8F;   /* pílula do selo no hero */
+    --tech-700: #2589B7;   /* Tech/100: barras, ícones, números */
+    --tech-500: #00B1E2;   /* Tech/001: bordas (texto branco sobre ele não passa no AA) */
+    --tech-300: #53D3EE;   /* bordas claras */
+    --tech-200: #C8F9FF;   /* fundos claros */
+    --tech-100: #E9FDFF;   /* fundos mais claros */
+    --azul-200: #BEDDFF;
+    --texto-corpo: #262930;
+    --marinho: #001B4D;
+
+    /* AA: ajustes de contraste (ver DECISOES_TECH.md, T-02) */
+    --aa-tech-botao: #007EA0;         /* era #00B1E2 com texto branco (2,5 → 4,7) */
+    --aa-tech-etiqueta: #1A6A8F;      /* era #2589B7 sobre #C8F9FF (3,5 → 5,3) */
+    --aa-pergunta-escura: #1F7AA8;    /* era #2589B7 com texto branco (3,9 → 4,8) */
+    --aa-pergunta-aberta: #C8F9FF;    /* era #53D3EE sobre o card escuro (2,2 → 4,2, texto grande) */
+
+    --secao-py: 64px;
+    --container-largo: 1116px;
+
+    /* Submenu do programa (packages/ui): cores do Sampa Tech. */
+    --hf-submenu-fundo: var(--tech-100);
+    --hf-submenu-texto: var(--tech-900);
+    --hf-submenu-texto-hover: var(--marinho);
+}
+
+/* Submenu: na página do Sampa Tech o fundo é #C8F9FF e o logo tem 9 px; no Vai Tec, #E9FDFF e 12 px. */
+.submenu { border-bottom: 1px solid var(--tech-100); }
+.submenu:has(.submenu__logo img[width="92"]) { background: var(--tech-200); border-bottom-color: var(--tech-200); }
+.submenu__logo img[width="92"] { height: 9px; }
+.submenu__logo img[width="116"] { height: 12px; }
+.submenu:has(.submenu__logo img[width="116"]) .submenu__logo { padding-right: 36px; } /* 48 px até o 1º link */
+[id] { scroll-margin-top: 16px; }
+
+/* ---------- Tipografia ---------- */
+.h-display { font-size: var(--fs-display); font-weight: 600; line-height: 1; margin: 0; }
+.h-secao { font-size: var(--fs-h2); font-weight: 600; line-height: 1.1; color: var(--tech-900); margin: 0; }
+.h-card { font-size: var(--fs-h5); font-weight: 700; line-height: 1.2; color: var(--tech-900); margin: 0; }
+.texto-1 { font-size: var(--fs-body1); line-height: 1.25; margin: 0; }
+.texto-2 { font-size: var(--fs-body2); line-height: 1.25; margin: 0; }
+.quebras { white-space: pre-line; }
+.centro { text-align: center; }
+.paragrafos { display: flex; flex-direction: column; gap: 25px; }
+.paragrafos p { margin: 0; }
+
+/* ---------- Seções ---------- */
+.secao { padding-block: var(--secao-py); }
+.secao--clara { background: var(--tech-100); }
+.cabecalho-centro { display: flex; flex-direction: column; gap: 8px; align-items: center; text-align: center; }
+
+/* ---------- Etiqueta (tag) ---------- */
+.etiqueta {
+    display: inline-flex; align-items: center; align-self: flex-start;
+    min-height: 21px; padding: 0 16px; border-radius: var(--radius-tag);
+    font-size: var(--fs-tag); font-weight: 700; line-height: 1; text-transform: uppercase; white-space: nowrap;
+}
+.etiqueta--solida { background: var(--aa-tech-botao); color: var(--branco); }
+
+/* Situação das inscrições (bolinha + etiqueta) */
+.status { display: flex; align-items: center; gap: 8px; margin: 0; }
+.status__bolinha { flex: 0 0 20px; width: 20px; height: 20px; border-radius: 50%; background: #09BF1E; box-shadow: inset 0 0 0 0.5px #0D961D; }
+.status--fechado .status__bolinha { background: #8A8F99; box-shadow: inset 0 0 0 0.5px #6B7079; }
+.status--clara .etiqueta { min-height: 22px; background: var(--tech-200); color: var(--aa-tech-etiqueta); box-shadow: inset 0 0 0 0.5px var(--tech-500); }
+.status--escura .etiqueta { background: var(--aa-tech-botao); color: var(--branco); }
+
+/* ---------- Botões ---------- */
+.botao {
+    display: inline-flex; align-items: center; justify-content: center; align-self: flex-start;
+    min-height: 44px; padding: 14px 24px; border-radius: var(--radius-btn);
+    font-size: var(--fs-botao); font-weight: 600; line-height: 1; text-align: center; text-decoration: none;
+    background: var(--aa-tech-botao); color: var(--branco); border: 0;
+    transition: background-color .15s ease, color .15s ease;
+}
+.botao[href]:hover { background: #005F78; }
+.botao:not([href]) { cursor: default; }
+.botao--contorno { background: var(--branco); color: var(--aa-tech-botao); box-shadow: inset 0 0 0 1px var(--tech-500); }
+.botao--contorno[href]:hover { background: var(--tech-200); color: var(--tech-900); }
+
+/* ---------- Breadcrumb ---------- */
+.breadcrumb ol { display: flex; flex-wrap: wrap; align-items: center; margin: 0; padding: 0; list-style: none; font-size: var(--fs-caption); line-height: 1.25; }
+.breadcrumb li { display: inline-flex; align-items: center; }
+.breadcrumb li + li::before { content: "/"; font-weight: 500; padding-inline: 8px; }
+.breadcrumb a { color: inherit; text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.breadcrumb [aria-current] { font-weight: 700; }
+
+/* ---------- Hero (azul-petróleo com losangos) ---------- */
+.hero { position: relative; overflow: hidden; color: var(--branco); background: var(--tech-900); }
+.hero__fundo { position: absolute; inset: 0; z-index: 0; }
+.hero__fundo img { width: 100%; height: 100%; object-fit: cover; }
+.hero__inner { position: relative; z-index: 1; display: flex; justify-content: space-between; gap: 40px; }
+.hero__textos { display: flex; flex-direction: column; gap: 48px; }
+.hero__conteudo { display: flex; flex-direction: column; gap: 16px; }
+.hero__lado { flex: 0 0 auto; display: flex; }
+/* Sampa Tech: 72 px de respiro, selo alinhado embaixo. */
+.hero--programa .hero__inner { padding-block: 72px; align-items: flex-end; }
+.hero--programa .hero__textos { width: 543px; max-width: 100%; }
+/* Vai Tec: 64 px de respiro, card do resumo à direita (16 px abaixo do topo). */
+.hero--vaitec .hero__inner { padding-block: 64px; align-items: flex-start; min-height: 496px; }
+.hero--vaitec .hero__textos { width: 642px; max-width: 100%; }
+.hero--vaitec .hero__lado { padding-block: 16px; }
+.hero--vaitec .resumo { border-color: var(--tech-700); }
+
+/* Selo ADE SAMPA + Prefeitura (pílula) */
+.selo {
+    display: inline-flex; align-items: center; gap: 22.6px; margin: 0;
+    padding: 16px 40px; border-radius: 55px; background: var(--tech-800);
+}
+.selo img:first-child { width: 137px; height: auto; }
+.selo img:last-child { width: 166px; height: auto; }
+.selo--claro { align-self: flex-start; background: var(--tech-700); box-shadow: inset 0 0 0 1px var(--tech-300); }
+
+/* ---------- Card "Resumo do Edital" ---------- */
+.resumo {
+    display: flex; flex-direction: column; justify-content: center;
+    width: 356px; max-width: 100%; padding: 40px 34px 40px 35px;
+    background: var(--tech-200); border: 1px solid var(--tech-500); border-radius: 16px; color: var(--texto-corpo);
+}
+.resumo__bloco { display: flex; flex-direction: column; padding-block: 16px; border-bottom: 1px solid var(--tech-500); }
+.resumo__bloco:first-child { padding-top: 0; gap: 8px; }
+.resumo__bloco:last-child { padding-bottom: 0; border-bottom: 0; }
+.resumo p { margin: 0; }
+.resumo__titulo { font-size: var(--fs-tag); font-weight: 700; line-height: 1; text-transform: uppercase; color: var(--tech-900); }
+.resumo__valor { font-size: var(--fs-h2); font-weight: 600; line-height: 1.1; color: var(--tech-900); margin-bottom: -8px !important; }
+.resumo__destaque { font-size: var(--fs-h5); font-weight: 700; line-height: 1.2; color: var(--tech-900); }
+.resumo__texto { font-size: var(--fs-body2); line-height: 1.25; color: var(--texto-corpo); }
+.resumo__link { align-self: flex-start; text-decoration: none; }
+.resumo__link[href] { text-decoration: underline; text-underline-offset: 3px; }
+.resumo__link[href]:hover { color: var(--tech-900); }
+
+/* ==========================================================================
+   Sampa Tech (página do programa)
+   ========================================================================== */
+.programa__inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+.programa__textos { display: flex; flex-direction: column; gap: 16px; width: 639px; max-width: 100%; }
+.programa__titulo { color: var(--marinho); }
+.programa .texto-1 { color: var(--texto-corpo); }
+.lista-check { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 4px 0; list-style: none; }
+.lista-check li { display: flex; align-items: center; gap: 11px; font-size: var(--fs-body2); line-height: 1.25; color: var(--texto-corpo); }
+.lista-check__icone { flex: 0 0 18px; width: 18px; height: 18px; color: var(--tech-700); }
+.erro-404 .container { display: flex; }
+
+/* ==========================================================================
+   Aceleração Vai Tec
+   ========================================================================== */
+/* Sobre */
+.sobre__inner { display: flex; justify-content: space-between; align-items: flex-start; gap: 40px; }
+.sobre__textos { display: flex; flex-direction: column; gap: 40px; width: 509px; max-width: 100%; }
+.sobre__bloco { display: flex; flex-direction: column; gap: 24px; }
+.sobre .texto-1 { color: var(--texto-corpo); }
+.sobre__foto { flex: 0 0 auto; width: 543px; max-width: 100%; }
+.sobre__foto img { display: block; width: 100%; height: 492px; object-fit: cover; border-radius: 16px; border: 1px solid var(--tech-300); }
+
+/* Benefícios */
+.beneficios { border-block: 1px solid var(--tech-200); }
+.beneficios__inner { display: flex; flex-direction: column; gap: 40px; }
+.beneficios__lista { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin: 0; padding: 0; list-style: none; }
+.beneficio {
+    display: flex; align-items: center; gap: 18px; min-height: 124px; padding: 24px 18px;
+    background: var(--tech-200); border-left: 16px solid var(--tech-700); border-radius: 8px;
+}
+.beneficio__icone { display: flex; align-items: center; justify-content: center; flex: 0 0 64px; width: 64px; height: 64px; border-radius: 50%; background: var(--tech-700); color: var(--branco); }
+.beneficio__textos { display: flex; flex-direction: column; gap: 12px; }
+.beneficio .texto-2 { color: var(--texto-corpo); }
+
+/* Temas abordados */
+.temas__inner { width: min(var(--container-largo), 100% - 2 * var(--gutter)); display: flex; flex-direction: column; gap: 40px; }
+.temas__cabecalho { display: flex; flex-direction: column; gap: 8px; }
+.temas__cabecalho .texto-1 { color: var(--texto-corpo); }
+.temas__lista { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin: 0; padding: 0 3px; list-style: none; }
+.tema { display: flex; align-items: center; gap: 24px; min-height: 98px; padding: 24px; background: var(--branco); border: 1px solid var(--azul-200); border-radius: 8px; }
+.tema__numero { display: flex; align-items: center; justify-content: center; flex: 0 0 48px; width: 48px; height: 48px; border-radius: 50%; background: var(--aa-tech-botao); color: var(--branco); font-size: var(--fs-h5); font-weight: 700; line-height: 1.25; }
+.tema__titulo { font-size: var(--fs-h5); font-weight: 700; line-height: 1.2; color: var(--tech-900); }
+
+/* Perguntas (Quem pode se inscrever? / Dúvidas) */
+.perguntas__inner { width: min(var(--container-largo), 100% - 2 * var(--gutter)); display: flex; flex-direction: column; gap: 32px; }
+.perguntas__lista { display: flex; flex-direction: column; gap: 16px; }
+.pergunta { border-radius: 8px; padding: 32px 24px 32px 40px; }
+.pergunta__titulo {
+    display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 36px;
+    font-size: var(--fs-h5); font-weight: 700; line-height: 1.2; cursor: pointer; list-style: none;
+}
+.pergunta__titulo::-webkit-details-marker { display: none; }
+.pergunta__icone { flex: 0 0 32px; width: 32px; height: 32px; margin-right: 2px; transform: rotate(0deg); transition: transform .2s ease; }
+.pergunta[open] .pergunta__icone { transform: rotate(180deg); }
+.pergunta__resposta { margin-top: 10px; max-width: 1020px; }
+.perguntas--escura {
+    position: relative; color: var(--branco); border-bottom: 1px solid var(--tech-900);
+    background: var(--tech-900) url('../assets/fotos/fundo-quem-pode.jpg') center / cover no-repeat;
+}
+.perguntas--escura .h-secao { color: var(--branco); }
+.perguntas--escura .pergunta { background: var(--aa-pergunta-escura); border: 1px solid var(--tech-900); }
+.perguntas--escura .pergunta[open] .pergunta__titulo { color: var(--aa-pergunta-aberta); }
+.perguntas--clara { background: var(--tech-200); border-bottom: 1px solid var(--tech-200); }
+.perguntas--clara .cabecalho-centro .texto-1 { color: var(--texto-corpo); }
+.perguntas--clara .pergunta { background: var(--branco); border: 1px solid var(--tech-300); }
+.perguntas--clara .pergunta__titulo { color: var(--tech-900); }
+.perguntas--clara .pergunta[open] .pergunta__titulo { color: var(--aa-tech-botao); }
+.perguntas--clara .pergunta__resposta { color: #14171F; }
+
+/* Cronograma */
+.cronograma { border-bottom: 1px solid var(--tech-200); }
+.cronograma__inner { display: flex; flex-direction: column; gap: 32px; }
+.cronograma .h-secao { line-height: 52px; }
+.cronograma__lista { display: flex; flex-direction: column; gap: 16px; margin: 0; padding: 0; list-style: none; }
+.etapa { display: flex; min-height: 88px; }
+.etapa p { margin: 0; }
+.etapa__data {
+    display: flex; align-items: center; flex: 0 0 180px; padding: 24px;
+    background: var(--tech-900); color: var(--branco); border-radius: 8px 0 0 8px;
+    font-size: var(--fs-body2); font-weight: 700; line-height: 1.25;
+}
+.etapa__titulo {
+    display: flex; align-items: center; gap: 16px; flex: 1 1 auto; padding: 24px 24px 24px 32px;
+    background: rgba(200, 249, 255, 0.25); border: 1px solid var(--tech-300); border-left: 0; border-radius: 0 8px 8px 0;
+    font-size: var(--fs-body1); font-weight: 700; line-height: 1.25; color: var(--tech-900);
+}
+.etapa__numero { flex: 0 0 20px; color: var(--tech-700); }
+
+/* Edital e inscrições */
+.edital__caixa {
+    display: flex; flex-direction: column; align-items: center; gap: 40px; padding: 48px;
+    background: var(--tech-900); color: var(--branco); border-radius: 16px; text-align: center;
+}
+.edital__textos { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.edital .h-secao { color: var(--branco); }
+.edital .texto-1 { max-width: 800px; }
+.edital__botoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; }
+.edital__notas {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 40px; align-self: stretch;
+    margin: 0; padding: 40px 0 0; list-style: none; border-top: 1px solid rgba(200, 249, 255, 0.25);
+    font-size: var(--fs-body2); line-height: 1.25;
+}
+
+/* ==========================================================================
+   Responsividade (o Figma só tem 1440 px)
+   ========================================================================== */
+@media (max-width: 1023px) {
+    :root { --secao-py: 56px; }
+    .hero__inner, .programa__inner, .sobre__inner { flex-direction: column; align-items: stretch; }
+    .hero--programa .hero__inner, .hero--vaitec .hero__inner { padding-block: 48px; min-height: 0; align-items: stretch; }
+    .hero--vaitec .hero__lado { padding-block: 0; }
+    .hero__textos, .programa__textos, .sobre__textos { width: 100% !important; }
+    .resumo { width: 100%; max-width: 560px; }
+    .sobre__foto { width: 100%; max-width: 640px; }
+    .sobre__foto img { height: auto; aspect-ratio: 543 / 492; }
+    .beneficios__lista { grid-template-columns: minmax(0, 1fr); }
+    .temas__lista { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 0; }
+    .selo { align-self: flex-start; }
+    /* Alvos de toque de 44 px no celular/tablet (mesmas regras da Home) */
+    .breadcrumb a { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 8px; }
+    .breadcrumb li:first-child a { margin-left: -8px; }
+    .breadcrumb li + li::before { padding-inline: 0; }
+    .breadcrumb li > span { padding-inline: 8px; }
+    .resumo__link { display: inline-flex; align-items: center; min-height: 44px; }
+    .pergunta__titulo { min-height: 44px; }
+}
+
+@media (max-width: 767px) {
+    .hero__textos { gap: 32px; }
+    .selo { gap: 16px; padding: 12px 24px; }
+    .selo img:first-child { width: 104px; }
+    .selo img:last-child { width: 126px; }
+    .beneficio { align-items: flex-start; border-left-width: 8px; }
+    .beneficio__icone { flex-basis: 48px; width: 48px; height: 48px; }
+    .beneficio__icone svg { width: 30px; height: 30px; }
+    .temas__lista { grid-template-columns: minmax(0, 1fr); }
+    .tema { min-height: 0; }
+    .pergunta { padding: 24px 16px 24px 20px; }
+    .pergunta__titulo { font-size: 18px; }
+    .etapa { flex-direction: column; }
+    .etapa__data { flex-basis: auto; padding: 12px 20px; border-radius: 8px 8px 0 0; white-space: normal; }
+    /* AA: em 18 px o número deixa de ser "texto grande" e precisa de 4,5:1 (#2589B7 dá 3,8). */
+    .etapa__numero { color: var(--aa-pergunta-escura); }
+    .etapa__titulo { padding: 16px 20px; border-left: 1px solid var(--tech-300); border-top: 0; border-radius: 0 0 8px 8px; font-size: 18px; }
+    .edital__caixa { padding: 32px 20px; gap: 32px; }
+    .edital__notas { padding-top: 32px; flex-direction: column; align-items: center; }
+    .edital__botoes .botao { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .botao, .pergunta__icone { transition: none; }
+}
+
+/* Ajustes finos de geometria (conferidos com tests/visual/figma.mjs tech) */
+.perguntas .cabecalho-centro { padding-bottom: 10px; }        /* Figma: bloco do título com 86 px */
+.resumo__titulo { line-height: 9px; }                          /* Figma: caixa de texto de 9 px */
+.hero--vaitec .breadcrumb ol { min-height: 24px; }             /* Figma: trilha com 24 px no Vai Tec */
+@media (min-width: 1024px) {
+    .programa .resumo { min-height: 363px; }                   /* Figma: card com 363 px na página Sampa Tech */
+}

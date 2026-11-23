@@ -1,0 +1,14 @@
+---
+/* Selo "ADE SAMPA + Prefeitura de São Paulo" (pílula azul do Figma, 405 × 85). */
+import logoAde from '../assets/logos/adesampa-branco.svg?url';
+import logoPrefeitura from '@adesampa/ui/assets/icons/logo-prefeitura-rodape.svg?url';
+
+interface Props {
+  classe?: string;
+}
+const { classe } = Astro.props;
+---
+<p class:list={['selo', classe]}>
+    <img src={logoAde} alt="ADE SAMPA" width="137" height="24">
+    <img src={logoPrefeitura} alt="Prefeitura de São Paulo" width="166" height="51">
+</p>

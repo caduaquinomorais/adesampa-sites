@@ -1,0 +1,61 @@
+---
+/* Sampa Tech — Figma: frame "Sampa Tech" (468:12857). Textos: src/content/paginas/inicio.md. */
+import { getEntry } from 'astro:content';
+import BaseLayout from '@adesampa/ui/BaseLayout.astro';
+import { caminho } from '@adesampa/ui/caminhos';
+import { ambienteAtual, pagina, resolverDestino } from '@adesampa/ui/institucional';
+import Hero from '../components/Hero.astro';
+import Selo from '../components/Selo.astro';
+import Status from '../components/Status.astro';
+import Resumo from '../components/Resumo.astro';
+import Botao from '../components/Botao.astro';
+import Icone from '../components/Icone.astro';
+import fundo from '../assets/fotos/hero-sampa-tech.jpg';
+import logoTech from '../assets/logos/sampa-tech-horizontal.svg?url';
+import '../styles/site.css';
+
+const entrada = await getEntry('inicio', 'inicio');
+if (!entrada) throw new Error('Falta src/content/paginas/inicio.md');
+const p = entrada.data;
+const home = resolverDestino(pagina('home'), ambienteAtual());
+const idPrograma = (i: number): string => (i === 0 ? 'programa' : `programa-${i + 1}`);
+---
+<BaseLayout
+    titulo={p.titulo}
+    descricao={p.descricao}
+    ativo="programas"
+    submenu={{
+        rotulo: 'Sampa Tech',
+        logo: logoTech,
+        logoLargura: 92,
+        logoAltura: 9,
+        logoLink: caminho(),
+        links: p.programas.map((prog) => ({ rotulo: prog.titulo, link: prog.botao.link ? caminho(prog.botao.link) : '' })),
+    }}
+>
+    <Hero fundo={fundo} trilha={[{ rotulo: 'Início', href: home }, { rotulo: 'Programas' }, { rotulo: p.hero.titulo }]} classe="hero--programa">
+        <span class="etiqueta etiqueta--solida">{p.hero.etiqueta}</span>
+        <h1 id="titulo-pagina" class="h-display">{p.hero.titulo}</h1>
+        <p class="texto-1 hero__texto">{p.hero.texto}</p>
+        <Selo slot="lado" />
+    </Hero>
+
+    {p.programas.map((prog, i) => (
+        <section class="secao programa" id={idPrograma(i)} aria-labelledby={`titulo-${idPrograma(i)}`}>
+            <div class="container programa__inner">
+                <div class="programa__textos">
+                    <Status texto={prog.status.texto} aberto={prog.status.aberto} variante="clara" />
+                    <h2 id={`titulo-${idPrograma(i)}`} class="h-secao programa__titulo">{prog.titulo}</h2>
+                    <p class="texto-1">{prog.texto}</p>
+                    {prog.itens.length > 0 && (
+                        <ul class="lista-check">
+                            {prog.itens.map((item) => <li><Icone nome="check" tamanho={18} classe="lista-check__icone" />{item}</li>)}
+                        </ul>
+                    )}
+                    <Botao texto={prog.botao.texto} link={prog.botao.link} />
+                </div>
+                <Resumo {...prog.resumo} />
+            </div>
+        </section>
+    ))}
+</BaseLayout>

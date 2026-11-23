@@ -1,0 +1,33 @@
+---
+/*
+ * Hero azul-petróleo com o padrão de losangos (Figma: Sampa Tech 468:12869 e Vai Tec 77:4466).
+ * O fundo é a imagem do Figma (cor #125070 + losangos), em <Picture> para carregar no tamanho certo.
+ * À direita vai o que a página passar no slot "lado" (selo ADE SAMPA + Prefeitura ou card "Resumo do Edital").
+ */
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Breadcrumb from './Breadcrumb.astro';
+
+interface Props {
+  fundo: ImageMetadata;
+  trilha: { rotulo: string; href?: string }[];
+  classe?: string;
+}
+const { fundo, trilha, classe } = Astro.props;
+---
+<section class:list={['hero', classe]} aria-labelledby="titulo-pagina">
+    <div class="hero__fundo" aria-hidden="true">
+        <Picture src={fundo} alt="" formats={['avif', 'webp']} fallbackFormat="jpg" widths={[768, 1440, 2880]} sizes="100vw" loading="eager" fetchpriority="high" />
+    </div>
+    <div class="container hero__inner">
+        <div class="hero__textos">
+            <Breadcrumb itens={trilha} />
+            <div class="hero__conteudo">
+                <slot />
+            </div>
+        </div>
+        <div class="hero__lado">
+            <slot name="lado" />
+        </div>
+    </div>
+</section>

@@ -1,0 +1,138 @@
+---
+/* Aceleração Vai Tec — Figma: frame "Aceleração Vai Tec" (64:2150). Textos: src/content/paginas/vaitec.md. */
+import { getEntry } from 'astro:content';
+import { Picture } from 'astro:assets';
+import BaseLayout from '@adesampa/ui/BaseLayout.astro';
+import { caminho } from '@adesampa/ui/caminhos';
+import { ambienteAtual, pagina, resolverDestino } from '@adesampa/ui/institucional';
+import Hero from '../../components/Hero.astro';
+import Selo from '../../components/Selo.astro';
+import Status from '../../components/Status.astro';
+import Resumo from '../../components/Resumo.astro';
+import Botao from '../../components/Botao.astro';
+import Icone from '../../components/Icone.astro';
+import Perguntas from '../../components/Perguntas.astro';
+import { paragrafos } from '../../lib/conteudo';
+import fundo from '../../assets/fotos/hero-vaitec.jpg';
+import logoTech from '../../assets/logos/sampa-tech-horizontal.svg?url';
+import '../../styles/site.css';
+
+const entrada = await getEntry('vaitec', 'vaitec');
+if (!entrada) throw new Error('Falta src/content/paginas/vaitec.md');
+const p = entrada.data;
+const home = resolverDestino(pagina('home'), ambienteAtual());
+const s = p.submenu;
+---
+<BaseLayout
+    titulo={p.titulo}
+    descricao={p.descricao}
+    ativo="programas"
+    submenu={{
+        rotulo: 'Sampa Tech',
+        logo: logoTech,
+        logoLargura: 116,
+        logoAltura: 12,
+        logoLink: caminho(),
+        links: [
+            { rotulo: s.sobre, link: '#sobre' },
+            { rotulo: s.beneficios, link: '#beneficios' },
+            { rotulo: s.temas, link: '#temas' },
+            { rotulo: s.quemPode, link: '#quem-pode' },
+            { rotulo: s.cronograma, link: '#cronograma' },
+            { rotulo: s.duvidas, link: '#duvidas' },
+            { rotulo: s.inscricoes, link: '#inscricoes' },
+        ],
+    }}
+>
+    <Hero fundo={fundo} trilha={[{ rotulo: 'Início', href: home }, { rotulo: 'Programas' }, { rotulo: 'Sampa Tech', href: caminho() }, { rotulo: p.hero.titulo }]} classe="hero--vaitec">
+        <Status texto={p.hero.status.texto} aberto={p.hero.status.aberto} variante="escura" />
+        <h1 id="titulo-pagina" class="h-display">{p.hero.titulo}</h1>
+        <p class="texto-1 hero__texto">{p.hero.texto}</p>
+        <Resumo slot="lado" {...p.hero.resumo} />
+    </Hero>
+
+    <section class="secao secao--clara sobre" id="sobre" aria-labelledby="titulo-sobre">
+        <div class="container sobre__inner">
+            <div class="sobre__textos">
+                <div class="sobre__bloco">
+                    <h2 id="titulo-sobre" class="h-secao">{p.sobre.titulo}</h2>
+                    <div class="texto-1 paragrafos">{paragrafos(p.sobre.texto).map((t) => <p>{t}</p>)}</div>
+                </div>
+                <Selo classe="selo--claro" />
+            </div>
+            <div class="sobre__foto">
+                <Picture src={p.sobre.imagem} alt={p.sobre.imagemAlt} formats={['avif', 'webp']} fallbackFormat="jpg" widths={[543, 1086]} sizes="(max-width: 1023px) 100vw, 543px" loading="lazy" />
+            </div>
+        </div>
+    </section>
+
+    <section class="secao beneficios" id="beneficios" aria-labelledby="titulo-beneficios">
+        <div class="container beneficios__inner">
+            <h2 id="titulo-beneficios" class="h-secao centro">{p.beneficios.titulo}</h2>
+            <ul class="beneficios__lista">
+                {p.beneficios.itens.map((b) => (
+                    <li class="beneficio">
+                        <span class="beneficio__icone"><Icone nome={b.icone} tamanho={40} /></span>
+                        <div class="beneficio__textos">
+                            <h3 class="h-card">{b.titulo}</h3>
+                            <p class="texto-2">{b.texto}</p>
+                        </div>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    </section>
+
+    <section class="secao secao--clara temas" id="temas" aria-labelledby="titulo-temas">
+        <div class="container temas__inner">
+            <div class="temas__cabecalho">
+                <h2 id="titulo-temas" class="h-secao">{p.temas.titulo}</h2>
+                <p class="texto-1">{p.temas.texto}</p>
+            </div>
+            <ol class="temas__lista">
+                {p.temas.itens.map((t, i) => (
+                    <li class="tema"><span class="tema__numero" aria-hidden="true">{i + 1}</span><span class="tema__titulo quebras">{t}</span></li>
+                ))}
+            </ol>
+        </div>
+    </section>
+
+    <Perguntas id="quem-pode" titulo={p.quemPode.titulo} texto={p.quemPode.texto} perguntas={p.quemPode.perguntas} variante="escura" />
+
+    <section class="secao cronograma" id="cronograma" aria-labelledby="titulo-cronograma">
+        <div class="container cronograma__inner">
+            <div class="temas__cabecalho">
+                <h2 id="titulo-cronograma" class="h-secao">{p.cronograma.titulo}</h2>
+                <p class="texto-1">{p.cronograma.texto}</p>
+            </div>
+            <ol class="cronograma__lista">
+                {p.cronograma.etapas.map((e, i) => (
+                    <li class="etapa">
+                        <p class="etapa__data quebras">{e.data}</p>
+                        <p class="etapa__titulo"><span class="etapa__numero">{i + 1}.</span> {e.titulo}</p>
+                    </li>
+                ))}
+            </ol>
+        </div>
+    </section>
+
+    <Perguntas id="duvidas" titulo={p.duvidas.titulo} texto={p.duvidas.texto} perguntas={p.duvidas.perguntas} variante="clara" />
+
+    <section class="secao edital" id="inscricoes" aria-labelledby="titulo-inscricoes">
+        <div class="container">
+            <div class="edital__caixa">
+                <div class="edital__textos">
+                    <h2 id="titulo-inscricoes" class="h-secao">{p.edital.titulo}</h2>
+                    <p class="texto-1">{p.edital.texto}</p>
+                </div>
+                <div class="edital__botoes">
+                    <Botao texto={p.edital.botaoPrincipal.texto} link={p.edital.botaoPrincipal.link} />
+                    <Botao texto={p.edital.botaoSecundario.texto} link={p.edital.botaoSecundario.link} variante="contorno" />
+                </div>
+                <ul class="edital__notas">
+                    {p.edital.notas.map((n) => <li>{n}</li>)}
+                </ul>
+            </div>
+        </div>
+    </section>
+</BaseLayout>

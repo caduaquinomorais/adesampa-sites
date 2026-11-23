@@ -1,0 +1,24 @@
+---
+/* Página 404 (Apache: ErrorDocument no .htaccess). Mesmo hero das outras páginas do Sampa Tech. */
+import BaseLayout from '@adesampa/ui/BaseLayout.astro';
+import { caminho } from '@adesampa/ui/caminhos';
+import { ambienteAtual, pagina, resolverDestino } from '@adesampa/ui/institucional';
+import Hero from '../components/Hero.astro';
+import Botao from '../components/Botao.astro';
+import fundo from '../assets/fotos/hero-sampa-tech.jpg';
+import '../styles/site.css';
+
+const home = resolverDestino(pagina('home'), ambienteAtual());
+---
+<BaseLayout titulo="Página não encontrada" semIndexacao>
+    <Hero fundo={fundo} trilha={[{ rotulo: 'Início', href: home }, { rotulo: 'Sampa Tech', href: caminho() }, { rotulo: 'Erro 404' }]} classe="hero--programa">
+        <span class="etiqueta etiqueta--solida">Erro 404</span>
+        <h1 id="titulo-pagina" class="h-display">Página não encontrada</h1>
+        <p class="texto-1 hero__texto">O endereço pode ter mudado ou não existir mais. Confira se foi digitado corretamente ou volte para a página do Sampa Tech.</p>
+    </Hero>
+    <section class="secao erro-404" aria-label="Para onde ir">
+        <div class="container">
+            <Botao texto="Voltar ao Sampa Tech" link={caminho()} />
+        </div>
+    </section>
+</BaseLayout>

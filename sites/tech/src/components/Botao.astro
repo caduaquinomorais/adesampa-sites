@@ -1,0 +1,13 @@
+---
+/* Botão-link (Figma: "Botão (Tech)"). Link vazio = pendente (aparece, mas não navega). */
+import { attrs } from '../lib/conteudo';
+
+interface Props {
+  texto: string;
+  link: string;
+  variante?: 'primario' | 'contorno';
+}
+
+const { texto, link, variante = 'primario' } = Astro.props;
+---
+<a class:list={['botao', { 'botao--contorno': variante === 'contorno' }]} {...attrs(link)}>{texto}</a>

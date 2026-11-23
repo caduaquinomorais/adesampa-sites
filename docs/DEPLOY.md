@@ -18,6 +18,15 @@ O deploy é automático. Ele é feito pelo workflow [.github/workflows/testes.ym
 
 Configuração no GitHub: os segredos `FTP_USERNAME` e `FTP_PASSWORD`, e as variáveis `ADESAMPA_AMBIENTE` (padrão `teste`) e `FTP_SERVER`.
 
+## Sites e pastas no FTP
+
+| Site | Pasta no FTP (dentro de `www/`) | Conteúdo do marcador `.adesampa-site` | Endereço de teste |
+|---|---|---|---|
+| `home` | `homolog/` | `home` | oranilom.com.br/homolog/ |
+| `tech` | `homolog/sampa-tech/` | `tech` | oranilom.com.br/homolog/sampa-tech/ |
+
+**Site novo:** antes do primeiro deploy, crie a pasta pelo FTP ou pelo gerenciador de arquivos da KingHost e, dentro dela, um arquivo `.adesampa-site` cujo único conteúdo é o nome do site. Sem o marcador, o deploy desse site para com um erro e não envia nada.
+
 ## Problemas conhecidos
 
 | Sintoma | Causa | O que fazer |

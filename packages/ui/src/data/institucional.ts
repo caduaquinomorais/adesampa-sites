@@ -59,6 +59,16 @@ export const SITES = congelar({
     pastaFtp: { teste: 'homolog', producao: 'homolog' },
     publicar: true,
   },
+  tech: {
+    rotulo: 'Sampa Tech',
+    // Pasta homolog/sampa-tech/ (subpasta da Home). Não confundir com www/sampa-tech/ (site antigo, fora deste projeto).
+    url: {
+      teste: 'https://oranilom.com.br/homolog/sampa-tech/',
+      producao: 'https://oranilom.com.br/homolog/sampa-tech/',
+    },
+    pastaFtp: { teste: 'homolog/sampa-tech', producao: 'homolog/sampa-tech' },
+    publicar: true,
+  },
   exemplo: {
     rotulo: 'Exemplo (só cabeçalho e rodapé, usado nos testes)',
     url: {
@@ -195,7 +205,7 @@ export const MENU_PROJETOS: MenuProjetos = congelar({
         link('Educação financeira'),
       ],
     },
-    { cor: 'tech', nome: 'Sampa Tech', links: [link('Aceleração Vai Tec')] },
+    { cor: 'tech', nome: 'Sampa Tech', links: [link('Aceleração Vai Tec', pagina('tech', 'vaitec/'))] },
     { cor: 'games', nome: 'Sampa Games', links: [link('Aceleração de estúdios'), link('Curso de game dev'), link('Hub de educação')] },
     {
       cor: 'verde',
@@ -267,7 +277,7 @@ export const RODAPE: Rodape = congelar({
       titulo: 'Sampa Empreende',
       cor: 'empreende',
       links: [
-        link('Atendimenro ao empreendedor'), // Grafia exatamente como no Figma (pendência P-18 no TEIA).
+        link('Atendimento ao empreendedor'), // No Figma está "Atendimenro" (erro de digitação, corrigido a pedido em 23/11/2026).
         link('Orientação empresarial'),
         link('Curso fábrica de negócios'),
         link('Curso de gestão de negócios'),
@@ -276,7 +286,7 @@ export const RODAPE: Rodape = congelar({
         link('Educação financeira'),
       ],
     },
-    { titulo: 'Sampa Tech', cor: 'tech', links: [link('Aceleração Vai Tec')] },
+    { titulo: 'Sampa Tech', cor: 'tech', links: [link('Aceleração Vai Tec', pagina('tech', 'vaitec/'))] },
     {
       titulo: 'Sampa Games',
       cor: 'games',

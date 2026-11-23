@@ -1,0 +1,16 @@
+---
+/*
+ * Situação das inscrições: bolinha + etiqueta (Figma: "Inscrições abertas").
+ * variante 'escura' = sobre o hero azul (etiqueta cheia); 'clara' = sobre fundo branco (etiqueta clara).
+ */
+interface Props {
+  texto: string;
+  aberto: boolean;
+  variante?: 'escura' | 'clara';
+}
+const { texto, aberto, variante = 'clara' } = Astro.props;
+---
+<p class:list={['status', `status--${variante}`, { 'status--fechado': !aberto }]}>
+    <span class="status__bolinha" aria-hidden="true"></span>
+    <span class="etiqueta">{texto}</span>
+</p>

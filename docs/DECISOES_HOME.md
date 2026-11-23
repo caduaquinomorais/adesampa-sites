@@ -103,7 +103,7 @@ Figma: frame "Menu de projetos" (656:19254), 1008 × 476. Fica em todos os sites
 - **Fora do Figma:**
   - sombra leve, para separar o painel do conteúdo branco da página;
   - seta do "Programas" girando quando o menu está aberto;
-  - "Atendimento" com a grafia corrigida (o rodapé mantém "Atendimenro", como no Figma, pendência P-18).
+  - "Atendimento" com a grafia corrigida (no Figma está "Atendimenro"). O rodapé foi corrigido também, em 23/11/2026.
 - **Logos dos eixos:** SVGs exportados do Figma (`packages/ui/assets/icons/menu-*.svg`, com 28 px de altura) e carregados só quando o menu abre (lazy). O teste visual força o carregamento deles para confirmar que não estão quebrados.
 
 ## H-10 — Efeitos de hover (Início e rodapé)

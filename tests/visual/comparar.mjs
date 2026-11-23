@@ -71,7 +71,7 @@ const ISOLAR = (igualarAtivo, esconderSubmenu = false) => `(() => {
   return new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => r(true))));
 })()`;
 const carregarRef = async (largura) => { await carregar(cdp, urlRef, largura); await cdp.avaliar(INJETAR_CORRECOES); await cdp.avaliar(ISOLAR(false, !comSubmenu)); };
-const carregarSite = async (largura) => { await carregar(cdp, urlSite, largura); await cdp.avaliar(ISOLAR(true)); };
+const carregarSite = async (largura) => { await carregar(cdp, urlSite, largura); await cdp.avaliar(ISOLAR(true, !comSubmenu)); };
 
 // Imagens do topo/rodapé que não carregaram (404, SVG inválido…). Com width/height fixos, uma imagem
 // quebrada ocupa a mesma caixa: só esta verificação a pega com certeza.
@@ -211,8 +211,10 @@ const chrome = await abrirChrome();
 const { cdp } = chrome;
 const urlRef = `${srv.url}/ref/exemplo.html`;
 const urlSite = `${srv.url}${BASE}`;
-const comSubmenu = existsSync(DIST) && readFileSync(join(DIST, 'index.html'), 'utf8').includes('class="submenu"');
-console.log(`Paridade visual — site "${NOME}" (${urlSite}) × referência (${urlRef})${comSubmenu ? '' : ' — sem submenu: compara só cabeçalho e rodapé'}`);
+// Só o submenu do Teia é igual ao da referência. O submenu de outro programa (ex.: Sampa Tech) é a parte
+// do topo que cada site personaliza: fica escondido nos dois lados e a comparação é só do cabeçalho e do rodapé.
+const comSubmenu = existsSync(DIST) && readFileSync(join(DIST, 'index.html'), 'utf8').includes('aria-label="Seções de Teia"');
+console.log(`Paridade visual — site "${NOME}" (${urlSite}) × referência (${urlRef})${comSubmenu ? '' : ' — sem o submenu do Teia: compara só cabeçalho e rodapé'}`);
 
 try {
   for (const largura of LARGURAS) {

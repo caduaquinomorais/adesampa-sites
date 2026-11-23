@@ -1,0 +1,29 @@
+{
+  "_comentario": "Geometria do Figma (arquivo r1NdYceMw9ocdyDDrVQUGW) a 1440 px, extraída pela API em 23/11/2026; referências exportadas do Figma no mesmo dia. y = topo da seção na página (cabeçalho 0–69, submenu 69–109/110).",
+  "paginas": [
+    {
+      "nome": "sampa-tech", "url": "", "referencia": "sampa-tech-1440.png", "frame": "468:12857",
+      "secoes": [
+        { "nome": "submenu", "seletor": ".submenu", "y": 69, "altura": 40 },
+        { "nome": "hero", "seletor": "main > section:nth-of-type(1)", "y": 109, "altura": 472 },
+        { "nome": "vai-tec", "seletor": "main > section:nth-of-type(2)", "y": 581, "altura": 491 },
+        { "nome": "rodape", "seletor": ".site-footer", "y": 1072, "altura": 679 }
+      ]
+    },
+    {
+      "nome": "vaitec", "url": "vaitec/", "referencia": "vaitec-1440.png", "frame": "64:2150",
+      "secoes": [
+        { "nome": "submenu", "seletor": ".submenu", "y": 69, "altura": 41 },
+        { "nome": "hero", "seletor": "main > section:nth-of-type(1)", "y": 110, "altura": 496 },
+        { "nome": "sobre", "seletor": "main > section:nth-of-type(2)", "y": 606, "altura": 620 },
+        { "nome": "beneficios", "seletor": "main > section:nth-of-type(3)", "y": 1226, "altura": 485 },
+        { "nome": "temas", "seletor": "main > section:nth-of-type(4)", "y": 1711, "altura": 610 },
+        { "nome": "quem-pode", "seletor": "main > section:nth-of-type(5)", "y": 2321, "altura": 813 },
+        { "nome": "cronograma", "seletor": "main > section:nth-of-type(6)", "y": 3134, "altura": 1062 },
+        { "nome": "duvidas", "seletor": "main > section:nth-of-type(7)", "y": 4195, "altura": 813 },
+        { "nome": "edital", "seletor": "main > section:nth-of-type(8)", "y": 5008, "altura": 513 },
+        { "nome": "rodape", "seletor": ".site-footer", "y": 5521, "altura": 679 }
+      ]
+    }
+  ]
+}

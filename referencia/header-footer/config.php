@@ -65,7 +65,7 @@ return [
         'colunas' => [
             'col_adesampa' => $coluna('ADE SAMPA', [$link('Início'), $link('Sobre nós'), $link('Transparência')]),
             'col_empreende' => $coluna('Sampa Empreende', [
-                $link('Atendimenro ao empreendedor'), // Grafia exatamente como no Figma (pendência P-18 no TEIA).
+                $link('Atendimento ao empreendedor'), // No Figma está "Atendimenro" (corrigido em 23/11/2026).
                 $link('Orientação empresarial'),
                 $link('Curso fábrica de negócios'),
                 $link('Curso de gestão de negócios'),

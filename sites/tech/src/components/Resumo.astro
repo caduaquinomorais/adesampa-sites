@@ -1,0 +1,27 @@
+---
+/* Card "Resumo do Edital" (Sampa Tech e hero do Vai Tec). */
+import { attrs } from '../lib/conteudo';
+
+interface Props {
+  titulo: string;
+  valor: string;
+  valorTexto: string;
+  itens: { destaque: string; texto: string; link?: string }[];
+}
+const { titulo, valor, valorTexto, itens } = Astro.props;
+---
+<aside class="resumo" aria-label={titulo}>
+    <div class="resumo__bloco">
+        <p class="resumo__titulo">{titulo}</p>
+        <p class="resumo__valor">{valor}</p>
+        <p class="resumo__texto quebras">{valorTexto}</p>
+    </div>
+    {itens.map((item) => (
+        <div class="resumo__bloco">
+            <p class="resumo__destaque">{item.destaque}</p>
+            {item.link !== undefined
+                ? <a class="resumo__texto resumo__link" {...attrs(item.link)}>{item.texto}</a>
+                : <p class="resumo__texto">{item.texto}</p>}
+        </div>
+    ))}
+</aside>
