@@ -15,7 +15,8 @@ O deploy é automático. Ele é feito pelo workflow [.github/workflows/testes.ym
    - No *Run workflow*, o campo "site" aceita o nome de um site ou "todos".
 4. **Deploy:** um site por vez, por FTPS (`web1160.kinghost.net`).
    - Antes de enviar, confere o marcador `.adesampa-site` na pasta de destino, para não sobrescrever a pasta errada.
-   - Se o envio falhar, faz uma pausa e tenta de novo.
+   - Se o envio falhar, tenta de novo até 3 vezes: espera 2 min antes da 2ª tentativa e 4 min antes da 3ª.
+   - Entre um site e outro, pausa de 60 s (a KingHost recusa muitas conexões FTP seguidas).
    - Depois de enviar, confere no ar a página, a 404 e os cabeçalhos de segurança.
 
 Configuração no GitHub: os segredos `FTP_USERNAME` e `FTP_PASSWORD`, e as variáveis `ADESAMPA_AMBIENTE` (padrão `teste`) e `FTP_SERVER`.
@@ -38,6 +39,7 @@ O Teia antigo (`www/teia/`, projeto teia-teste) e o Sampa Tech antigo (`www/samp
 |---|---|---|
 | Actions verde, mas o site no ar não mudou | Até 18/11/2026, o plano comparava só com o push anterior. Um deploy que falhava "perdia" as mudanças. | Já corrigido (comparação com o último run bem-sucedido). Para forçar: *Run workflow* → `todos`. |
 | "Chrome não iniciou o DevTools" | O Chrome demorou a abrir no runner do GitHub. | Os testes agora usam uma porta livre escolhida pelo Chrome, esperam 30 s e tentam 3 vezes. Se ainda acontecer, rode o workflow de novo. |
+| Deploy de um site falha com `AggregateError: (control socket)` | A KingHost recusou a conexão FTP: muitas conexões seguidas do mesmo endereço (aconteceu no 3º site de um deploy, em 23/11/2026). | O deploy já espera e tenta 3 vezes. Se ainda falhar, abra a execução e clique em *Re-run failed jobs*: só o site que falhou é publicado de novo. |
 | Página antiga no navegador | Cache do navegador. | Ctrl+F5. O HTML é servido com `no-cache`, e CSS/JS têm nome com hash. |
 
 ## Conferir se o deploy chegou

@@ -181,6 +181,12 @@
 .mega__eixo { display: flex; flex-direction: column; gap: 28px; width: 117px; }
 .mega__programa { display: flex; align-items: center; min-height: 27px; }
 .mega__programa img { height: 28px; width: auto; }
+/* Logo do programa = link para a página dele. Ao passar o mouse (ou focar pelo teclado), cresce 5%,
+   bem de leve. Só nos logos com link: os pendentes ficam parados. */
+.mega__programa-link { display: inline-flex; border-radius: 4px; }
+.mega__programa-link img { transform-origin: left center; transition: transform .18s ease-out; }
+.mega__programa-link[href]:hover img,
+.mega__programa-link[href]:focus-visible img { transform: scale(1.05); }
 .mega__grupo { display: flex; flex-direction: column; gap: 12px; }
 .mega__grupo-titulo { font-size: 16px; font-weight: 700; line-height: 20px; color: #000; }
 .mega__links { display: flex; flex-direction: column; gap: 12px; }

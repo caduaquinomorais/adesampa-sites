@@ -179,7 +179,7 @@ jobs:
     needs: planejar
     if: needs.planejar.outputs.quantidade != '0'
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     strategy:
       # Um site por vez: várias conexões FTP seguidas bloqueiam o IP na KingHost.
       max-parallel: 1
@@ -292,12 +292,35 @@ jobs:
             **/.git*/**
             .adesampa-site
 
-      - name: Aguardar antes da segunda tentativa
+      # Se a KingHost recusar a conexão (ex.: "control socket" depois de várias conexões seguidas),
+      # o bloqueio costuma durar alguns minutos: espera cada vez mais antes de tentar de novo.
+      - name: Aguardar antes da segunda tentativa (2 min)
         if: steps.envio1.outcome == 'failure'
-        run: sleep 60
+        run: sleep 120
 
       - name: Enviar por FTPS (2ª tentativa)
+        id: envio2
         if: steps.envio1.outcome == 'failure'
+        continue-on-error: true
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ env.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./sites/${{ matrix.site.nome }}/dist/
+          server-dir: ./${{ matrix.site.pasta }}/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .adesampa-site
+
+      - name: Aguardar antes da terceira tentativa (4 min)
+        if: steps.envio2.outcome == 'failure'
+        run: sleep 240
+
+      - name: Enviar por FTPS (3ª tentativa)
+        if: steps.envio2.outcome == 'failure'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ env.FTP_SERVER }}
@@ -353,7 +376,8 @@ jobs:
           echo "Arquivo oculto .adesampa-site → $oculto"
           [ "$oculto" = 404 ] || [ "$oculto" = 403 ] || echo "::warning::Arquivos ocultos estão acessíveis (.htaccess sem mod_rewrite?)."
 
-      # Pausa entre sites (o próximo da matriz só começa depois desta).
+      # Pausa entre sites (o próximo da matriz só começa depois desta). 60 s: com 3 sites ou mais em
+      # sequência, 30 s não bastavam e a KingHost recusava a conexão (23/11/2026, deploy do Teia).
       - name: Pausa antes do próximo site
         if: always()
-        run: sleep 30
+        run: sleep 60

@@ -185,6 +185,8 @@ export interface EixoMenu {
   cor: CorPrograma;
   /** Nome do programa (texto alternativo do logo). */
   nome: string;
+  /** Para onde o logo leva (página do programa). '' = pendente (o logo aparece, mas não clica). */
+  link: Destino;
   links: Link[];
 }
 
@@ -206,6 +208,7 @@ export const MENU_PROJETOS: MenuProjetos = congelar({
     {
       cor: 'empreende',
       nome: 'Sampa Empreende',
+      link: '', // TODO-LINK: página do Sampa Empreende
       links: [
         link('Atendimento ao empreendedor'),
         link('Orientação empresarial'),
@@ -216,11 +219,12 @@ export const MENU_PROJETOS: MenuProjetos = congelar({
         link('Educação financeira'),
       ],
     },
-    { cor: 'tech', nome: 'Sampa Tech', links: [link('Aceleração Vai Tec', pagina('tech', 'vaitec/'))] },
-    { cor: 'games', nome: 'Sampa Games', links: [link('Aceleração de estúdios'), link('Curso de game dev'), link('Hub de educação')] },
+    { cor: 'tech', nome: 'Sampa Tech', link: pagina('tech'), links: [link('Aceleração Vai Tec', pagina('tech', 'vaitec/'))] },
+    { cor: 'games', nome: 'Sampa Games', link: '', links: [link('Aceleração de estúdios'), link('Curso de game dev'), link('Hub de educação')] },
     {
       cor: 'verde',
       nome: 'Sampa Verde',
+      link: '', // TODO-LINK: página do Sampa Verde
       links: [
         link('Aceleração de negócios rurais'),
         link('Aceleração de hortas'),
@@ -228,7 +232,7 @@ export const MENU_PROJETOS: MenuProjetos = congelar({
         link('Hub de inovação'),
       ],
     },
-    { cor: 'criativa', nome: 'Sampa Criativa', links: [link('Aceleração de audiovisual'), link('Aceleração de moda')] },
+    { cor: 'criativa', nome: 'Sampa Criativa', link: '', links: [link('Aceleração de audiovisual'), link('Aceleração de moda')] },
   ],
   espacosTitulo: 'Espaços e plataformas',
   espacos: [

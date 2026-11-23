@@ -105,6 +105,8 @@ Figma: frame "Menu de projetos" (656:19254), 1008 × 476. Fica em todos os sites
   - seta do "Programas" girando quando o menu está aberto;
   - "Atendimento" com a grafia corrigida (no Figma está "Atendimenro"). O rodapé foi corrigido também, em 23/11/2026.
 - **Logos dos eixos:** SVGs exportados do Figma (`packages/ui/assets/icons/menu-*.svg`, com 28 px de altura) e carregados só quando o menu abre (lazy). O teste visual força o carregamento deles para confirmar que não estão quebrados.
+- **Logos como links (23/11/2026):** cada logo leva à página do programa (campo `link` de cada eixo em `MENU_PROJETOS`). Hoje só o Sampa Tech tem página; os outros 4 ficam pendentes (aparecem, mas não clicam).
+  - Ao passar o mouse ou focar pelo teclado, o logo com link cresce 5% em 180 ms (fora do Figma, a pedido). Os pendentes ficam parados.
 
 ## H-10 — Efeitos de hover (Início e rodapé)
 
