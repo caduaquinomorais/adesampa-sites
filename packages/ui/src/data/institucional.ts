@@ -149,6 +149,11 @@ export interface ItemMenu extends Link {
   chave: ChaveMenu;
   /** Mostra a setinha de menu suspenso. */
   seta: boolean;
+  /**
+   * Menu suspenso simples (lista de links), como o de "Comunicação" (Figma 1117:22696). Com submenu, o item
+   * vira um botão que abre a lista (igual a "Programas"), e o `link` do item deixa de ser usado no cabeçalho.
+   */
+  submenu?: Link[];
 }
 
 export interface Cabecalho {
@@ -167,7 +172,21 @@ export const CABECALHO: Cabecalho = congelar({
     { chave: 'sobre', rotulo: 'Sobre', link: pagina('home', 'sobre/'), seta: false },
     // Abre o "Menu de projetos" (MENU_PROJETOS, abaixo); por isso não tem link próprio.
     { chave: 'programas', rotulo: 'Programas', link: '', seta: true },
-    { chave: 'comunicacao', rotulo: 'Comunicação', link: pagina('home', 'comunicacao/'), seta: true },
+    {
+      chave: 'comunicacao',
+      rotulo: 'Comunicação',
+      link: pagina('home', 'comunicacao/'),
+      seta: true,
+      // Menu Comunicação (Figma 1117:22696). "Central de conteúdo" = a página Comunicação (decisão H-13).
+      submenu: [
+        link('Notícias', pagina('home', 'comunicacao/noticias/')),
+        link('Publicações', pagina('home', 'comunicacao/publicacoes/')),
+        link('Central de conteúdo', pagina('home', 'comunicacao/')),
+        link('Manual de marcas', pagina('home', 'comunicacao/#manual-de-marca')),
+        link('Manual de redação', pagina('home', 'comunicacao/#manual-de-redacao')),
+        link('Contato', pagina('home', 'comunicacao/#contato')),
+      ],
+    },
     { chave: 'transparencia', rotulo: 'Transparência', link: '', seta: false }, // TODO-LINK
     // Página provisória (em produção): parcerias-governamentais/ no site Home. Figma: frame "Parcerias Governamentais" (966:21749).
     { chave: 'governamental', rotulo: 'Governamental', link: pagina('home', 'parcerias-governamentais/'), seta: false },
@@ -369,7 +388,7 @@ export const RODAPE: Rodape = congelar({
 export function todosOsDestinos(): Destino[] {
   return [
     CABECALHO.logoLink,
-    ...CABECALHO.menu.map((i) => i.link),
+    ...CABECALHO.menu.flatMap((i) => [i.link, ...(i.submenu ?? []).map((l) => l.link)]),
     CABECALHO.botaoLink,
     ...MENU_PROJETOS.eixos.flatMap((e) => e.links.map((l) => l.link)),
     ...MENU_PROJETOS.eixos.map((e) => e.link),

@@ -12,55 +12,60 @@ const header = document.querySelector<HTMLElement>('.site-header');
 const toggle = header?.querySelector<HTMLButtonElement>('.site-header__toggle');
 
 /*
- * Menu de projetos (item "Programas"). Botão com aria-expanded (padrão "disclosure").
+ * Menus suspensos do cabeçalho: "Programas" (Menu de projetos, [data-mega]) e itens com submenu, como
+ * "Comunicação" ([data-dropdown]). Botão com aria-expanded (padrão "disclosure").
  * Computador com mouse: abre ao passar o mouse (fecha 200 ms depois de sair) e também ao clicar.
  * Teclado: Enter/Espaço abre e fecha; Esc fecha e devolve o foco; sair com Tab fecha.
  * Celular/tablet (< 1024 px): só o toque abre e fecha (sanfona dentro do ☰).
- * Registrado antes do menu mobile, para o Esc fechar primeiro o Menu de projetos.
+ * Abrir um menu fecha o outro. Registrado antes do menu mobile, para o Esc fechar primeiro o menu suspenso.
  */
-const itemMega = header?.querySelector<HTMLElement>('[data-mega]');
-const gatilho = itemMega?.querySelector<HTMLButtonElement>('.site-header__trigger');
+const computador = matchMedia('(min-width: 1024px) and (hover: hover)');
+const larga = matchMedia('(min-width: 1024px)');
+const fechadores: ((exceto?: HTMLElement) => void)[] = [];
 
-if (itemMega && gatilho) {
-  const computador = matchMedia('(min-width: 1024px) and (hover: hover)');
+for (const item of header?.querySelectorAll<HTMLElement>('[data-mega], [data-dropdown]') ?? []) {
+  const gatilho = item.querySelector<HTMLButtonElement>('.site-header__trigger');
+  if (!gatilho) continue;
   let timer: ReturnType<typeof setTimeout> | undefined;
   let abertoPeloMouse = false;
-  const megaAberto = (): boolean => itemMega.classList.contains('is-open');
-  const definirMega = (abrir: boolean): void => {
+  const aberto = (): boolean => item.classList.contains('is-open');
+  const definir = (abrir: boolean): void => {
     clearTimeout(timer);
-    if (!abrir) abertoPeloMouse = false;
-    itemMega.classList.toggle('is-open', abrir);
+    if (abrir) for (const fechar of fechadores) fechar(item);
+    else abertoPeloMouse = false;
+    item.classList.toggle('is-open', abrir);
     gatilho.setAttribute('aria-expanded', abrir ? 'true' : 'false');
   };
+  fechadores.push((exceto) => { if (exceto !== item && aberto()) definir(false); });
 
   // Se o mouse já abriu, o clique mantém aberto (em vez de fechar logo em seguida).
   gatilho.addEventListener('click', () => {
     if (abertoPeloMouse) { abertoPeloMouse = false; return; }
-    definirMega(!megaAberto());
+    definir(!aberto());
   });
-  itemMega.addEventListener('mouseenter', () => {
+  item.addEventListener('mouseenter', () => {
     if (!computador.matches) return;
-    if (!megaAberto()) abertoPeloMouse = true;
-    definirMega(true);
+    if (!aberto()) abertoPeloMouse = true;
+    definir(true);
   });
-  itemMega.addEventListener('mouseleave', () => {
+  item.addEventListener('mouseleave', () => {
     if (!computador.matches) return;
     clearTimeout(timer);
-    timer = setTimeout(() => definirMega(false), 200);
+    timer = setTimeout(() => definir(false), 200);
   });
   document.addEventListener('keydown', (ev) => {
-    if (ev.key === 'Escape' && megaAberto()) {
-      definirMega(false);
+    if (ev.key === 'Escape' && aberto()) {
+      definir(false);
       gatilho.focus();
       ev.stopImmediatePropagation();
     }
   });
-  itemMega.addEventListener('focusout', (ev) => {
+  item.addEventListener('focusout', (ev) => {
     const destino = ev.relatedTarget;
-    if (matchMedia('(min-width: 1024px)').matches && destino instanceof Node && !itemMega.contains(destino)) definirMega(false);
+    if (larga.matches && destino instanceof Node && !item.contains(destino)) definir(false);
   });
   document.addEventListener('click', (ev) => {
-    if (megaAberto() && matchMedia('(min-width: 1024px)').matches && ev.target instanceof Node && !itemMega.contains(ev.target)) definirMega(false);
+    if (aberto() && larga.matches && ev.target instanceof Node && !item.contains(ev.target)) definir(false);
   });
 }
 
@@ -86,8 +91,8 @@ if (header && toggle) {
     if (aberto() && ev.target instanceof Node && !header.contains(ev.target)) definir(false);
   });
 
-  // Clicar numa âncora interna (#secao) fecha o menu.
+  // Clicar numa âncora (#secao), inclusive da mesma página com endereço completo (menu Comunicação), fecha o menu.
   header.addEventListener('click', (ev) => {
-    if (ev.target instanceof Element && ev.target.closest('a[href^="#"]')) definir(false);
+    if (ev.target instanceof Element && ev.target.closest('a[href*="#"]')) definir(false);
   });
 }

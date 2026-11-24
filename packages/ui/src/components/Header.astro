@@ -4,8 +4,8 @@
  * Textos e links: src/data/institucional.ts (CABECALHO). Nenhum site passa textos ou links.
  * A única variação permitida é o item ativo do menu (prop `ativo`).
  * Origem da marcação: adesampa-header-footer/partials/header.php.
- * "Programas" abre o Menu de projetos (MENU_PROJETOS; Figma 656:19254). Comportamento: scripts/menu.ts
- * e docs/DECISOES_HOME.md (H-09).
+ * "Programas" abre o Menu de projetos (MENU_PROJETOS; Figma 656:19254). Itens com `submenu` (ex.: "Comunicação",
+ * Figma 1117:22696) abrem uma lista simples. Comportamento: scripts/menu.ts e docs/DECISOES_HOME.md (H-09, H-13).
  */
 import { CABECALHO, MENU_PROJETOS, ambienteAtual, resolverDestino, type ChaveMenu } from '../data/institucional';
 import { atributosLink } from '../lib/links';
@@ -77,6 +77,16 @@ const href = (destino: Parameters<typeof resolverDestino>[0]) => atributosLink(r
                                 ))}
                             </div>
                         </div>
+                    </li>
+                ) : item.submenu ? (
+                    <li class:list={['site-header__item', 'site-header__item--dropdown', { 'is-active': item.chave === ativo }]} data-dropdown>
+                        <button class="site-header__link site-header__trigger" type="button" aria-expanded="false" aria-controls={`menu-${item.chave}`}>
+                            {item.rotulo}
+                            <img class="site-header__arrow" src={setaMenu} alt="" width="7" height="4">
+                        </button>
+                        <ul class="dropdown" id={`menu-${item.chave}`}>
+                            {item.submenu.map((l) => <li><a class="dropdown__link" {...href(l.link)}>{l.rotulo}</a></li>)}
+                        </ul>
                     </li>
                 ) : (
                     <li class:list={['site-header__item', { 'is-active': item.chave === ativo }]}>

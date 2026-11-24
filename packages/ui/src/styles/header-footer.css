@@ -150,9 +150,9 @@
    Sem JS: abre com :hover / :focus-within. */
 .site-header__trigger { background: none; border-inline: 0; padding-inline: 0; cursor: pointer; }
 .site-header .site-header__trigger { font: 600 var(--hf-fs-nav)/1 var(--hf-font); letter-spacing: var(--hf-ls-nav); }
-.site-header__trigger:hover, .site-header__item--mega.is-open .site-header__trigger { color: var(--hf-empreende-001); }
+.site-header__trigger:hover, .site-header__item:is(.site-header__item--mega, .site-header__item--dropdown).is-open .site-header__trigger { color: var(--hf-empreende-001); }
 .site-header__trigger .site-header__arrow { transition: transform .16s ease-out; }
-.site-header__item--mega.is-open .site-header__arrow { transform: rotate(180deg); }
+.site-header__item:is(.site-header__item--mega, .site-header__item--dropdown).is-open .site-header__arrow { transform: rotate(180deg); }
 .mega {
     display: none;
     position: absolute; top: 100%; left: 50%; z-index: 30;
@@ -195,6 +195,30 @@
 .mega__links { display: flex; flex-direction: column; gap: 12px; }
 .mega__link { display: inline-block; color: var(--hf-preto-001); transition: color .16s ease-out; }
 .mega__link[href]:hover { color: var(--hf-empreende-001); }
+
+/* ---------- Menu suspenso simples (item com submenu, ex.: "Comunicação") — Figma 1117:22696, 195 px ----------
+   Lista centralizada sob o item, texto centralizado e linhas divisórias. Mesmo comportamento do
+   Menu de projetos (scripts/menu.ts); a sombra e os cantos seguem o Menu de projetos (decisão H-13). */
+.site-header__item--dropdown { position: relative; }
+.dropdown {
+    display: none;
+    position: absolute; top: 100%; left: 50%; z-index: 30;
+    transform: translateX(-50%);
+    width: 195px; margin: 0; padding: 0; list-style: none;
+    background: var(--hf-branco);
+    border-radius: 0 0 12px 12px; overflow: hidden;
+    box-shadow: 0 16px 32px rgba(20, 23, 31, 0.12);
+}
+.site-header__item--dropdown.is-open .dropdown,
+.no-js .site-header__item--dropdown:is(:hover, :focus-within) .dropdown { display: block; }
+.dropdown li + li { border-top: 1px solid #DDEEFF; }
+.dropdown__link {
+    display: flex; align-items: center; justify-content: center; min-height: 40px; padding: 8px 16px;
+    font-size: var(--hf-fs-nav); font-weight: 400; line-height: 1.25; text-align: center;
+    color: var(--hf-preto-001); text-decoration: none;
+    transition: color .16s ease-out, background-color .16s ease-out;
+}
+.dropdown__link[href]:hover { color: var(--hf-empreende-001); background: #F4F9FF; }
 
 /* ---------- Submenu do programa (opcional) ---------- */
 .submenu {
@@ -329,6 +353,14 @@
     .mega__links { gap: 0; }
     .mega__link { display: flex; align-items: center; min-height: 44px; font-size: 14px; line-height: 1.25; }
     .mega__grupo-link[href] { display: inline-flex; align-items: center; min-height: 44px; }
+    /* Menu suspenso simples no celular/tablet: sanfona alinhada à esquerda, sem sombra. */
+    .site-header__item--dropdown { flex-direction: column; position: static; }
+    .dropdown { position: static; transform: none; width: auto; z-index: auto; border-radius: 0; box-shadow: none; padding-bottom: 8px; }
+    .no-js .site-header__item--dropdown .dropdown { display: block; }
+    .dropdown li + li { border-top: 0; }
+    /* Recuo de 27 px: 12 px a mais que o texto dos itens principais (borda 3 + 12), para mostrar que são subitens. */
+    .dropdown__link { justify-content: flex-start; min-height: 44px; padding: 0 0 0 27px; text-align: left; }
+    .dropdown__link[href]:hover { background: none; }
 
     .submenu { padding-inline: 0; }
     .submenu__inner { padding-inline: var(--hf-gutter); overflow-x: auto; scrollbar-width: thin; }

@@ -132,14 +132,25 @@ Ficam em [sites/home/src/components/](../sites/home/src/components/). Mudar um c
 | `Hero.astro` | Topo das páginas internas (trilha "Início > …", título e texto) | Sobre, Comunicação, Publicações, Produtos digitais, notícias |
 | `Breadcrumb.astro` | A trilha "Início > Comunicação > …" | Dentro do Hero |
 | `Carrossel.astro` | Fileira de cards com setas | Destaques (Início), Revistas e Cartilhas |
-| `Galeria.astro` | Fotos com pontinhos para trocar | Parcerias e Praça (Início), capas (Comunicação) |
+| `Galeria.astro` | Fotos com pontinhos para trocar. Com `automatico={segundos}`, passam sozinhas | Parcerias (automática, 10 s) e Praça (Início), capas (Comunicação) |
 | `Eixos.astro` | Os 5 cards dos programas | Início e Sobre |
 | `CardNoticia.astro` | O card de uma notícia | Comunicação, lista de notícias, "Também pode interessar" |
 | `FiltrosNoticias.astro` | Os botões de categoria e a busca | Páginas de notícias |
 | `Paginacao.astro` | "1 2 3 próxima" | Páginas de notícias |
 | `IconeProduto.astro` | Traduz o nome do ícone (`mapa`, `gratuito`…) para o arquivo | Produtos digitais |
 
-Comportamentos (o que "se mexe") ficam em [sites/home/src/scripts/](../sites/home/src/scripts/): `carrossel.ts` (setas e pontinhos), `busca.ts` (busca de notícias) e `mapa.ts` (mapa interativo do Teia na página inicial).
+Comportamentos (o que "se mexe") ficam em [sites/home/src/scripts/](../sites/home/src/scripts/): `carrossel.ts` (setas, pontinhos e troca automática), `busca.ts` (busca de notícias) e `mapa.ts` (mapa interativo do Teia na página inicial).
+
+### Troca automática das fotos (ex.: Parcerias a cada 10 s) — 🟡 um site
+
+| Quero… | Onde |
+|---|---|
+| Mudar o tempo (ex.: de 10 para 6 s) | [index.astro](../sites/home/src/pages/index.astro), na `<Galeria>` de Parcerias: `automatico={10}` |
+| Ligar em outra galeria (ex.: Praça) | Acrescente `automatico={10}` na `<Galeria>` dela, na página |
+| Desligar | Apague o `automatico={…}` da `<Galeria>` |
+| Mudar **como** a troca funciona (pausar, ordem, velocidade da animação) | [carrossel.ts](../sites/home/src/scripts/carrossel.ts), função `iniciarGaleria`, bloco "Troca automática" |
+
+A troca para sozinha com o mouse em cima, com o foco do teclado na galeria, com a aba escondida e para quem ativou "reduzir movimento" no computador. Os testes não conferem a troca em si: veja no `npm run dev -w sites/home`. Decisão registrada em [docs/DECISOES_HOME.md](../docs/DECISOES_HOME.md#h-14--troca-automática-em-parcerias-governamentais-24112026).
 
 ---
 

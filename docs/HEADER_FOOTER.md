@@ -6,6 +6,7 @@ Estas partes são **iguais em todos os sites**. Elas existem num lugar só, e um
 |---|---|---|---|
 | Cabeçalho (logo, menu, botão "Agendamentos") | `CABECALHO` | `Header.astro` | `header-footer.css` |
 | Menu de projetos (abre em "Programas") | `MENU_PROJETOS` | `Header.astro` | `header-footer.css` (`.mega…`) |
+| Menu Comunicação (lista simples) | `submenu` do item `comunicacao` em `CABECALHO.menu` | `Header.astro` | `header-footer.css` (`.dropdown…`) |
 | Rodapé | `RODAPE` | `Footer.astro` | `header-footer.css` (`.site-footer…`) |
 | Submenu do programa (opcional) | na própria página do site | `Submenu.astro` | `header-footer.css` (`.submenu…`) |
 | Abrir e fechar o menu (☰, teclado) | — | `scripts/menu.ts` | — |
@@ -35,7 +36,7 @@ legais: [link('Termos de uso', 'https://www.adesampa.com.br/termos'), link('Priv
 | Bloco | O que tem |
 |---|---|
 | `SITES` | Endereço e pasta no FTP de cada site, por ambiente (ver [ARQUITETURA.md](ARQUITETURA.md#endereços-ambientes-site-e-base)). |
-| `CABECALHO.menu` | Itens do menu principal. Cada um tem uma `chave` (`'home'`, `'sobre'`, `'programas'`, `'comunicacao'`, `'transparencia'`, `'governamental'`), um `rotulo`, um `link` e `seta` (mostra a setinha). |
+| `CABECALHO.menu` | Itens do menu principal. Cada um tem uma `chave` (`'home'`, `'sobre'`, `'programas'`, `'comunicacao'`, `'transparencia'`, `'governamental'`), um `rotulo`, um `link` e `seta` (mostra a setinha). Com `submenu` (lista de `link(...)`), o item vira um menu suspenso, como "Comunicação". |
 | `CABECALHO.botaoTexto` / `botaoLink` | O botão azul "Agendamentos". |
 | `MENU_PROJETOS.eixos` | As 5 colunas de programas (Sampa Empreende, Tech, Games, Verde e Criativa). `link` = para onde vai o **logo**; `links` = os itens abaixo dele. |
 | `MENU_PROJETOS.espacos` | Grupos de "Espaços e plataformas" (Teia, Produtos digitais, Praça Victor Civita). `link` = para onde vai o **título** do grupo; `links` = os itens. |
@@ -54,6 +55,24 @@ Nesse caso, atualize também a referência em `referencia/header-footer/`, nos 3
 - `html/header.html` ou `html/footer.html`, as versões em HTML puro.
 
 > O **Menu de projetos** não existe na referência (foi criado depois, a partir do Figma). Mudanças nele não exigem atualizar `referencia/`.
+
+### Menu suspenso de um item (ex.: Comunicação)
+
+Qualquer item do menu principal pode ganhar uma lista suspensa. Basta o campo `submenu`:
+
+```ts
+{
+  chave: 'comunicacao', rotulo: 'Comunicação', link: pagina('home', 'comunicacao/'), seta: true,
+  submenu: [
+    link('Notícias', pagina('home', 'comunicacao/noticias/')),
+    link('Contato', pagina('home', 'comunicacao/#contato')),
+  ],
+},
+```
+
+- Com `submenu`, o item vira um **botão** que abre a lista (igual a "Programas"), e o `link` do item não aparece no cabeçalho. Por isso, a página principal da seção precisa estar **dentro** da lista (no caso de Comunicação, "Central de conteúdo").
+- Para mudar, acrescentar ou remover itens da lista, edite só o `submenu`. A lista não existe na referência, e não é preciso atualizar `referencia/`.
+- Comportamento: `scripts/menu.ts` (o mesmo de "Programas"). Visual: `.dropdown` em `header-footer.css`.
 
 ### Item novo no menu principal
 

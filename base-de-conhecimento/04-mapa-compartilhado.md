@@ -14,6 +14,7 @@
 |---|---|---|---|
 | **Cabeçalho** (logo, menu, botão "Agendamentos") | [institucional.ts](../packages/ui/src/data/institucional.ts) → `CABECALHO` | [Header.astro](../packages/ui/src/components/Header.astro) | [header-footer.css](../packages/ui/src/styles/header-footer.css) |
 | **Menu de projetos** (abre em "Programas") | `institucional.ts` → `MENU_PROJETOS` | `Header.astro` | `header-footer.css`, procure `.mega` |
+| **Menu Comunicação** (lista que abre em "Comunicação") | `institucional.ts` → `CABECALHO.menu`, item `comunicacao`, campo `submenu` | `Header.astro` | `header-footer.css`, procure `.dropdown` |
 | **Rodapé** | `institucional.ts` → `RODAPE` | [Footer.astro](../packages/ui/src/components/Footer.astro) | `header-footer.css`, procure `.site-footer` |
 | **Submenu** (faixa do programa abaixo do cabeçalho) | **Cada site define o seu**, na própria página (ver os mapas [02](02-mapa-sampa-tech.md) e [03](03-mapa-teia.md)) | [Submenu.astro](../packages/ui/src/components/Submenu.astro) | `header-footer.css`, procure `.submenu` |
 | **Abrir e fechar o menu** (☰ no celular, teclado) | — | [scripts/menu.ts](../packages/ui/src/scripts/menu.ts) | — |
@@ -32,7 +33,7 @@ Este é o arquivo de **conteúdo** das partes compartilhadas. Ele não é YAML: 
 | Bloco | O que tem |
 |---|---|
 | `SITES` | O endereço e a pasta no servidor de cada site |
-| `CABECALHO.menu` | Os itens do menu principal (Home, Sobre, Programas, Comunicação…) |
+| `CABECALHO.menu` | Os itens do menu principal (Home, Sobre, Programas, Comunicação…). O campo `submenu` de um item é a lista que abre embaixo dele (hoje, só em Comunicação) |
 | `CABECALHO.botaoTexto` e `botaoLink` | O botão azul "Agendamentos" |
 | `MENU_PROJETOS.eixos` | As 5 colunas de programas. `link` = para onde vai o **logo**; `links` = os itens abaixo dele |
 | `MENU_PROJETOS.espacos` | "Espaços e plataformas" (Teia, Produtos digitais, Praça) |
@@ -62,6 +63,7 @@ Para páginas do próprio projeto, use sempre `pagina('nome-do-site', 'caminho/'
 | Mudar o **texto** de um item do cabeçalho ou do rodapé | ⚠️ Exige um passo a mais | Atualize também os 3 arquivos da referência (abaixo) |
 | **Acrescentar ou remover** itens do menu principal ou do rodapé | ⚠️ Exige um passo a mais | Atualize também os 3 arquivos da referência (abaixo) |
 | Mudar o **Menu de projetos** | ✅ Sim | Ele não existe na referência |
+| Mudar os itens do **menu Comunicação** (`submenu`) | ✅ Sim | Ele também não existe na referência |
 
 **Por quê?** Um teste compara o cabeçalho e o rodapé de cada site, **pixel a pixel**, com um modelo original guardado em [referencia/header-footer/](../referencia/header-footer/). Se o texto muda no site mas não no modelo, o teste acusa diferença.
 

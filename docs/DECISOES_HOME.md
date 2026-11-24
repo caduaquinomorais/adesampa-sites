@@ -58,6 +58,7 @@ No Figma, o mapa é uma imagem: um painel da unidade junto com um trecho do Goog
   - Sem JavaScript, rolam com o dedo, o mouse ou o teclado (a faixa recebe foco).
   - Com JavaScript, as setas avançam um card por vez e ficam desativadas no começo e no fim.
   - Não há rotação automática.
+- **Galerias com pontinhos:** manuais por padrão. A troca automática é opcional, por galeria (ver H-14).
 - **Praça Victor Civita e capa das publicações:** o Figma mostra 4 pontinhos, mas só uma foto.
   - Os pontinhos só aparecem com 2 fotos ou mais, como no TEIA (decisão D-06).
   - Para incluir fotos, use a lista `fotos` em `inicio.md` ou `capas` em `comunicacao.md`.
@@ -128,7 +129,7 @@ Tirados das interações "ao passar o mouse" do protótipo no Figma.
 O Figma da Início ganhou uma seção nova e o cabeçalho ganhou um item. Comparação feita com a versão de 16/11 (base da Home).
 - **Seção "Parcerias governamentais"** (966:18689), entre "Destaques" e "Nosso impacto":
   - textos e fotos em `inicio.md` (`parcerias`); as 2 fotos foram baixadas do Figma;
-  - carrossel **manual** com pontinhos (componente `Galeria`), como os outros do site (H-05). No Figma ele passa sozinho a cada 4 s; a passagem automática não foi feita;
+  - carrossel **manual** com pontinhos (componente `Galeria`), como os outros do site (H-05). No Figma ele passa sozinho a cada 4 s. A passagem automática foi ligada depois, a cada 10 s (ver H-14);
   - o título fica sobre a foto, num degradê azul `#042F80` em "multiplicar" (75%), como no card 1 do Figma. O card 2 do Figma usa um degradê um pouco mais estreito; o site usa o mesmo nos dois;
   - os pontinhos seguem o número de fotos (2), e não os 4 desenhados no Figma;
   - contraste do título: medido no print (o teste automático não mede texto sobre foto). Em 90% dos pixels atrás dele fica ≥ 4,9:1 (texto grande exige 3:1), com uma sombra leve no texto para reforçar;
@@ -149,6 +150,28 @@ Figma: frame "Produtos Digitais" (685:50101). Endereço: `/comunicacao/produtos-
   - os 9 ícones estão em `src/assets/icones/produtos/` e são escolhidos pelo campo `icone:` no conteúdo (`components/IconeProduto.astro`).
 - **Medidas:** o limite de uso do Figma acabou no meio da leitura. Vieram a estrutura, os textos, as medidas e o banner; as cores dos fundos e dos cards saíram do print do frame.
 - **Teste:** a página não tem referência no teste de comparação com o Figma; passa pelos testes de responsividade e acessibilidade.
+
+## H-13 — Menu Comunicação (24/11/2026)
+
+Figma: frame "Menu Comunicação" (1117:22696), 195 px de largura. Fica no cabeçalho compartilhado (todos os sites).
+- **Itens:** Notícias, Publicações, Central de conteúdo, Manual de marcas, Manual de redação e Contato (`submenu` do item `comunicacao` em `CABECALHO.menu`, `institucional.ts`).
+- **"Central de conteúdo"** leva à página Comunicação (`/comunicacao/`), que não tem outro nome no Figma. Os manuais e o Contato levam às seções dessa página (`#manual-de-marca`, `#manual-de-redacao`, `#contato`).
+- **Comportamento igual ao de "Programas"** (H-09): "Comunicação" deixou de ser link e virou um botão que abre a lista (passar o mouse ou clicar; Esc fecha; Tab para fora fecha). Abrir um menu fecha o outro. No celular, vira sanfona dentro do ☰.
+- **Fora do Figma:**
+  - sombra e cantos arredondados embaixo, iguais aos do Menu de projetos;
+  - linhas divisórias numa cor só (`#DDEEFF`). No print do Figma, elas alternam entre azul-claro e cinza;
+  - hover: texto azul e fundo `#F4F9FF`.
+- **"Produtos digitais"** não entra neste menu (segue o Figma). Continua no Menu de projetos.
+- **Medidas:** a API e o MCP do Figma estavam no limite de uso, então o menu foi feito a partir de um print. A altura de cada item (40 px) e o tamanho do texto (14 px) são aproximados.
+
+## H-14 — Troca automática em Parcerias governamentais (24/11/2026)
+
+- As fotos de "Parcerias governamentais" (Início) passam sozinhas **a cada 10 s** (o Figma usa 4 s; 10 s foi pedido pela equipe).
+- Como ligar em uma galeria: `<Galeria … automatico={10} />` na página. Sem a opção, a galeria continua manual (Praça e capas de Comunicação).
+- Caminho: página (`automatico`) → `Galeria.astro` (`data-automatico`) → `scripts/carrossel.ts` (função `iniciarGaleria`, `setInterval`).
+- Pausa com o mouse em cima, com o foco do teclado dentro da galeria e com a aba oculta. Não roda com "reduzir movimento" (`prefers-reduced-motion`).
+- **Pendente (acessibilidade, WCAG 2.2.2):** falta um botão visível de pausar. Não foi feito para manter a mudança mínima.
+- Os testes não verificam a troca em si (só que a página continua válida). Conferir com `npm run dev -w sites/home`.
 
 ## Pendências de conteúdo (confirmar com a ADE SAMPA)
 
