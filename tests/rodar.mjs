@@ -1,6 +1,7 @@
 // ADE SAMPA — executa as baterias de teste em sequência e para na primeira que falhar.
 //   npm test                 (todas)
 //   npm test -- visual       (só as que têm "visual" no nome; também "build", "unitários", "home"…)
+//   npm test -- build home   (várias palavras: roda as baterias que têm QUALQUER uma delas no nome)
 // Pressupõe o build feito (npm run build). No CI o workflow faz o build antes.
 // Para continuar depois de uma falha (ver todas): ADESAMPA_TESTES_CONTINUAR=1 npm test
 //
@@ -14,7 +15,7 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const RAIZ = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const filtro = process.argv[2] ?? '';
+const filtros = process.argv.slice(2);
 const sites = readdirSync(join(RAIZ, 'sites'), { withFileTypes: true })
   .filter((d) => d.isDirectory() && existsSync(join(RAIZ, 'sites', d.name, 'package.json')))
   .map((d) => d.name)
@@ -32,7 +33,12 @@ const BATERIAS = [
 ];
 
 let falhas = 0;
-for (const b of BATERIAS.filter((x) => x.nome.includes(filtro))) {
+const selecionadas = BATERIAS.filter((x) => filtros.length === 0 || filtros.some((f) => x.nome.includes(f)));
+if (selecionadas.length === 0) {
+  console.log(`Nenhuma bateria tem "${filtros.join('" ou "')}" no nome. Baterias disponíveis:\n${BATERIAS.map((b) => `  - ${b.nome}`).join('\n')}`);
+  process.exit(1);
+}
+for (const b of selecionadas) {
   console.log(`\n=== ${b.nome}`);
   // No GitHub Actions, cada linha de falha (✗) vira uma anotação (visível no resumo, sem abrir o log).
   const noCI = !!process.env.GITHUB_ACTIONS;

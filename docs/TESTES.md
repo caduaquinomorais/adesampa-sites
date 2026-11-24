@@ -10,7 +10,10 @@ npm test                      # todas as baterias (para na primeira que falhar)
 npm test -- home              # só as baterias com "home" no nome
 npm test -- "visual: tech "   # só os testes visuais do Sampa Tech
 npm test -- build             # só identidade e links (rápido, sem navegador)
+npm test -- build home        # várias palavras: roda as baterias que têm QUALQUER uma delas no nome
 ```
+
+Um filtro que não bate com nenhuma bateria (erro de digitação) falha e lista os nomes disponíveis.
 
 - Para ver **todas** as falhas sem parar na primeira: no PowerShell, `$env:ADESAMPA_TESTES_CONTINUAR=1; npm test`; no bash, `ADESAMPA_TESTES_CONTINUAR=1 npm test`.
 - Os testes visuais usam o Chrome ou o Edge instalado no computador. Se nenhum for encontrado, defina a variável `CHROME_PATH` com o caminho do executável.
