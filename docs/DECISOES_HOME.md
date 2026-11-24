@@ -173,6 +173,15 @@ Figma: frame "Menu Comunicação" (1117:22696), 195 px de largura. Fica no cabe�
 - **Pendente (acessibilidade, WCAG 2.2.2):** falta um botão visível de pausar. Não foi feito para manter a mudança mínima.
 - Os testes não verificam a troca em si (só que a página continua válida). Conferir com `npm run dev -w sites/home`.
 
+## H-15 — Menu de projetos: itens sem link ficam ocultos (24/11/2026)
+
+- Só Sampa Empreende e Sampa Tech estão em uso. Os itens dos demais programas ainda não têm página.
+- Regra: nos **eixos** do Menu de projetos, item com destino vazio não é exibido. Se nenhum item do programa tem destino, fica só o logo.
+- Os textos continuam em `institucional.ts` (`MENU_PROJETOS`): basta preencher o destino para o item voltar.
+- Onde: `Header.astro`, lista `mega__links` dos eixos (`.some(...) &&` + `.filter((l) => l.link)`).
+- "Espaços e plataformas" **não** usa a regra: "Conheça os equipamentos" (Praça) continua visível sem link.
+- O Menu de projetos não existe em `referencia/`, então o teste de referência não muda.
+
 ## Pendências de conteúdo (confirmar com a ADE SAMPA)
 
 | # | Onde | Pendência |

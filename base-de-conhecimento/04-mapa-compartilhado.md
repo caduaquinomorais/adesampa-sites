@@ -53,6 +53,28 @@ link('Estúdios de podcast', pagina('teia', '#podcast'))  // trecho de uma pági
 
 Para páginas do próprio projeto, use sempre `pagina('nome-do-site', 'caminho/')`. Assim o endereço é montado sozinho, e o teste confere se a página existe.
 
+### Link vazio: o item aparece ou some?
+
+| Onde | Sem link, o item… |
+|---|---|
+| Os itens **abaixo dos logos dos programas** (Menu de projetos) | **Some do site.** Se nenhum item do programa tem link, aparece só o logo |
+| O **logo** do programa | Aparece sempre, mas só clica quando tiver link |
+| "Espaços e plataformas", menu principal, menu Comunicação e rodapé | Aparece, mas não clica |
+
+**Exemplo:** hoje os itens do Sampa Empreende estão escritos assim e, por isso, não aparecem:
+
+```ts
+link('Linhas de crédito'),
+```
+
+Quando a página existir, preencha o destino e o item aparece sozinho:
+
+```ts
+link('Linhas de crédito', 'https://www.exemplo.sp.gov.br/credito'),
+```
+
+Ou seja: **não apague** os itens que ainda não têm página. Deixe o texto escrito e só acrescente o link quando ele existir. Tudo isso fica em [institucional.ts](../packages/ui/src/data/institucional.ts), no bloco `MENU_PROJETOS`.
+
 ---
 
 ## O cuidado mais importante

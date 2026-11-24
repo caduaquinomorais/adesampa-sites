@@ -37,21 +37,13 @@ function iniciarGaleria(raiz: HTMLElement): void {
     marcar(i);
   }));
   trilho.addEventListener('scroll', () => marcar(Math.round(trilho.scrollLeft / Math.max(1, trilho.clientWidth))), { passive: true });
-  // Troca automática (só quando a página pediu, ex.: automatico={10}).
+  // Troca automática (só quando a página pediu, ex.: automatico={10}). Roda sempre, sem pausas.
   const segundos = Number(raiz.dataset.automatico);
-  const reduzirMovimento = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (segundos > 0 && !reduzirMovimento) {
-    let pausado = false;
-    raiz.addEventListener('mouseenter', () => { pausado = true; });
-    raiz.addEventListener('mouseleave', () => { pausado = false; });
-    raiz.addEventListener('focusin', () => { pausado = true; });
-    raiz.addEventListener('focusout', () => { pausado = false; });
-
+  if (segundos > 0) {
     setInterval(() => {
-      if (pausado || document.hidden) return;
       const atual = Math.round(trilho.scrollLeft / Math.max(1, trilho.clientWidth));
       const proxima = (atual + 1) % pontos.length;
-      trilho.scrollTo({ left: proxima * trilho.clientWidth, behavior: suave() });
+      trilho.scrollTo({ left: proxima * trilho.clientWidth, behavior: 'smooth' });
       marcar(proxima);
     }, segundos * 1000);
   }

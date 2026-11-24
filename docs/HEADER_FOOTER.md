@@ -31,6 +31,16 @@ Prefira `pagina(site, caminho)` para páginas do projeto. O endereço completo �
 legais: [link('Termos de uso', 'https://www.adesampa.com.br/termos'), link('Privacidade (LGPD)'), …],
 ```
 
+### Link vazio: aparece ou some?
+
+| Onde | Sem destino (`link('Texto')` ou `link: ''`) |
+|---|---|
+| Itens abaixo dos logos dos programas (`MENU_PROJETOS.eixos[].links`) | **Some.** O `Header.astro` filtra com `.filter((l) => l.link)`; se nenhum item do programa tem destino, a lista inteira (`<ul class="mega__links">`) não é desenhada e fica só o logo. O texto continua em `institucional.ts` e volta sozinho quando o destino for preenchido |
+| Logo do programa (`eixos[].link`) | Aparece sempre; só não clica (e não cresce no hover) |
+| Espaços e plataformas, menu principal, submenu Comunicação, rodapé | Aparece, mas não clica (pendente) |
+
+Para ocultar itens vazios em outro bloco, aplique o mesmo `.filter((l) => l.link)` no `.map` correspondente do `Header.astro` ou do `Footer.astro`. Decisão: H-15 em [DECISOES_HOME.md](DECISOES_HOME.md).
+
 ### Partes do `institucional.ts`
 
 | Bloco | O que tem |
@@ -38,7 +48,7 @@ legais: [link('Termos de uso', 'https://www.adesampa.com.br/termos'), link('Priv
 | `SITES` | Endereço e pasta no FTP de cada site, por ambiente (ver [ARQUITETURA.md](ARQUITETURA.md#endereços-ambientes-site-e-base)). |
 | `CABECALHO.menu` | Itens do menu principal. Cada um tem uma `chave` (`'home'`, `'sobre'`, `'programas'`, `'comunicacao'`, `'transparencia'`, `'governamental'`), um `rotulo`, um `link` e `seta` (mostra a setinha). Com `submenu` (lista de `link(...)`), o item vira um menu suspenso, como "Comunicação". |
 | `CABECALHO.botaoTexto` / `botaoLink` | O botão azul "Agendamentos". |
-| `MENU_PROJETOS.eixos` | As 5 colunas de programas (Sampa Empreende, Tech, Games, Verde e Criativa). `link` = para onde vai o **logo**; `links` = os itens abaixo dele. |
+| `MENU_PROJETOS.eixos` | As 5 colunas de programas (Sampa Empreende, Tech, Games, Verde e Criativa). `link` = para onde vai o **logo**; `links` = os itens abaixo dele. **Item sem destino fica oculto** (ver abaixo). |
 | `MENU_PROJETOS.espacos` | Grupos de "Espaços e plataformas" (Teia, Produtos digitais, Praça Victor Civita). `link` = para onde vai o **título** do grupo; `links` = os itens. |
 | `RODAPE.redes` | Botões das redes sociais (a ordem da lista é a ordem na tela). |
 | `RODAPE.colunas` | Colunas de links do rodapé. `cor` = cor da barrinha ao lado do título. |

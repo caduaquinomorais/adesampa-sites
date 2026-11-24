@@ -198,6 +198,7 @@ export const CABECALHO: Cabecalho = congelar({
 // ============================================================================
 // 3b. Menu de projetos (menu suspenso do item "Programas")
 // Figma: frame "Menu de projetos" (656:19254), 1008 × 476. Links vazios = TODO-LINK.
+// Nos EIXOS, item sem destino NÃO aparece no site (só o logo); preencha o destino para exibi-lo (H-15).
 // ============================================================================
 
 export interface EixoMenu {
@@ -240,8 +241,23 @@ export const MENU_PROJETOS: MenuProjetos = congelar({
         link('Educação financeira'),
       ],
     },
-    { cor: 'tech', nome: 'Sampa Tech', link: pagina('tech'), links: [link('Aceleração Vai Tec', pagina('tech', 'vaitec/'))] },
-    { cor: 'games', nome: 'Sampa Games', link: '', links: [link('Aceleração de estúdios'), link('Curso de game dev'), link('Hub de educação')] },
+    {
+      cor: 'tech',
+      nome: 'Sampa Tech',
+      link: pagina('tech'),
+      links: [
+        link('Aceleração Vai Tec', pagina('tech', 'vaitec/'))
+      ]
+    },
+    {
+      cor: 'games',
+      nome: 'Sampa Games',
+      link: '',
+      links: [
+        link('Aceleração de estúdios'),
+        link('Curso de game dev'),
+        link('Hub de educação')]
+    },
     {
       cor: 'verde',
       nome: 'Sampa Verde',
