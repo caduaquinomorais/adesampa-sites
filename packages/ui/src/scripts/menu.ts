@@ -96,3 +96,44 @@ if (header && toggle) {
     if (ev.target instanceof Element && ev.target.closest('a[href*="#"]')) definir(false);
   });
 }
+
+/*
+ * Topo fixo das páginas com submenu (BaseLayout: [data-topo-fixo]).
+ * Rolando para baixo, o cabeçalho desliza para fora e o submenu fica preso no topo; rolando para cima,
+ * o cabeçalho volta. Ele nunca se esconde no começo da página, com um menu aberto (☰, Programas,
+ * Comunicação) ou com o foco do teclado dentro dele. Mudanças de menos de 6 px são ignoradas (tremidas).
+ * As alturas são medidas aqui e passadas ao CSS por variáveis (CSSOM: permitido pela CSP).
+ */
+const topo = document.querySelector<HTMLElement>('[data-topo-fixo]');
+if (topo && header) {
+  const raiz = document.documentElement;
+  const medir = (): void => {
+    topo.style.setProperty('--topo-cabecalho', `${header.offsetHeight}px`);
+    raiz.style.setProperty('--topo-altura', `${topo.offsetHeight}px`);
+  };
+  medir();
+  addEventListener('resize', medir);
+
+  const recolher = (sim: boolean): void => { topo.classList.toggle('is-recolhido', sim); };
+  const algoAberto = (): boolean =>
+    header.classList.contains('is-open') || header.querySelector('.is-open') !== null || header.contains(document.activeElement);
+
+  let ultimoY = scrollY;
+  let agendado = false;
+  addEventListener('scroll', () => {
+    if (agendado) return;
+    agendado = true;
+    requestAnimationFrame(() => {
+      agendado = false;
+      const y = scrollY;
+      if (y <= header.offsetHeight) { recolher(false); ultimoY = y; return; }
+      const delta = y - ultimoY;
+      if (Math.abs(delta) < 6) return;
+      recolher(delta > 0 && !algoAberto());
+      ultimoY = y;
+    });
+  }, { passive: true });
+
+  // Foco do teclado no cabeçalho (Tab vindo do link "Pular para o conteúdo" ou de volta do submenu): mostra.
+  header.addEventListener('focusin', () => recolher(false));
+}

@@ -66,6 +66,7 @@ Cada guia diz o nível de risco da tarefa. O nível também define **quais teste
 | Saber o que cada teste confere, qual rodar e como rodar no meu computador | [08 — Testes](base-de-conhecimento/08-testes.md) |
 | Publicar uma mudança e saber se ela chegou ao site | [09 — Publicação](base-de-conhecimento/09-publicacao.md) |
 | Entender uma mensagem de erro | [10 — Erros comuns](base-de-conhecimento/10-erros-comuns.md) |
+| Saber o que mudou em cada commit e em quais arquivos | [11 — Histórico de mudanças](base-de-conhecimento/11-historico.md) |
 
 ---
 

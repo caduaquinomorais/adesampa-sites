@@ -18,6 +18,7 @@
 | **Rodapé** | `institucional.ts` → `RODAPE` | [Footer.astro](../packages/ui/src/components/Footer.astro) | `header-footer.css`, procure `.site-footer` |
 | **Submenu** (faixa do programa abaixo do cabeçalho) | **Cada site define o seu**, na própria página (ver os mapas [02](02-mapa-sampa-tech.md) e [03](03-mapa-teia.md)) | [Submenu.astro](../packages/ui/src/components/Submenu.astro) | `header-footer.css`, procure `.submenu` |
 | **Abrir e fechar o menu** (☰ no celular, teclado) | — | [scripts/menu.ts](../packages/ui/src/scripts/menu.ts) | — |
+| **Topo preso nas páginas com submenu** (o cabeçalho some ao rolar para baixo e volta ao subir; o submenu fica) | — | [layouts/BaseLayout.astro](../packages/ui/src/layouts/BaseLayout.astro) + fim do [scripts/menu.ts](../packages/ui/src/scripts/menu.ts) | `header-footer.css`, procure `.topo-fixo` |
 | **Esqueleto de toda página** (cabeçalho + conteúdo + rodapé, fonte, título da aba) | — | [layouts/BaseLayout.astro](../packages/ui/src/layouts/BaseLayout.astro) | — |
 | **Cores, tamanhos de texto e espaçamentos gerais** | — | — | [tokens.css](../packages/ui/src/styles/tokens.css) |
 | **Fonte** (Geist) | — | — | [packages/ui/assets/fonts/](../packages/ui/assets/fonts/) |

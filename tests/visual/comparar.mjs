@@ -65,8 +65,11 @@ const IGUALAR_ATIVO = `document.querySelectorAll('.site-header__item').forEach((
 });`;
 // esconderSubmenu: quando o site não tem submenu, a referência também fica sem (o painel do menu mobile
 // aberto passa por cima do submenu, que rola na horizontal e muda a composição/suavização do texto).
+// .topo-fixo (cabeçalho + submenu presos no topo, só nas páginas com submenu) fica solto aqui: preso
+// (position: sticky), o Chrome desenha o texto numa camada própria e a suavização das letras muda alguns
+// pixels. Este teste confere a APARÊNCIA do cabeçalho; o comportamento de rolagem não é comparado.
 const ISOLAR = (igualarAtivo, esconderSubmenu = false) => `(() => {
-  const s = document.createElement('style'); s.textContent = 'main { display: none !important; }' + (${esconderSubmenu} ? ' .submenu { display: none !important; }' : ''); document.head.append(s);
+  const s = document.createElement('style'); s.textContent = 'main { display: none !important; } .topo-fixo { position: static !important; transform: none !important; }' + (${esconderSubmenu} ? ' .submenu { display: none !important; }' : ''); document.head.append(s);
   ${igualarAtivo ? IGUALAR_ATIVO : ''}
   return new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => r(true))));
 })()`;

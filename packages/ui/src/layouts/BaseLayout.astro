@@ -50,8 +50,16 @@ const canonico = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : und
 </head>
 <body>
 <SkipLink />
-<Header ativo={ativo} />
-{submenu && <Submenu {...submenu} />}
+{submenu ? (
+    // Com submenu (páginas dos programas): cabeçalho + submenu presos no topo. Ao rolar para baixo,
+    // o cabeçalho desliza para fora e o submenu fica; ao rolar para cima, o cabeçalho volta (scripts/menu.ts).
+    <div class="topo-fixo" data-topo-fixo>
+        <Header ativo={ativo} />
+        <Submenu {...submenu} />
+    </div>
+) : (
+    <Header ativo={ativo} />
+)}
 <main id="conteudo" tabindex="-1">
     <slot />
 </main>

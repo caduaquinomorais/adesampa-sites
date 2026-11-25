@@ -37,7 +37,7 @@
 .submenu__logo img[width="92"] { height: 9px; }
 .submenu__logo img[width="116"] { height: 12px; }
 .submenu:has(.submenu__logo img[width="116"]) .submenu__logo { padding-right: 36px; } /* 48 px até o 1º link */
-[id] { scroll-margin-top: 16px; }
+/* Âncoras: a folga abaixo do topo fixo (cabeçalho + submenu) fica em packages/ui (header-footer.css). */
 
 /* ---------- Tipografia ---------- */
 .h-display { font-size: var(--fs-display); font-weight: 600; line-height: 1; margin: 0; }

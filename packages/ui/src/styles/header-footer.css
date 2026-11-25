@@ -220,6 +220,16 @@
 }
 .dropdown__link[href]:hover { color: var(--hf-empreende-001); background: #F4F9FF; }
 
+/* ---------- Topo fixo (só em páginas com submenu) ----------
+   Cabeçalho + submenu presos no topo. Rolando para baixo, o cabeçalho desliza para cima (200 ms) e o
+   submenu fica sozinho no topo; rolando para cima, o cabeçalho volta. --topo-cabecalho e --topo-altura
+   são medidos em scripts/menu.ts. Sem JavaScript, os dois ficam presos no topo, sempre visíveis. */
+.topo-fixo { position: sticky; top: 0; z-index: 40; transition: transform .2s ease-out; }
+.topo-fixo.is-recolhido { transform: translateY(calc(-1 * var(--topo-cabecalho, var(--hf-header-h)))); }
+@media (prefers-reduced-motion: reduce) { .topo-fixo { transition: none; } }
+/* Âncoras (#secao) param abaixo do topo fixo, com 16 px de folga. */
+html:has(.topo-fixo) { scroll-padding-top: calc(var(--topo-altura, 109px) + 16px); }
+
 /* ---------- Submenu do programa (opcional) ---------- */
 .submenu {
     background: var(--hf-submenu-fundo);

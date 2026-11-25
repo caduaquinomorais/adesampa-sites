@@ -136,6 +136,12 @@ O item fica sublinhado em azul e ganha `aria-current`. É a **única** diferenç
 
 Sem `submenu`, a faixa não aparece. Como fica fora do `<header>`, ela não entra no teste de identidade.
 
+**Topo fixo:** com `submenu`, o `BaseLayout` coloca o cabeçalho e o submenu dentro de `<div class="topo-fixo" data-topo-fixo>`, preso no topo (`position: sticky`).
+- Rolando para baixo, o cabeçalho desliza para cima (200 ms, classe `is-recolhido`) e o submenu fica sozinho no topo. Rolando para cima, o cabeçalho volta.
+- O cabeçalho nunca se esconde no começo da página, com um menu aberto ou com o foco do teclado dentro dele.
+- As âncoras (`#secao`) param abaixo do topo fixo, com 16 px de folga (`scroll-padding-top`).
+- Código: `scripts/menu.ts` (fim do arquivo) e `.topo-fixo` em `header-footer.css`. Páginas sem submenu (Home) não mudam.
+
 ## Garantias (testes)
 
 - **Identidade** (`tests/build/identidade.mjs`): o `<header>` e o `<footer>` são iguais, byte a byte, em todas as páginas de todos os sites (fora o item ativo).
