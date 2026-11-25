@@ -7,6 +7,7 @@
  *   noticias/*.md         → uma notícia por arquivo (o nome do arquivo vira o endereço)
  *   categorias.yaml       → categorias das notícias (os filtros da página Comunicação)
  *   destaques.yaml        → cards de "Destaques e oportunidades" do Início
+ *   eixos.yaml            → texto dos cards dos 5 eixos (versão de hover; Início e Sobre)
  *   publicacoes.yaml      → revistas ADE SAMPA News e cartilhas
  *
  * Como editar: docs/CONTEUDO_HOME.md. O build falha com uma mensagem clara se faltar um campo.
@@ -59,6 +60,12 @@ const destaques = defineCollection({
     texto: z.string(),
     botao,
   }),
+});
+
+/** Cards dos 5 eixos (Início e Sobre): texto da versão de hover. Links: components/Eixos.astro. */
+const eixos = defineCollection({
+  loader: file('src/content/eixos.yaml'),
+  schema: z.object({ nome: z.string(), texto: z.string(), botao: z.string().default('Saiba mais') }),
 });
 
 const publicacoes = defineCollection({
@@ -215,4 +222,4 @@ const produtosDigitais = defineCollection({
   }),
 });
 
-export const collections = { noticias, categorias, destaques, publicacoes, inicio, sobre, comunicacao, paginaPublicacoes, produtosDigitais };
+export const collections = { eixos, noticias, categorias, destaques, publicacoes, inicio, sobre, comunicacao, paginaPublicacoes, produtosDigitais };

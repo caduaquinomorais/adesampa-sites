@@ -1,7 +1,4 @@
 ---
-# Página Sampa Tech (https://oranilom.com.br/homolog/sampa-tech/). Textos copiados do Figma (frame "Sampa Tech", 468:12857).
-# Links: deixe '' para "pendente" (o botão aparece, mas não navega). Caminhos deste site são escritos
-# sem barra inicial, ex.: 'vaitec/'.
 titulo: 'Sampa Tech'
 descricao: 'Iniciativas da ADE SAMPA de apoio a negócios de base tecnológica na cidade de São Paulo, como a aceleração Vai Tec.'
 

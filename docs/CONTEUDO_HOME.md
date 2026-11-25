@@ -14,6 +14,7 @@ O build confere cada arquivo. Se faltar um campo obrigatório ou um valor estive
 | Textos da página Publicações | `paginas/publicacoes.md` |
 | Textos da página Produtos digitais (plataformas, recursos, ícones e botões) | `paginas/produtos-digitais.md` |
 | Cards "Destaques e oportunidades" do Início | `destaques.yaml` |
+| Texto dos 5 cards "Nossos eixos de atuação" (versão que aparece ao passar o mouse; Início e Sobre) | `eixos.yaml` |
 | Revistas ADE SAMPA News e cartilhas | `publicacoes.yaml` |
 | Categorias das notícias (os filtros) | `categorias.yaml` |
 | Notícias | `noticias/` (um arquivo por notícia) |

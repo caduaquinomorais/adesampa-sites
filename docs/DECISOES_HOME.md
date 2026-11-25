@@ -182,6 +182,17 @@ Figma: frame "Menu Comunicação" (1117:22696), 195 px de largura. Fica no cabe�
 - "Espaços e plataformas" **não** usa a regra: "Conheça os equipamentos" (Praça) continua visível sem link.
 - O Menu de projetos não existe em `referencia/`, então o teste de referência não muda.
 
+## H-14 — Hover dos cards dos eixos (25/11/2026)
+
+Cards de "Nossos eixos de atuação" (Início e Sobre, componente `Eixos.astro`). Feito a partir de prints do protótipo, porque o Figma estava no limite de uso.
+- **Hover:** ao passar o mouse ou com foco pelo teclado, a versão branca (logo de 2 linhas, texto e botão "Saiba mais" na cor do programa) aparece por cima da imagem colorida, dissolvendo em 160 ms, como os outros hovers (H-10). A animação exata do protótipo não foi lida.
+- **Só no computador com mouse (≥ 1024 px):** no celular e no tablet fica só o card colorido, e o toque abre a página do programa.
+- **Todos os 5 cards têm o hover.** Nos 4 programas sem página, o card continua pendente: não clica.
+- **Logos:** os mesmos SVGs do Menu de projetos (`packages/ui/assets/icons/menu-*.svg`), com 40 px de altura.
+- **Textos:** em `src/content/eixos.yaml`. "Têxtil" foi escrito com acento (no Figma está "textil").
+- **Acessibilidade:** a versão branca é só visual (`aria-hidden`). O nome e o texto do programa estão no `alt` da imagem; o "Saiba mais" não é um segundo link, porque o card inteiro já é o link.
+- **AA:** botões do Tech `#007EA0` (era `#00B1E2`), do Verde `#3E841D` (era `#52AF27`) e do Criativa `#C94A10` (era `#FB5F1C`), todos com ≥ 4,5:1 com o texto branco. O texto cinza da descrição passou de `#8F9299` (3,1:1) para `#6B7280` (4,8:1). Empreende e Games ficaram com as cores do Figma.
+
 ## Pendências de conteúdo (confirmar com a ADE SAMPA)
 
 | # | Onde | Pendência |

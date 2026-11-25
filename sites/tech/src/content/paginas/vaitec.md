@@ -1,9 +1,4 @@
 ---
-# Página Aceleração Vai Tec (https://oranilom.com.br/homolog/sampa-tech/vaitec/).
-# Textos copiados do Figma (frame "Aceleração Vai Tec", 64:2150).
-# ATENÇÃO: no Figma, parte do conteúdo ainda é provisória (pendências P-T1 a P-T4 em docs/DECISOES_TECH.md):
-# respostas em "Lorem ipsum", cronograma com 8 linhas iguais e datas que não batem (28/01 × 30/10).
-# Links: deixe '' para "pendente" (o botão aparece, mas não navega).
 titulo: 'Aceleração Vai Tec'
 descricao: 'Apoio financeiro e suporte técnico para desenvolver e fortalecer empreendimentos inovadores de base tecnológica na cidade de São Paulo.'
 
@@ -31,7 +26,6 @@ hero:
 
 sobre:
   titulo: 'Sobre a aceleração'
-  # Linha em branco = novo parágrafo.
   texto: |
     O Sampa Tech: aceleração Vai Tec apoia o desenvolvimento de empreendimentos inovadores que utilizam tecnologia como parte essencial do modelo de negócio. Com atuação em toda a cidade de São Paulo, especialmente as periferias. O Vai Tec fortalece iniciativas com potencial para gerar impacto social, emprego e renda.
 
@@ -61,8 +55,8 @@ temas:
     - 'Visão sistêmica e inteligência de mercado'
     - 'Marketing digital, aquisição de clientes, growth e tração'
     - 'Pitch, storytelling e preparação para rodadas de negócios'
+    - 'Teste'
 
-# PROVISÓRIO (P-T2): no Figma, esta seção repete as perguntas de "Dúvidas". A numeração é automática.
 quemPode:
   titulo: 'Quem pode se inscrever?'
   texto: 'Encontre respostas rápidas para as principais dúvidas sobre o Sampa Tech: aceleração Vai Tec.'
@@ -76,7 +70,6 @@ quemPode:
     - pergunta: 'O que é considerado negócio de "Base Tecnológica"?'
       resposta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ornare id leo sit amet bibendum. Phasellus blandit luctus molestie.'
 
-# PROVISÓRIO (P-T3): no Figma, as 8 etapas são iguais.
 cronograma:
   titulo: 'Cronograma'
   texto: 'Acompanhe as datas oficiais da edição vigente para não perder os prazos.'
@@ -90,7 +83,6 @@ cronograma:
     - { data: "15 de agosto\na 30 de outubro", titulo: 'Período de inscrições online' }
     - { data: "15 de agosto\na 30 de outubro", titulo: 'Período de inscrições online' }
 
-# PROVISÓRIO (P-T1): respostas em "Lorem ipsum" no Figma.
 duvidas:
   titulo: 'Dúvidas'
   texto: 'Encontre respostas rápidas para as principais dúvidas sobre o Sampa Tech: aceleração Vai Tec.'
@@ -101,14 +93,12 @@ duvidas:
       resposta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ornare id leo sit amet bibendum. Phasellus blandit luctus molestie.'
     - pergunta: 'Posso inscrever mais de uma ideia no mesmo edital?'
       resposta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ornare id leo sit amet bibendum. Phasellus blandit luctus molestie.'
-    - pergunta: 'O que é considerado negócio de "Base Tecnológica"?'
-      resposta: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ornare id leo sit amet bibendum. Phasellus blandit luctus molestie.'
 
 edital:
   titulo: 'Edital e inscrições'
   texto: 'Leia com atenção o regulamento completo antes de preencher o formulário oficial. Garanta que toda a documentação comprobatória exigida esteja pronta para anexo.'
-  botaoPrincipal: { texto: 'Baixar edital e documentos', link: '' } # TODO-LINK: PDF do edital
-  botaoSecundario: { texto: 'Preencher formulário de inscrição', link: '' } # TODO-LINK: formulário
+  botaoPrincipal: { texto: 'Baixar edital e documentos', link: '' } 
+  botaoSecundario: { texto: 'Preencher formulário de inscrição', link: '' }
   notas:
     - 'Prazo final: 30/10 às 18h00'
     - 'Iniciativa pública da Prefeitura de São Paulo'

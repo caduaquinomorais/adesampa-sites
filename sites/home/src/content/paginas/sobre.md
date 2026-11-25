@@ -1,6 +1,4 @@
 ---
-# Página Sobre (…/homolog/sobre/). Textos do Figma (frame "Sobre", 306:4533).
-# Parágrafos: separe com uma linha em branco dentro do texto.
 titulo: 'Sobre'
 descricao: 'A ADE SAMPA atua no fortalecimento do empreendedorismo e apoia negócios que contribuem para o desenvolvimento econômico e a geração de emprego e renda em São Paulo.'
 
@@ -25,7 +23,7 @@ eixos:
   texto: "Conheça nossas iniciativas de apoio ao\nempreendedorismo na cidade de São Paulo."
 
 pilares:
-  titulo: 'Nosso pilares' # Grafia exatamente como no Figma (pendência: "Nossos pilares"?)
+  titulo: 'Nosso pilares'
   proposito:
     titulo: 'Nosso propósito'
     texto: 'Impulsionar o desenvolvimento em São Paulo por meio da implementação de políticas públicas capazes de gerar renda e reduzir desigualdades econômicas.'

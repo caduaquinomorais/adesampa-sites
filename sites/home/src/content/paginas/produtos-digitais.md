@@ -1,7 +1,4 @@
 ---
-# Página Produtos digitais (/comunicacao/produtos-digitais/). Figma: frame "Produtos Digitais" (685:50101).
-# Como editar: docs/CONTEUDO_HOME.md. Ícones disponíveis: gratuito, certificado, ampulheta, dinheiro,
-# caixa, vitrine, grafico, mapa, apoio (arquivos em src/assets/icones/produtos/).
 titulo: 'Produtos digitais'
 descricao: 'Sampa Ensina, Gestão Sampa e Data Sampa: plataformas gratuitas da ADE SAMPA para aprender, organizar o negócio e explorar dados da cidade.'
 

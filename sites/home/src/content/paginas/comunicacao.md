@@ -1,6 +1,4 @@
 ---
-# Página Comunicação (…/homolog/comunicacao/) e textos comuns das páginas de notícias.
-# Textos do Figma (frames "Comunicação" 264:3552 e "Exemplo de notícia" 574:43625).
 titulo: 'Comunicação'
 descricao: 'Notícias, publicações, manuais de marca e de redação e contatos de imprensa da ADE SAMPA.'
 
@@ -14,7 +12,6 @@ noticias:
   textoBotao: 'Ler notícia'
   rotuloBusca: 'Pesquisar'
 
-# Cabeçalho das páginas /comunicacao/noticias/ (lista completa e cada notícia).
 paginaNoticias:
   titulo: 'Notícias'
   texto: 'Confira novidades, abertura de inscrições, balanços, inaugurações de equipamentos públicos e comunicados oficiais da ADE SAMPA e nossos programas.'

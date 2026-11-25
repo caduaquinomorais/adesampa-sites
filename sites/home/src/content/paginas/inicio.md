@@ -1,7 +1,4 @@
 ---
-# Página Início (https://oranilom.com.br/homolog/). Textos copiados do Figma (frame "Início", 1:2884).
-# Links: deixe '' para "pendente" (o botão aparece, mas não navega). Caminhos do próprio site
-# são escritos sem barra inicial, ex.: 'sobre/'.
 titulo: 'ADE SAMPA – Agência São Paulo de Desenvolvimento'
 descricao: 'Programas, soluções e serviços para todas as fases da jornada empreendedora, da ideia à expansão, na cidade de São Paulo.'
 
@@ -18,7 +15,7 @@ destaques:
   titulo: 'Destaques e oportunidades'
 
 parcerias:
-  etiqueta: 'Lorem Ipsum Dollor' # PROVISÓRIO: texto ainda não definido no Figma
+  etiqueta: 'Lorem Ipsum Dollor'
   titulo: 'Parcerias governamentais'
   texto: 'A ADE SAMPA também atua como parceira governamental estratégica na implantação e gestão de políticas públicas municipais, estruturando diversos espaços físicos de impacto na cidade de São Paulo.'
   botao: { texto: 'Veja nossa atuação em parcerias', link: 'parcerias-governamentais/' }
@@ -43,13 +40,11 @@ teia:
   etiqueta: 'Equipamento público'
   titulo: 'Teia: coworkings e estúdios gratuitos em toda a cidade'
   texto: 'Rede de espaços de trabalho públicos com internet, computadores e salas de reunião, além de estúdios profissionais de podcast, música e fotografia em todas as regiões de São Paulo.'
-  botaoSecundario: { texto: 'Saiba mais', link: 'https://oranilom.com.br/homolog/teia/' } # Teia novo (homolog). O Teia antigo segue em oranilom.com.br/teia/.
+  botaoSecundario: { texto: 'Saiba mais', link: 'https://oranilom.com.br/homolog/teia/' } 
   botaoPrincipal: { texto: 'Agende seu horário', link: 'https://app.adesampa.com.br/welcome' }
   mapa: ../../assets/fotos/teia-mapa.png
   mapaAlt: 'Mapa de São Paulo com a unidade TEIA Parque Novo Mundo (zona Norte), na Av. Ernesto Augusto Lopes, 100 – Parque Vila Maria.'
   mapaLink: 'https://oranilom.com.br/homolog/teia/#mapa'
-  # Mapa interativo: cole aqui o link de incorporação do Google My Maps (https://www.google.com/maps/d/embed?mid=…).
-  # Vazio = fica só a imagem acima, com link.
   mapaEmbed: 'https://www.google.com/maps/d/embed?mid=1VKpbJmE27aZ-ZaMqH6xwHOgXpnaUiWw&ehbc=2E312F'
   mapaBotao: 'Ver mapa interativo'
 

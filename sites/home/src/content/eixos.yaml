@@ -1,0 +1,18 @@
+# Cards "Nossos eixos de atuação" (Início e Sobre). Cada card mostra a imagem colorida e, ao passar o mouse
+# (computador), a versão branca com o logo, este texto e o botão. Os links ficam em src/components/Eixos.astro.
+# id: empreende, tech, games, verde ou criativa. A ordem na tela é fixa (a do Figma), definida em Eixos.astro.
+- id: empreende
+  nome: 'Sampa Empreende'
+  texto: 'Apoio a empreendedores, orientação e facilitação de crédito.'
+- id: tech
+  nome: 'Sampa Tech'
+  texto: 'Tecnologias digitais, inovação, IA e aceleração de startups.'
+- id: games
+  nome: 'Sampa Games'
+  texto: 'Desenvolvimento de jogos, educação digital e aceleração de estúdios.'
+- id: verde
+  nome: 'Sampa Verde'
+  texto: 'Economia circular, inovação verde e locais de agricultura.'
+- id: criativa
+  nome: 'Sampa Criativa'
+  texto: 'Economia criativa, audiovisual, design de moda e cadeia têxtil.'

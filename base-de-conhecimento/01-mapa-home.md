@@ -40,7 +40,7 @@ Fotos, ícones e logos ficam em [sites/home/src/assets/](../sites/home/src/asset
 | Seção (de cima para baixo) | 📝 Conteúdo | 🧱 Estrutura | 🎨 Visual (procure no `site.css`) |
 |---|---|---|---|
 | **Banner** (frase principal e botão) | `inicio.md` → `banner`. Foto de fundo: `assets/fotos/banner-fundo.jpg` | `index.astro`, `<section class="banner">` | `.banner` |
-| **Nossos eixos de atuação** (5 programas) | Título e texto: `inicio.md` → `eixos`. As 5 imagens e os links ficam **no componente** | [components/Eixos.astro](../sites/home/src/components/Eixos.astro). Imagens em `assets/eixos/` | `Eixos de atuação` |
+| **Nossos eixos de atuação** (5 programas) | Título e texto: `inicio.md` → `eixos`. Texto de cada card (o que aparece ao passar o mouse): [eixos.yaml](../sites/home/src/content/eixos.yaml). As 5 imagens, os logos e os links ficam **no componente**; as cores dos botões, em `site.css` (procure `.eixo-card`) | [components/Eixos.astro](../sites/home/src/components/Eixos.astro). Imagens em `assets/eixos/` | `Eixos de atuação` |
 | **Destaques e oportunidades** (carrossel de cards) | Título: `inicio.md` → `destaques`. **Cards:** [destaques.yaml](../sites/home/src/content/destaques.yaml) | `index.astro` + [components/Carrossel.astro](../sites/home/src/components/Carrossel.astro) | `Carrossel` e `Destaques` |
 | **Parcerias governamentais** (texto + fotos) | `inicio.md` → `parcerias` (fotos em `parcerias.itens`) | `index.astro` + [components/Galeria.astro](../sites/home/src/components/Galeria.astro) | `Parcerias governamentais` |
 | **Nosso impacto em números** | `inicio.md` → `numeros` | `index.astro`, `<section class="… numeros">` | `Números` |

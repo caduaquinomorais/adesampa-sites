@@ -1,7 +1,3 @@
-# Publicações: revistas ADE SAMPA News e cartilhas.
-# capa: imagem em src/assets/publicacoes/ (caminho relativo a este arquivo).
-# arquivo: link da publicação (https://… — PDF ou livro digital, ex.: Heyzine). Vazio = ainda sem link (o card aparece, mas não vira link).
-# ordem: menor aparece primeiro.
 - id: news-7
   tipo: revista
   ordem: 1

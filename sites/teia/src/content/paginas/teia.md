@@ -1,11 +1,7 @@
 ---
-# Página do Teia (https://oranilom.com.br/homolog/teia/). Textos copiados do Figma (frame "Teia", 212:2903),
-# trazidos do projeto teia-teste (app/content/teia.php) sem mudanças.
-# Links: deixe '' para "pendente" (o botão aparece, mas não navega).
 titulo: 'Teia — Coworkings e estúdios públicos'
 descricao: 'Um programa gratuito do Sampa Empreende, ligado à Prefeitura de São Paulo e executado pela Ade Sampa, que ajuda pequenos empreendedores e MEIs.'
 
-# Destino de todos os botões "Faça seu agendamento".
 linkAgendamento: 'https://app.adesampa.com.br/welcome'
 
 banner:
@@ -47,8 +43,6 @@ mapa:
   titulo: 'Encontre o Teia mais próximo de você'
   texto: 'Espaços estruturados com Wi-Fi veloz, computadores, salas de reunião compartilhadas e suporte técnico nas regiões periféricas e centrais de São Paulo.'
   botao: 'Faça seu agendamento'
-  # Mapa interativo (Google My Maps), carregado só quando a pessoa clica. O mesmo do Início.
-  # Vazio = fica só o painel da unidade e a prévia do mapa.
   embed: 'https://www.google.com/maps/d/embed?mid=1VKpbJmE27aZ-ZaMqH6xwHOgXpnaUiWw&ehbc=2E312F'
   botaoInterativo: 'Ver mapa interativo'
   rotulos:
@@ -68,7 +62,6 @@ mapa:
 duvidas:
   titulo: 'Dúvidas frequentes'
   subtitulo: 'Encontre respostas rápidas para as principais dúvidas sobre o Teia.'
-  # Perguntas com resposta vazia NÃO aparecem no site (pendência P-01 do Teia: respostas não fornecidas).
   itens:
     - { pergunta: 'O uso do Teia é totalmente gratuito?', resposta: '' }
     - { pergunta: 'Preciso ter um CNPJ para utilizar?', resposta: '' }
@@ -78,8 +71,6 @@ duvidas:
 normas:
   titulo: 'Normas de uso dos espaços'
   texto: 'Para garantir um ambiente colaborativo produtivo e respeitoso para todos, solicitamos a leitura das regras vigentes antes de realizar seu agendamento.'
-  # arquivo: PDF em public/documentos/ (ex.: 'documentos/manual-de-conduta.pdf') ou https://…
-  # Vazio = o botão "Baixar PDF" não aparece (pendência P-02 do Teia: PDFs não fornecidos).
   documentos:
     - { titulo: 'Manual de conduta', descricao: 'Diretrizes de convivência, consumo de alimentos, uso das mesas compartilhadas e cuidados básicos.', arquivo: '', botao: 'Baixar PDF' }
     - { titulo: 'Uso para gravações', descricao: 'Termos de responsabilidade para uso dos estúdios (podcast, fotografia e música) e política de conservação dos equipamentos públicos.', arquivo: '', botao: 'Baixar PDF' }

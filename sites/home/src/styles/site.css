@@ -141,9 +141,34 @@
 .eixos { --secao-py: 72px; }
 .eixos .container { display: flex; flex-direction: column; gap: 40px; }
 .eixos__lista { display: grid; grid-template-columns: repeat(5, minmax(0, 206px)); justify-content: center; gap: 20px; margin: 0; padding: 0; list-style: none; }
-.eixos__lista a { display: block; border-radius: 8px; transition: transform .15s ease, box-shadow .15s ease; }
-.eixos__lista a[href]:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(4, 47, 128, 0.18); }
-.eixos__lista img { display: block; width: 100%; height: auto; aspect-ratio: 206 / 234; border-radius: 8px; }
+/* Card do eixo: imagem colorida do Figma + versão branca do hover por cima (H-14). */
+.eixo-card { --eixo-cor: var(--azul-600); }
+.eixo-card--tech { --eixo-cor: var(--aa-tech-botao); }     /* AA: era #00B1E2 */
+.eixo-card--games { --eixo-cor: #9B32E0; }
+.eixo-card--verde { --eixo-cor: var(--aa-verde-botao); }   /* AA: era #52AF27 */
+.eixo-card--criativa { --eixo-cor: #C94A10; }              /* AA: era #FB5F1C */
+.eixo-card__link { position: relative; display: block; border-radius: 8px; text-decoration: none; }
+.eixo-card__img { display: block; width: 100%; height: auto; aspect-ratio: 206 / 234; border-radius: 8px; }
+.eixo-card__hover { display: none; }
+/* Só no computador com mouse: a versão branca aparece ao passar o mouse ou com foco pelo teclado,
+   dissolvendo em 160 ms (como os outros hovers, H-10). No celular e no tablet fica o card colorido. */
+@media (hover: hover) and (min-width: 1024px) {
+    .eixo-card__hover {
+        position: absolute; inset: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 8px;
+        padding: 24px 20px 20px; background: var(--branco); border: 1px solid var(--azul-100); border-radius: 8px;
+        opacity: 0; pointer-events: none; transition: opacity .16s ease-out;
+    }
+    .eixo-card:hover .eixo-card__hover,
+    .eixo-card__link:focus-visible .eixo-card__hover { opacity: 1; }
+    .eixo-card__link[href]:hover { box-shadow: 0 8px 20px rgba(4, 47, 128, 0.12); }
+    .eixo-card__logo { display: block; height: 40px; width: auto; }
+    .eixo-card__texto { font-size: 14px; line-height: 1.3; color: #6B7280; } /* AA: o cinza do Figma (#8F9299) dá 3,1:1 */
+    .eixo-card__botao {
+        display: flex; align-items: center; justify-content: center; align-self: stretch; min-height: 44px; margin-top: auto;
+        border-radius: var(--radius-btn); background: var(--eixo-cor); color: var(--branco);
+        font-size: var(--fs-botao); font-weight: 600; line-height: 1;
+    }
+}
 
 /* Carrossel (Destaques e Publicações) */
 .carrossel { position: relative; overflow: hidden; }

@@ -1,12 +1,8 @@
-# Cards de "Destaques e oportunidades" (carrossel do Início). Textos do Figma.
-# programa: empreende | tech | games | verde | criativa (define as cores da etiqueta e do botão)
-# botao.link: '' = pendente; https://…; ou caminho deste site sem barra inicial (ex.: 'comunicacao/').
 - id: vai-tec
   ordem: 1
   programa: tech
   etiqueta: 'Sampa Tech'
   titulo: 'Aceleração Vai Tec: edital aberto'
-  # PENDÊNCIA: o Figma traz "xx de janeiro" — confirmar a data antes de publicar em produção.
   texto: 'O programa oferece aporte financeiro de R$ 52 mil, mentorias e oficinas. Inscrições abertas até xx de janeiro.'
   botao: { texto: 'Inscreva-se agora!', link: '' } # TODO-LINK
 - id: game-dev

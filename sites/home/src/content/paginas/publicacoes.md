@@ -1,6 +1,4 @@
 ---
-# Página Publicações (…/homolog/comunicacao/publicacoes/). Textos do Figma (frame "Publicações", 654:15568).
-# As revistas e cartilhas ficam em src/content/publicacoes.yaml.
 titulo: 'Publicações'
 descricao: 'Revista ADE SAMPA News e cartilhas gratuitas para o micro e pequeno empreendedor paulistano.'
 hero:
