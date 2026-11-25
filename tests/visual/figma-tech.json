@@ -17,10 +17,10 @@
         { "nome": "hero", "seletor": "main > section:nth-of-type(1)", "y": 110, "altura": 496 },
         { "nome": "sobre", "seletor": "main > section:nth-of-type(2)", "y": 606, "altura": 620 },
         { "nome": "beneficios", "seletor": "main > section:nth-of-type(3)", "y": 1226, "altura": 485 },
-        { "nome": "temas", "seletor": "main > section:nth-of-type(4)", "y": 1711, "altura": 610 },
-        { "nome": "quem-pode", "seletor": "main > section:nth-of-type(5)", "y": 2321, "altura": 813 },
-        { "nome": "cronograma", "seletor": "main > section:nth-of-type(6)", "y": 3134, "altura": 1062 },
-        { "nome": "duvidas", "seletor": "main > section:nth-of-type(7)", "y": 4195, "altura": 813 },
+        { "nome": "temas", "seletor": "main > section:nth-of-type(4)", "y": 1711, "altura": null },
+        { "nome": "quem-pode", "seletor": "main > section:nth-of-type(5)", "y": 2321, "altura": null },
+        { "nome": "cronograma", "seletor": "main > section:nth-of-type(6)", "y": 3134, "altura": null },
+        { "nome": "duvidas", "seletor": "main > section:nth-of-type(7)", "y": 4195, "altura": null },
         { "nome": "edital", "seletor": "main > section:nth-of-type(8)", "y": 5008, "altura": 513 },
         { "nome": "rodape", "seletor": ".site-footer", "y": 5521, "altura": 679 }
       ]

@@ -59,6 +59,12 @@ Foi usada a cor mais próxima da original que atinge o contraste mínimo. É o m
 
 **Teste:** `tests/visual/figma.mjs tech` compara as 2 páginas com as imagens exportadas do Figma em 23/11/2026 (`tests/visual/reference/tech/`). As 14 seções ficam com a altura do Figma, com tolerância de ±4 px.
 
+## T-06 — Seções com listas têm altura livre no teste (25/11/2026)
+
+Temas, Quem pode, Cronograma e Dúvidas, na página Vai Tec, crescem ou diminuem com a quantidade de itens do conteúdo, que vai variar. No `tests/visual/figma-tech.json`, essas 4 seções têm `"altura": null`: o teste ainda compara a imagem delas com o Figma, mas não bloqueia mais a publicação por causa da altura. As outras seções continuam com tolerância de ±4 px.
+
+Motivo: o commit de 25/11 acrescentou um tema e tirou uma pergunta. O teste viu Temas 122 px mais alta e Dúvidas 118 px mais baixa, e o deploy não aconteceu.
+
 ## Pendências de conteúdo (confirmar com a ADE SAMPA)
 
 | # | Onde | Pendência |
