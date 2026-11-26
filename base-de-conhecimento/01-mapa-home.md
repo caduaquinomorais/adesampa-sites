@@ -135,7 +135,7 @@ Ficam em [sites/home/src/components/](../sites/home/src/components/). Mudar um c
 | `Galeria.astro` | Fotos com pontinhos para trocar. Com `automatico={segundos}`, passam sozinhas | Parcerias (automática, 10 s) e Praça (Início), capas (Comunicação) |
 | `Eixos.astro` | Os 5 cards dos programas | Início e Sobre |
 | `CardNoticia.astro` | O card de uma notícia | Comunicação, lista de notícias, "Também pode interessar" |
-| `FiltrosNoticias.astro` | Os botões de categoria e a busca | Páginas de notícias |
+| `FiltrosNoticias.astro` | Os botões de categoria e a busca. O filtro e a paginação trocam só os cards, sem recarregar a página ([scripts/noticias.ts](../sites/home/src/scripts/noticias.ts)) | Páginas de notícias |
 | `Paginacao.astro` | "1 2 3 próxima" | Páginas de notícias |
 | `IconeProduto.astro` | Traduz o nome do ícone (`mapa`, `gratuito`…) para o arquivo | Produtos digitais |
 

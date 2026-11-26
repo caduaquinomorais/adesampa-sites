@@ -110,7 +110,7 @@ const submenu = {
                 <p class="body1">{c.mapa.texto}</p>
                 <a class="btn btn--secondary" {...attrs(c.linkAgendamento)}>{c.mapa.botao}</a>
             </div>
-            {/* Painel da unidade + prévia do mapa. Com mapa.embed, o botão (exibido pelo JavaScript) troca tudo pelo Google My Maps. */}
+            {/* Painel da unidade + prévia do mapa. Com mapa.embed, a prévia vira o Google My Maps sozinha quando a pessoa chega perto (scripts/teia.ts, decisão H-16). */}
             <div class="map-card" data-mapa={c.mapa.embed || undefined} data-mapa-titulo="Mapa interativo das unidades do Teia (Google Maps)">
                 <div class="map-card__panel">
                     <p class="map-card__header" data-map-title>{primeira.nome}</p>

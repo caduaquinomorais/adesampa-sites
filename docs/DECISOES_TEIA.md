@@ -8,8 +8,8 @@ O Teia foi construído no projeto `teia-teste` (PHP), que continua no ar em `ora
 - **Cabeçalho, submenu e rodapé** vêm do pacote compartilhado (`packages/ui`), iguais aos dos outros sites. Com isso, o Teia ganha o Menu de projetos, o item "Governamental" e os links reais das redes sociais.
 - **Mapa:**
   - O Teia antigo carregava o Google Maps sozinho (um iframe por endereço).
-  - Agora o cartão mostra o painel da unidade e uma prévia do mapa (imagem do Figma). O botão "Ver mapa interativo" troca tudo pelo Google My Maps, o mesmo do Início.
-  - O Google só carrega quando a pessoa pede (LGPD e desempenho).
+  - Agora o cartão mostra o painel da unidade e uma prévia do mapa (imagem do Figma). Quando a pessoa chega perto da seção, a prévia vira o Google My Maps sozinha (o mesmo do Início), e o painel continua ao lado.
+  - Até 26/11/2026, o Google só carregava no clique. A mudança e a questão de LGPD estão em H-16 (`DECISOES_HOME.md`).
   - Sem JavaScript, fica o painel com a prévia.
 - **CEP da unidade:** passou a ser `02169-030`. No Teia antigo, o CEP estava cortado (pendência P-04), e o número completo aparece na imagem do mapa do Figma usada no Início.
 - **Trilha:** "Início" leva à Home. "Programas" fica sem link, porque ainda não existe uma página de programas.

@@ -11,9 +11,36 @@ O que foi feito em cada commit, do mais recente para o mais antigo, com os arqui
 
 ---
 
-## Commit pendente — Cabeçalho some ao rolar para baixo nas páginas com submenu (25/11/2026)
+## Commit pendente — Mapa do Teia carrega sozinho (26/11/2026)
 
-**Mensagem sugerida:** "Cabeçalho some ao rolar para baixo e volta ao subir nas páginas com submenu; histórico de mudanças"
+**Mensagem sugerida:** "Mapa do Teia carrega sozinho ao chegar na seção (Início e Teia)"
+
+O mapa do Google (My Maps) deixou de precisar de clique: ele aparece interativo quando a pessoa rola até perto dele, na Início e na página do Teia. No Teia, o painel com os dados da unidade continua ao lado (decisão H-16; pendência de privacidade P-H8).
+
+| Arquivo | Linhas | O quê |
+|---|---|---|
+| `sites/home/src/scripts/mapa.ts` | 1–39 (reescrito) | Carrega o mapa ao chegar perto da seção |
+| `sites/teia/src/scripts/teia.ts` | 63–95 | O mesmo no Teia, trocando só a prévia |
+| `sites/teia/src/pages/index.astro` | 113 | Comentário atualizado |
+| `docs/DECISOES_HOME.md` · `docs/DECISOES_TEIA.md` | H-04, H-16, P-H8 · TE-01 | Documentação |
+| `base-de-conhecimento/03-mapa-teia.md` | 43, 46 | Documentação para a equipe |
+
+## Commit pendente — Filtro das notícias sem recarregar a página (26/11/2026)
+
+**Mensagem sugerida:** "Filtro e paginação das notícias na própria página, sem recarregar"
+
+Na Comunicação e na lista de notícias, o filtro por categoria e a paginação trocam só os cards, sem recarregar a página. Na Comunicação, o endereço vira `?categoria=…`, que pode ser compartilhado, e o Voltar do navegador desfaz o filtro (decisão H-15).
+
+| Arquivo | Linhas | O quê |
+|---|---|---|
+| `sites/home/src/scripts/noticias.ts` | arquivo novo | Busca a página do filtro em segundo plano e troca os cards |
+| `sites/home/src/pages/comunicacao/index.astro` | 29, 35–42, 114 | Marca a seção e o bloco que pode ser trocado; liga o script |
+| `sites/home/src/pages/comunicacao/noticias/[...lista].astro` | 57, 60–67, 71 | O mesmo, na lista de notícias |
+| `sites/home/src/styles/site.css` | 346–348 | Espaçamento do bloco e leve esmaecimento enquanto carrega |
+| `sites/home/src/components/FiltrosNoticias.astro` | 3–4 | Comentário explicando o comportamento |
+| `docs/DECISOES_HOME.md` · `base-de-conhecimento/01-mapa-home.md` | H-15 · tabela de componentes | Documentação |
+
+## ee9f821 — Cabeçalho some ao rolar para baixo nas páginas com submenu (25/11/2026)
 
 Nas páginas dos programas que têm submenu (Sampa Tech, Vai Tec e Teia), o cabeçalho e o submenu ficam presos no topo. Rolando para baixo, o cabeçalho desliza para cima e o submenu fica sozinho no topo; rolando para cima, o cabeçalho volta. Vale em todas as telas. A Home não muda, porque não tem submenu.
 

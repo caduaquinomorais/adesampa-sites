@@ -343,6 +343,9 @@
    ========================================================================== */
 .noticias-secao .container { display: flex; flex-direction: column; gap: 32px; }
 .noticias-secao__topo { display: flex; flex-direction: column; gap: 24px; }
+/* Lista + paginação (bloco trocado pelo filtro sem recarregar): mesmo espaçamento de antes. */
+.noticias-lista { display: flex; flex-direction: column; gap: 32px; transition: opacity .16s ease-out; }
+.noticias-lista[aria-busy="true"] { opacity: .5; }
 .filtros { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
 .filtros__categorias { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
 .chip {

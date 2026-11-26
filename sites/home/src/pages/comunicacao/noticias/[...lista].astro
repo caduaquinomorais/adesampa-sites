@@ -54,13 +54,18 @@ const titulo = [p.paginaNoticias.titulo, nomeAtual, pagina > 1 ? `página ${pagi
         titulo={p.paginaNoticias.titulo}
         texto={p.paginaNoticias.texto}
     />
-    <section class="secao secao--64 secao--branca-borda noticias-secao" aria-label={nomeAtual ? `Notícias: ${nomeAtual}` : 'Todas as notícias'}>
+    <section class="secao secao--64 secao--branca-borda noticias-secao" aria-label={nomeAtual ? `Notícias: ${nomeAtual}` : 'Todas as notícias'} data-noticias data-noticias-endereco="real" data-noticias-nivel="h2" data-noticias-base={urlLista()}>
         <div class="container">
             <FiltrosNoticias categorias={categorias} atual={categoria} rotuloBusca={p.noticias.rotuloBusca} />
-            {noticias.length > 0
-                ? <ul class="grade-noticias">{noticias.map((n) => <li><CardNoticia noticia={n} categoria={nomeCategoria.get(n.data.categoria.id) ?? ''} textoBotao={p.noticias.textoBotao} nivel="h2" /></li>)}</ul>
-                : <p class="sem-noticias texto-1">Nenhuma notícia nesta categoria por enquanto.</p>}
-            <Paginacao atual={pagina} total={total} urls={Array.from({ length: total }, (_, i) => urlLista(i + 1, categoria || undefined))} />
+            {/* Lista + paginação: este bloco também é lido por scripts/noticias.ts para filtrar sem recarregar. */}
+            <div class="noticias-lista" data-noticias-lista>
+                {noticias.length > 0
+                    ? <ul class="grade-noticias">{noticias.map((n) => <li><CardNoticia noticia={n} categoria={nomeCategoria.get(n.data.categoria.id) ?? ''} textoBotao={p.noticias.textoBotao} nivel="h2" /></li>)}</ul>
+                    : <p class="sem-noticias texto-1">Nenhuma notícia nesta categoria por enquanto.</p>}
+                <Paginacao atual={pagina} total={total} urls={Array.from({ length: total }, (_, i) => urlLista(i + 1, categoria || undefined))} />
+            </div>
+            <p class="sr-only" aria-live="polite" data-noticias-aviso></p>
         </div>
     </section>
 </BaseLayout>
+<script>import '../../../scripts/noticias';</script>

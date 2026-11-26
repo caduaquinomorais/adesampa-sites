@@ -60,24 +60,36 @@ if (cartao && seletor) {
   });
 }
 
-// ---------- Mapa interativo (Google My Maps), só no clique ----------
-// O Google só carrega (e só recebe dados do visitante) quando alguém pede: LGPD e desempenho.
+// ---------- Mapa interativo (Google My Maps), carregado sozinho ----------
+// A prévia (imagem) vira o mapa do Google quando a pessoa chega perto da seção (300 px antes de aparecer).
+// O painel com os dados da unidade continua ao lado. Decisão H-16 (docs/DECISOES_HOME.md): antes era só no
+// clique (LGPD); agora o Google carrega para quem rolar até o mapa, o que deve constar na política de privacidade.
+// Navegador sem IntersectionObserver (muito antigo): aparece o botão, como antes.
 // A CSP (public/.htaccess) libera frame-src só para https://www.google.com.
 if (cartao) {
+  const previa = cartao.querySelector<HTMLElement>('.map-card__previa');
   const botao = cartao.querySelector<HTMLButtonElement>('[data-mapa-botao]');
   const url = cartao.dataset.mapa ?? '';
-  if (botao && /^https:\/\/www\.google\.com\/maps\/d\/(u\/\d+\/)?embed\?/.test(url)) {
-    botao.hidden = false;
-    botao.addEventListener('click', () => {
+  if (previa && /^https:\/\/www\.google\.com\/maps\/d\/(u\/\d+\/)?embed\?/.test(url)) {
+    const carregarMapa = (): void => {
       const frame = document.createElement('iframe');
       frame.src = url;
       frame.title = cartao.dataset.mapaTitulo ?? 'Mapa interativo';
       frame.className = 'map-card__frame';
       frame.allowFullscreen = true;
-      frame.tabIndex = 0;
-      cartao.classList.add('map-card--full');
-      cartao.replaceChildren(frame);
-      frame.focus();
-    }, { once: true });
+      frame.loading = 'lazy';
+      previa.replaceChildren(frame);
+    };
+    if ('IntersectionObserver' in window) {
+      const observador = new IntersectionObserver((entradas) => {
+        if (!entradas.some((e) => e.isIntersecting)) return;
+        observador.disconnect();
+        carregarMapa();
+      }, { rootMargin: '300px 0px' });
+      observador.observe(cartao);
+    } else if (botao) {
+      botao.hidden = false;
+      botao.addEventListener('click', carregarMapa, { once: true });
+    }
   }
 }

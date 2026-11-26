@@ -26,16 +26,20 @@ const total = totalPaginas(todas.length);
 <BaseLayout titulo={p.titulo} descricao={p.descricao} ativo="comunicacao">
     <Hero trilha={[{ rotulo: 'Início', href: caminho() }, { rotulo: 'Comunicação' }]} etiqueta={p.hero.etiqueta} titulo={p.hero.titulo} texto={p.hero.texto} />
 
-    <section id="noticias" class="secao secao--64 secao--branca-borda noticias-secao" aria-labelledby="titulo-noticias">
+    <section id="noticias" class="secao secao--64 secao--branca-borda noticias-secao" aria-labelledby="titulo-noticias" data-noticias data-noticias-endereco="consulta" data-noticias-nivel="h3" data-noticias-base={urlLista()}>
         <div class="container">
             <div class="noticias-secao__topo">
                 <h2 id="titulo-noticias" class="h-secao">{p.noticias.titulo}</h2>
                 <FiltrosNoticias categorias={categorias} atual="" rotuloBusca={p.noticias.rotuloBusca} />
             </div>
-            {recentes.length > 0
-                ? <ul class="grade-noticias">{recentes.map((n) => <li><CardNoticia noticia={n} categoria={nomeCategoria.get(n.data.categoria.id) ?? ''} textoBotao={p.noticias.textoBotao} /></li>)}</ul>
-                : <p class="sem-noticias texto-1">Nenhuma notícia publicada ainda.</p>}
-            <Paginacao atual={1} total={total} urls={Array.from({ length: total }, (_, i) => urlLista(i + 1))} />
+            {/* Lista + paginação: trocadas sem recarregar a página ao filtrar ou paginar (scripts/noticias.ts). */}
+            <div class="noticias-lista" data-noticias-lista>
+                {recentes.length > 0
+                    ? <ul class="grade-noticias">{recentes.map((n) => <li><CardNoticia noticia={n} categoria={nomeCategoria.get(n.data.categoria.id) ?? ''} textoBotao={p.noticias.textoBotao} /></li>)}</ul>
+                    : <p class="sem-noticias texto-1">Nenhuma notícia publicada ainda.</p>}
+                <Paginacao atual={1} total={total} urls={Array.from({ length: total }, (_, i) => urlLista(i + 1))} />
+            </div>
+            <p class="sr-only" aria-live="polite" data-noticias-aviso></p>
         </div>
     </section>
 
@@ -107,3 +111,4 @@ const total = totalPaginas(todas.length);
         </div>
     </section>
 </BaseLayout>
+<script>import '../../scripts/noticias';</script>

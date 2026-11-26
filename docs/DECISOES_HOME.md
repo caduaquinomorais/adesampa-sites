@@ -45,8 +45,7 @@ O fundo foi gerado a partir das camadas do Figma: a foto com 80% de opacidade, a
 
 No Figma, o mapa é uma imagem: um painel da unidade junto com um trecho do Google Maps. Ela foi usada como está, com uma descrição em texto (alt), e leva ao mapa do site do Teia.
 
-**Mapa interativo (Google My Maps), só no clique.** Com `teia.mapaEmbed` preenchido em `paginas/inicio.md`, aparece sobre a imagem o botão "Ver mapa interativo". O clique troca a imagem pelo iframe do My Maps (`src/scripts/mapa.ts`).
-- O Google só carrega quando a pessoa pede: a página inicial não chama serviços do Google sozinha (LGPD) e continua leve.
+**Mapa interativo (Google My Maps).** Com `teia.mapaEmbed` preenchido em `paginas/inicio.md`, a imagem vira o iframe do My Maps sozinha quando a pessoa chega perto da seção (`src/scripts/mapa.ts`). **Atualizado em 26/11/2026 (H-16):** antes era só no clique.
 - Por que My Maps: a lista salva do Google Maps (`maps.app.goo.gl/…`) não tem código de incorporação. O My Maps tem, e as unidades são editadas lá, sem deploy.
 - A CSP libera só `frame-src https://www.google.com` (o resto continua `'self'`).
 - O build recusa qualquer `mapaEmbed` que não seja `https://www.google.com/maps/d/embed?mid=…`.
@@ -193,6 +192,23 @@ Cards de "Nossos eixos de atuação" (Início e Sobre, componente `Eixos.astro`)
 - **Acessibilidade:** a versão branca é só visual (`aria-hidden`). O nome e o texto do programa estão no `alt` da imagem; o "Saiba mais" não é um segundo link, porque o card inteiro já é o link.
 - **AA:** botões do Tech `#007EA0` (era `#00B1E2`), do Verde `#3E841D` (era `#52AF27`) e do Criativa `#C94A10` (era `#FB5F1C`), todos com ≥ 4,5:1 com o texto branco. O texto cinza da descrição passou de `#8F9299` (3,1:1) para `#6B7280` (4,8:1). Empreende e Games ficaram com as cores do Figma.
 
+## H-15 — Filtro e paginação das notícias sem recarregar (26/11/2026)
+
+Na Comunicação e na lista de notícias, clicar numa categoria ou num número da paginação troca **só os cards**, sem recarregar a página nem voltar ao topo.
+- **Como funciona:** os filtros continuam sendo links para as páginas estáticas da lista (`/comunicacao/noticias/categoria/<id>/…`), que funcionam sem JavaScript. Com JavaScript, `scripts/noticias.ts` busca essa página em segundo plano e troca só o bloco `[data-noticias-lista]`. Se a busca falhar, abre a página estática.
+- **Endereço:** na Comunicação, vira `/comunicacao/?categoria=eventos&pagina=2#noticias`, e abrir esse endereço aplica o filtro. Na lista, fica o endereço da própria página estática. O Voltar do navegador desfaz o filtro.
+- **Acessibilidade:** o filtro ativo fica marcado (`aria-current`), um aviso escondido lê "Mostrando notícias: Eventos" para quem usa leitor de tela, e os títulos dos cards mantêm o nível da página (`<h3>` na Comunicação, `<h2>` na lista).
+- **A busca** continua abrindo a página de resultados (`/comunicacao/noticias/busca/`).
+
+## H-16 — Mapa do Teia carrega sozinho (26/11/2026)
+
+Vale para a seção Teia da Início e para a página do Teia. Antes, o mapa do Google só carregava depois do clique em "Ver mapa interativo", o que deixava o mapa pouco intuitivo.
+- **Agora:** a prévia (imagem) vira o Google My Maps sozinha quando a pessoa rola até 300 px antes do mapa. O topo da página continua leve: quem não chega no mapa não carrega o Google.
+- **Teia:** só a prévia vira mapa; o painel com os dados da unidade continua ao lado (antes, o clique trocava o cartão inteiro).
+- **Navegador muito antigo** (sem `IntersectionObserver`): aparece o botão, como antes. **Sem JavaScript:** fica a imagem.
+- **LGPD (decisão do usuário):** o Google passa a receber dados (endereço IP etc.) de quem rolar até o mapa, sem clique. Isso precisa constar na política de privacidade (pendência P-H8).
+- **Atenção:** o mapa do My Maps mostra o nome e a foto da conta Google que o criou (hoje, uma conta pessoal). Recomenda-se transferir o mapa para uma conta institucional da ADE SAMPA (pendência P-H8).
+
 ## Pendências de conteúdo (confirmar com a ADE SAMPA)
 
 | # | Onde | Pendência |
@@ -202,5 +218,6 @@ Cards de "Nossos eixos de atuação" (Início e Sobre, componente `Eixos.astro`)
 | P-H3 | Início ("13 anos") × Sobre ("Há 14 anos") | Os números divergem no Figma. |
 | P-H4 | Links pendentes | Programas, Transparência, redes sociais, links legais, sites dos 5 programas, produtos digitais, botões dos destaques, "Ver programação completa", manuais (PDF) e PDFs das revistas e cartilhas. |
 | P-H5 | Revistas 1ª a 3ª edição | Os textos alternativos das capas são genéricos. Faltam os temas de cada edição. |
+| P-H8 | Mapa do Teia (H-16) | Citar o Google Maps na política de privacidade (o mapa carrega sem clique) e passar o mapa do My Maps para uma conta institucional (hoje mostra o nome e a foto de uma conta pessoal). |
 | P-H7 | Produtos digitais | Endereços das 3 plataformas (botões "Conheça a plataforma" e cards "Acesse a plataforma" da Início). |
 | P-H6 | Início, "Parcerias governamentais" | Texto da etiqueta (no Figma: "Lorem Ipsum Dollor") e textos alternativos das 2 fotos (escritos por nós). |
