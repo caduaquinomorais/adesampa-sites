@@ -23,8 +23,6 @@ const entrada = await getEntry('teia', 'teia');
 if (!entrada) throw new Error('Falta src/content/paginas/teia.md');
 const c = entrada.data;
 const home = resolverDestino(pagina('home'), ambienteAtual());
-const unidades = c.mapa.unidades;
-const primeira = unidades[0];
 const faq = c.duvidas.itens.filter((i) => i.resposta.trim() !== '');
 
 const submenu = {
@@ -110,30 +108,12 @@ const submenu = {
                 <p class="body1">{c.mapa.texto}</p>
                 <a class="btn btn--secondary" {...attrs(c.linkAgendamento)}>{c.mapa.botao}</a>
             </div>
-            {/* Painel da unidade + prévia do mapa. Com mapa.embed, a prévia vira o Google My Maps sozinha quando a pessoa chega perto (scripts/teia.ts, decisão H-16). */}
-            <div class="map-card" data-mapa={c.mapa.embed || undefined} data-mapa-titulo="Mapa interativo das unidades do Teia (Google Maps)">
-                <div class="map-card__panel">
-                    <p class="map-card__header" data-map-title>{primeira.nome}</p>
-                    {unidades.length > 1 && (
-                        <>
-                            <label class="map-card__select-label" for="mapa-unidade">Escolha a unidade</label>
-                            <select class="map-card__select" id="mapa-unidade" data-map-select>
-                                {unidades.map((u, n) => <option value={n}>{u.nome}</option>)}
-                            </select>
-                        </>
-                    )}
-                    {unidades.map((u, n) => (
-                        <dl class="map-card__details" data-map-unit={n} data-map-name={u.nome} hidden={n > 0}>
-                            <div><dt>{c.mapa.rotulos.unidade}</dt><dd>{u.nome}</dd></div>
-                            {u.zona && <div><dt>{c.mapa.rotulos.zona}</dt><dd>{u.zona}</dd></div>}
-                            {u.classificacao && <div><dt>{c.mapa.rotulos.classificacao}</dt><dd>{u.classificacao}</dd></div>}
-                            {u.status && <div><dt>{c.mapa.rotulos.status}</dt><dd>{u.status}</dd></div>}
-                            <div><dt>{c.mapa.rotulos.endereco}</dt><dd>{u.endereco}</dd></div>
-                        </dl>
-                    ))}
-                </div>
+            {/* Só o mapa (o painel da unidade do Figma era um exemplo; os dados continuam em teia.md → mapa.unidades,
+                sem uso nesta página). A prévia (imagem) vira o Google My Maps sozinha quando a pessoa chega perto
+                (scripts/teia.ts, decisão H-16). As unidades aparecem como pinos no próprio My Maps. */}
+            <div class="map-card map-card--full" data-mapa={c.mapa.embed || undefined} data-mapa-titulo="Mapa interativo das unidades do Teia (Google Maps)">
                 <div class="map-card__previa">
-                    <Picture src={previaMapa} alt="Trecho do mapa de São Paulo, da região central até a zona sul." formats={['avif', 'webp']} fallbackFormat="jpg" widths={[320, 640]} sizes="320px" loading="lazy" />
+                    <Picture src={previaMapa} alt="Trecho do mapa de São Paulo, da região central até a zona sul." formats={['avif', 'webp']} fallbackFormat="jpg" widths={[640, 1280]} sizes="(max-width: 767px) 100vw, 638px" loading="lazy" />
                     {c.mapa.embed && (
                         <button type="button" class="btn btn--primary map-card__botao" data-mapa-botao hidden>
                             {c.mapa.botaoInterativo}<span class="sr-only"> (carrega o Google Maps)</span>

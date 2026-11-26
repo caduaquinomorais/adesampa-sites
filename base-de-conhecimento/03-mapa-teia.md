@@ -38,12 +38,11 @@ O Teia tem **uma página só**, e quase tudo dela está em **um único arquivo d
 |---|---|
 | Uma **dúvida sem resposta** | Ela **não aparece** no site. Basta escrever a `resposta` para ela surgir |
 | Um espaço com **2 fotos ou mais** | Aparecem os pontinhos do carrossel sozinhos |
-| **2 unidades ou mais** no mapa | Aparece sozinho o seletor "Escolha a unidade" |
 | Um documento das normas com `arquivo: ''` | O card aparece, mas **sem** o botão "Baixar PDF" |
 | `mapa.embed` vazio | Fica só a prévia do mapa (imagem), sem o mapa interativo |
 | Um **espaço novo** | O link no submenu usa o `titulo` do espaço. Os 4 atuais têm nomes curtos definidos no `index.astro` (🟡) |
 
-> O mapa interativo é do Google My Maps. Ele carrega sozinho quando a pessoa rola até perto do mapa, e o painel da unidade continua ao lado. Para isso, o servidor do Teia libera o endereço `https://www.google.com` (regra no arquivo [sites/teia/public/.htaccess](../sites/teia/public/.htaccess)). As unidades do mapa interativo são editadas no próprio My Maps, sem deploy.
+> O mapa interativo é do Google My Maps. O cartão mostra só o mapa, que carrega sozinho quando a pessoa rola até perto dele. Os dados das unidades em `teia.md` (`mapa.unidades`) ficam guardados, mas não aparecem no cartão. Para isso, o servidor do Teia libera o endereço `https://www.google.com` (regra no arquivo [sites/teia/public/.htaccess](../sites/teia/public/.htaccess)). As unidades do mapa interativo são editadas no próprio My Maps, sem deploy.
 
 Para acrescentar espaços, fotos, unidades, dúvidas ou documentos, veja [05 — Cards e listas](05-cards-e-listas.md#teia).
 

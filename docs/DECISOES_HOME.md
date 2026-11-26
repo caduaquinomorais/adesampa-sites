@@ -204,7 +204,7 @@ Na Comunicação e na lista de notícias, clicar numa categoria ou num número d
 
 Vale para a seção Teia da Início e para a página do Teia. Antes, o mapa do Google só carregava depois do clique em "Ver mapa interativo", o que deixava o mapa pouco intuitivo.
 - **Agora:** a prévia (imagem) vira o Google My Maps sozinha quando a pessoa rola até 300 px antes do mapa. O topo da página continua leve: quem não chega no mapa não carrega o Google.
-- **Teia:** só a prévia vira mapa; o painel com os dados da unidade continua ao lado (antes, o clique trocava o cartão inteiro).
+- **Teia:** o cartão mostra **só o mapa**, ocupando o espaço inteiro. O painel com os dados de uma unidade ("TEIA Parque Novo Mundo") era um exemplo do Figma e saiu do cartão; os dados continuam em `teia.md` (`mapa.unidades`), sem uso na página. As unidades aparecem como pinos no próprio My Maps.
 - **Navegador muito antigo** (sem `IntersectionObserver`): aparece o botão, como antes. **Sem JavaScript:** fica a imagem.
 - **LGPD (decisão do usuário):** o Google passa a receber dados (endereço IP etc.) de quem rolar até o mapa, sem clique. Isso precisa constar na política de privacidade (pendência P-H8).
 - **Atenção:** o mapa do My Maps mostra o nome e a foto da conta Google que o criou (hoje, uma conta pessoal). Recomenda-se transferir o mapa para uma conta institucional da ADE SAMPA (pendência P-H8).

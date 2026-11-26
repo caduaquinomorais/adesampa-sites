@@ -15,15 +15,15 @@ O que foi feito em cada commit, do mais recente para o mais antigo, com os arqui
 
 **Mensagem sugerida:** "Mapa do Teia carrega sozinho ao chegar na seção (Início e Teia)"
 
-O mapa do Google (My Maps) deixou de precisar de clique: ele aparece interativo quando a pessoa rola até perto dele, na Início e na página do Teia. No Teia, o painel com os dados da unidade continua ao lado (decisão H-16; pendência de privacidade P-H8).
+O mapa do Google (My Maps) deixou de precisar de clique: ele aparece interativo quando a pessoa rola até perto dele, na Início e na página do Teia. No Teia, o cartão passou a mostrar só o mapa: o painel com a unidade de exemplo do Figma saiu (os dados continuam no `teia.md`). Decisão H-16; pendência de privacidade P-H8.
 
 | Arquivo | Linhas | O quê |
 |---|---|---|
 | `sites/home/src/scripts/mapa.ts` | 1–39 (reescrito) | Carrega o mapa ao chegar perto da seção |
 | `sites/teia/src/scripts/teia.ts` | 63–95 | O mesmo no Teia, trocando só a prévia |
-| `sites/teia/src/pages/index.astro` | 113 | Comentário atualizado |
+| `sites/teia/src/pages/index.astro` | 25, 111–124 | Cartão do mapa só com o mapa (sem o painel da unidade) |
 | `docs/DECISOES_HOME.md` · `docs/DECISOES_TEIA.md` | H-04, H-16, P-H8 · TE-01 | Documentação |
-| `base-de-conhecimento/03-mapa-teia.md` | 43, 46 | Documentação para a equipe |
+| `base-de-conhecimento/03-mapa-teia.md` | 41–45 | Documentação para a equipe |
 
 ## Commit pendente — Filtro das notícias sem recarregar a página (26/11/2026)
 
