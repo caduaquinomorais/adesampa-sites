@@ -10,9 +10,12 @@
 - id: games
   nome: 'Sampa Games'
   texto: 'Desenvolvimento de jogos, educação digital e aceleração de estúdios.'
+  botao: 'Em breve'
 - id: verde
   nome: 'Sampa Verde'
   texto: 'Economia circular, inovação verde e locais de agricultura.'
+  botao: 'Em breve'
 - id: criativa
   nome: 'Sampa Criativa'
   texto: 'Economia criativa, audiovisual, design de moda e cadeia têxtil.'
+  botao: 'Em breve'
