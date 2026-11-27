@@ -10,7 +10,7 @@ Os sites da ADE SAMPA (Agência São Paulo de Desenvolvimento) num repositório 
 
 | Site | Pasta | Endereço (homologação) | Páginas |
 |---|---|---|---|
-| Home (ADE SAMPA) | `sites/home/` | https://oranilom.com.br/homolog/ | Início, Sobre, Comunicação, Notícias, Publicações, Produtos digitais, Parcerias governamentais (provisória) |
+| Home (ADE SAMPA) | `sites/home/` | https://oranilom.com.br/homolog/ | Início, Sobre, Comunicação, Notícias, Publicações, Produtos digitais, Parcerias governamentais |
 | Sampa Tech | `sites/tech/` | https://oranilom.com.br/homolog/sampa-tech/ | Sampa Tech, Aceleração Vai Tec |
 | Teia | `sites/teia/` | https://oranilom.com.br/homolog/teia/ | Teia (página única) |
 | Exemplo | `sites/exemplo/` | — (nunca é publicado) | Só cabeçalho e rodapé, usado nos testes |

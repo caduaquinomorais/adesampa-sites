@@ -8,7 +8,7 @@
  * Endereço na barra do navegador (data-noticias-endereco):
  *   "consulta" (Comunicação): /comunicacao/?categoria=eventos&pagina=2#noticias. Abrir esse endereço aplica o filtro;
  *   "real" (lista de notícias): o endereço da própria página estática.
- * O botão Voltar do navegador desfaz o filtro. Decisão H-15 (docs/DECISOES_HOME.md).
+ * O botão Voltar do navegador desfaz o filtro. Decisão H-18 (docs/DECISOES_HOME.md).
  */
 interface Estado { categoria: string; pagina: number }
 

@@ -134,7 +134,7 @@ O Figma da Início ganhou uma seção nova e o cabeçalho ganhou um item. Compar
   - contraste do título: medido no print (o teste automático não mede texto sobre foto). Em 90% dos pixels atrás dele fica ≥ 4,9:1 (texto grande exige 3:1), com uma sombra leve no texto para reforçar;
   - "inteligencia" foi escrito com acento ("inteligência");
   - a etiqueta continua "Lorem Ipsum Dollor", como no Figma, até o texto ser definido (pendência P-H6).
-- **Item "Governamental" no cabeçalho** (7 sites): leva a `parcerias-governamentais/` no site Home, uma página **provisória** ("Em construção", fora dos buscadores). O botão "Veja nossa atuação em parcerias" leva à mesma página. Quando o frame "Parcerias Governamentais" (966:21749) for implementado, basta substituir essa página.
+- **Item "Governamental" no cabeçalho** (7 sites): leva a `parcerias-governamentais/` no site Home, uma página **provisória** ("Em construção", fora dos buscadores). O botão "Veja nossa atuação em parcerias" leva à mesma página. Quando o frame "Parcerias Governamentais" (966:21749) for implementado, basta substituir essa página. **Atualizado em 27/11/2026:** a página definitiva foi implementada (H-19).
 - **Não seguido:** as faixas de degradê dos destaques (Rectangle 908/909) saíram do lugar no Figma, aparentemente sem querer. O site as mantém alinhadas ao carrossel.
 - **Teste visual:** a referência `inicio-1440.png` foi montada com a imagem antiga mais a exportação da seção nova, porque a API do Figma estava no limite de uso.
 
@@ -181,7 +181,7 @@ Figma: frame "Menu Comunicação" (1117:22696), 195 px de largura. Fica no cabe�
 - "Espaços e plataformas" **não** usa a regra: "Conheça os equipamentos" (Praça) continua visível sem link.
 - O Menu de projetos não existe em `referencia/`, então o teste de referência não muda.
 
-## H-14 — Hover dos cards dos eixos (25/11/2026)
+## H-17 — Hover dos cards dos eixos (25/11/2026)
 
 Cards de "Nossos eixos de atuação" (Início e Sobre, componente `Eixos.astro`). Feito a partir de prints do protótipo, porque o Figma estava no limite de uso.
 - **Hover:** ao passar o mouse ou com foco pelo teclado, a versão branca (logo de 2 linhas, texto e botão "Saiba mais" na cor do programa) aparece por cima da imagem colorida, dissolvendo em 160 ms, como os outros hovers (H-10). A animação exata do protótipo não foi lida.
@@ -192,7 +192,7 @@ Cards de "Nossos eixos de atuação" (Início e Sobre, componente `Eixos.astro`)
 - **Acessibilidade:** a versão branca é só visual (`aria-hidden`). O nome e o texto do programa estão no `alt` da imagem; o "Saiba mais" não é um segundo link, porque o card inteiro já é o link.
 - **AA:** botões do Tech `#007EA0` (era `#00B1E2`), do Verde `#3E841D` (era `#52AF27`) e do Criativa `#C94A10` (era `#FB5F1C`), todos com ≥ 4,5:1 com o texto branco. O texto cinza da descrição passou de `#8F9299` (3,1:1) para `#6B7280` (4,8:1). Empreende e Games ficaram com as cores do Figma.
 
-## H-15 — Filtro e paginação das notícias sem recarregar (26/11/2026)
+## H-18 — Filtro e paginação das notícias sem recarregar (26/11/2026)
 
 Na Comunicação e na lista de notícias, clicar numa categoria ou num número da paginação troca **só os cards**, sem recarregar a página nem voltar ao topo.
 - **Como funciona:** os filtros continuam sendo links para as páginas estáticas da lista (`/comunicacao/noticias/categoria/<id>/…`), que funcionam sem JavaScript. Com JavaScript, `scripts/noticias.ts` busca essa página em segundo plano e troca só o bloco `[data-noticias-lista]`. Se a busca falhar, abre a página estática.
@@ -209,6 +209,17 @@ Vale para a seção Teia da Início e para a página do Teia. Antes, o mapa do G
 - **LGPD (decisão do usuário):** o Google passa a receber dados (endereço IP etc.) de quem rolar até o mapa, sem clique. Isso precisa constar na política de privacidade (pendência P-H8).
 - **Atenção:** o mapa do My Maps mostra o nome e a foto da conta Google que o criou (hoje, uma conta pessoal). Recomenda-se transferir o mapa para uma conta institucional da ADE SAMPA (pendência P-H8).
 
+## H-19 — Página Parcerias governamentais (27/11/2026)
+
+Figma: frame "Parcerias Governamentais" (966:21749), lido inteiro pela API (estrutura, textos, as 6 fotos e um print). Substitui a página provisória "Em construção" no mesmo endereço (`/parcerias-governamentais/`), agora indexada pelos buscadores.
+- **Textos e fotos:** `paginas/parcerias-governamentais.md`; fotos em `src/assets/fotos/parcerias/` (convertidas para JPG).
+- **Projetos:** cada item de `projetos` vira uma seção. O lado da foto e o fundo alternam sozinhos (azul-claro com texto à esquerda; branco com texto à direita), como no Figma. Cada projeto tem uma âncora (`#smart-sampa`, `#espaco-motoboy`).
+- **Carrosséis:** 3 fotos por projeto, com pontinhos, passando sozinhos a cada 10 s, como o carrossel de Parcerias na Início (H-14).
+- **Corrigido do Figma:** "politicas" → "políticas" (card de contato) e "espço" → "espaço" (botão).
+- **Pendentes (P-H9):** o e-mail do card de contato (o Figma mostra "XXXXXXX@adesampa.com.br", exibido sem link) e o link do botão "Saiba mais sobre o espaço".
+- **Descrições das fotos (alt):** escritas por nós a partir das imagens.
+- **Teste:** comparação com o Figma (`tests/visual/figma-home.json`, página "parcerias"); todas as alturas iguais ao Figma.
+
 ## Pendências de conteúdo (confirmar com a ADE SAMPA)
 
 | # | Onde | Pendência |
@@ -218,6 +229,7 @@ Vale para a seção Teia da Início e para a página do Teia. Antes, o mapa do G
 | P-H3 | Início ("13 anos") × Sobre ("Há 14 anos") | Os números divergem no Figma. |
 | P-H4 | Links pendentes | Programas, Transparência, redes sociais, links legais, sites dos 5 programas, produtos digitais, botões dos destaques, "Ver programação completa", manuais (PDF) e PDFs das revistas e cartilhas. |
 | P-H5 | Revistas 1ª a 3ª edição | Os textos alternativos das capas são genéricos. Faltam os temas de cada edição. |
+| P-H9 | Parcerias governamentais (H-19) | E-mail do card "Tire políticas públicas do papel" (campo `contato.email`) e link do botão "Saiba mais sobre o espaço" do Espaço Motoboy. |
 | P-H8 | Mapa do Teia (H-16) | Citar o Google Maps na política de privacidade (o mapa carrega sem clique) e passar o mapa do My Maps para uma conta institucional (hoje mostra o nome e a foto de uma conta pessoal). |
 | P-H7 | Produtos digitais | Endereços das 3 plataformas (botões "Conheça a plataforma" e cards "Acesse a plataforma" da Início). |
 | P-H6 | Início, "Parcerias governamentais" | Texto da etiqueta (no Figma: "Lorem Ipsum Dollor") e textos alternativos das 2 fotos (escritos por nós). |

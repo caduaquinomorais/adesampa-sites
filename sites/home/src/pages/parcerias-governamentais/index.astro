@@ -1,26 +1,84 @@
 ---
 /*
- * Parcerias governamentais — página PROVISÓRIA (em produção), destino do item "Governamental" do
- * cabeçalho e do botão da seção "Parcerias governamentais" do Início.
- * Figma: frame "Parcerias Governamentais" (966:21749), ainda não implementado.
- * Fica fora dos buscadores (semIndexacao) até ser concluída.
+ * Parcerias governamentais — Figma: frame "Parcerias Governamentais" (966:21749).
+ * Textos e fotos: src/content/paginas/parcerias-governamentais.md. Decisão H-17 (docs/DECISOES_HOME.md).
+ * Destino do item "Governamental" do cabeçalho e do botão da seção "Parcerias governamentais" do Início.
+ * Projetos: um bloco por item de `projetos`, alternando o lado da foto (texto à esquerda no 1º, à direita no 2º…)
+ * e o fundo (azul-claro / branco), como no Figma.
  */
+import { getEntry } from 'astro:content';
 import BaseLayout from '@adesampa/ui/BaseLayout.astro';
 import { caminho } from '@adesampa/ui/caminhos';
 import Hero from '../../components/Hero.astro';
 import Botao from '../../components/Botao.astro';
+import Galeria from '../../components/Galeria.astro';
+import { paragrafos } from '../../lib/conteudo';
+import envelope from '../../assets/icones/envelope.svg?url';
 import '../../styles/site.css';
+
+const entrada = await getEntry('parceriasGovernamentais', 'parcerias-governamentais');
+if (!entrada) throw new Error('Falta src/content/paginas/parcerias-governamentais.md');
+const p = entrada.data;
 ---
-<BaseLayout titulo="Parcerias governamentais" descricao="Atuação da ADE SAMPA como parceira governamental na implantação e gestão de políticas públicas municipais." ativo="governamental" semIndexacao>
+<BaseLayout titulo={p.titulo} descricao={p.descricao} ativo="governamental">
     <Hero
-        trilha={[{ rotulo: 'Início', href: caminho() }, { rotulo: 'Parcerias governamentais' }]}
-        etiqueta="Em construção"
-        titulo="Parcerias governamentais"
-        texto="Esta página está sendo preparada. Em breve, você encontrará aqui os projetos que a ADE SAMPA realiza em parceria com o poder público."
+        trilha={[{ rotulo: 'Início', href: caminho() }, { rotulo: p.hero.titulo }]}
+        etiqueta={p.hero.etiqueta}
+        titulo={p.hero.titulo}
+        texto={p.hero.texto}
     />
-    <section class="secao secao--64 erro-404" aria-label="Para onde ir">
+
+    <section class="secao secao--64 parceria-destaque" aria-label="Nossa proposta">
         <div class="container">
-            <Botao texto="Voltar ao início" link={caminho()} />
+            <p class="parceria-destaque__texto">{p.destaque}</p>
+        </div>
+    </section>
+
+    {p.projetos.map((projeto, i) => (
+        <section
+            id={projeto.id}
+            class:list={['secao secao--64 parceria-projeto', i % 2 === 0 ? 'secao--clara-sem-borda' : 'secao--branca-borda parceria-projeto--invertido']}
+            aria-labelledby={`titulo-${projeto.id}`}
+        >
+            <div class="container duas-colunas">
+                <div class="parceria-projeto__texto">
+                    <h2 id={`titulo-${projeto.id}`} class="h-secao">{projeto.titulo}</h2>
+                    <div class="parceria-projeto__paragrafos">
+                        {paragrafos(projeto.texto).map((t) => <p class="texto-1">{t}</p>)}
+                    </div>
+                    {projeto.botao && <Botao texto={projeto.botao.texto} link={projeto.botao.link} rotuloAcessivel={projeto.titulo} />}
+                </div>
+                <div class="parceria-projeto__galeria">
+                    <Galeria
+                        fotos={projeto.fotos}
+                        rotulo={`Fotos: ${projeto.titulo}`}
+                        variante="azul"
+                        larguras={[543, 1086]}
+                        sizes="(max-width: 1023px) 100vw, 543px"
+                        automatico={10}
+                    />
+                </div>
+            </div>
+        </section>
+    ))}
+
+    <section class="secao secao--64 secao--clara-sem-borda parceria-contato" aria-labelledby="titulo-parceria-contato">
+        <div class="container">
+            <div class="parceria-contato__card">
+                <div class="parceria-contato__textos">
+                    <h2 id="titulo-parceria-contato" class="h-secao">{p.contato.titulo}</h2>
+                    <p class="texto-1 quebras">{p.contato.texto}</p>
+                </div>
+                <div class="card-email parceria-contato__email">
+                    <span class="card-email__icone"><img src={envelope} alt="" width="32" height="32"></span>
+                    <div class="card-email__textos">
+                        <p class="card-email__rotulo">{p.contato.rotulo}</p>
+                        {p.contato.email
+                            ? <a href={`mailto:${p.contato.email}`}>{p.contato.email}</a>
+                            : <span class="card-email__pendente" data-link-pendente="true">XXXXXXX@adesampa.com.br</span>}
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 </BaseLayout>

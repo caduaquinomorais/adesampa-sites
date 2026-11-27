@@ -141,7 +141,7 @@
 .eixos { --secao-py: 72px; }
 .eixos .container { display: flex; flex-direction: column; gap: 40px; }
 .eixos__lista { display: grid; grid-template-columns: repeat(5, minmax(0, 206px)); justify-content: center; gap: 20px; margin: 0; padding: 0; list-style: none; }
-/* Card do eixo: imagem colorida do Figma + versão branca do hover por cima (H-14). */
+/* Card do eixo: imagem colorida do Figma + versão branca do hover por cima (H-17). */
 .eixo-card { --eixo-cor: var(--azul-600); }
 .eixo-card--tech { --eixo-cor: var(--aa-tech-botao); }     /* AA: era #00B1E2 */
 .eixo-card--games { --eixo-cor: #9B32E0; }
@@ -477,6 +477,26 @@ a.card-publicacao:hover .card-publicacao__titulo { text-decoration: underline; }
 .produto__recurso .icone-produto { flex: 0 0 64px; }
 .produto__recurso .h-5 { color: var(--azul-900); margin-bottom: 8px; }
 
+/* Página Parcerias governamentais (Figma 966:21749). Seções de 64 px de respiro, como no Figma. */
+.parceria-destaque { background: var(--azul-600); color: var(--branco); }
+.parceria-destaque__texto { max-width: 804px; margin: 0; font-size: var(--fs-h2); font-weight: 600; line-height: 1.1; }
+.parceria-projeto__texto { display: flex; flex-direction: column; align-items: flex-start; gap: 32px; width: 508px; max-width: 100%; }
+.parceria-projeto__texto .h-secao { margin-bottom: -16px; } /* título → texto: 16 px; texto → botão: 32 px */
+.parceria-projeto__paragrafos { display: flex; flex-direction: column; gap: 25px; color: var(--texto-corpo); }
+.parceria-projeto__galeria { flex: 0 0 auto; width: 543px; max-width: 100%; }
+.parceria-projeto--invertido .duas-colunas { flex-direction: row-reverse; }
+.parceria-projeto .galeria__trilho img { aspect-ratio: 543 / 362; object-fit: cover; }
+.parceria-projeto .galeria__ponto { background: var(--azul-200); }
+.parceria-projeto .galeria__ponto[aria-pressed="true"] { background: var(--azul-500); }
+.parceria-contato__card {
+    display: flex; flex-direction: column; align-items: center; gap: 40px; padding: 48px;
+    background: var(--azul-800); border-radius: 16px; color: var(--branco); text-align: center;
+}
+.parceria-contato__textos { display: flex; flex-direction: column; gap: 8px; }
+.parceria-contato__textos .h-secao { color: var(--branco); }
+.parceria-contato__email { width: 542px; max-width: 100%; height: auto; text-align: left; }
+.card-email__pendente { font-size: var(--fs-h5); font-weight: 700; line-height: 1.2; color: var(--azul-800); overflow-wrap: anywhere; }
+
 /* 404 */
 .erro-404 .container { display: flex; flex-direction: column; align-items: flex-start; gap: 24px; }
 
@@ -499,6 +519,11 @@ a.card-publicacao:hover .card-publicacao__titulo { text-decoration: underline; }
     .duas-colunas, .redacao .container { flex-direction: column; align-items: stretch; }
     .coluna-texto, .publicacoes-chamada .coluna-texto { width: 100%; }
     .teia__mapa, .praca__galeria, .parcerias__galeria { width: 100%; max-width: 640px; }
+    .parceria-projeto--invertido .duas-colunas { flex-direction: column; }
+    .parceria-projeto__texto { width: 100%; }
+    .parceria-projeto__galeria { width: 100%; max-width: 640px; }
+    .parceria-contato__card { padding: 32px 24px; gap: 32px; }
+    .parceria-contato .quebras { white-space: normal; }
     .publicacoes-chamada__capa { width: min(285px, 100%); }
     .produtos__lista { grid-template-columns: minmax(0, 560px); }
     .produto { min-height: 0; }
@@ -543,6 +568,8 @@ a.card-publicacao:hover .card-publicacao__titulo { text-decoration: underline; }
     .numeros__texto, .pilar--largo .pilar__titulo, .pilar--largo .pilar__texto, .h-card, .artigo__subtitulo { font-size: 22px; }
     .pilar { flex-direction: column; gap: 16px; padding: 24px; }
     .card-email { gap: 16px; padding: 16px; }
+    .parceria-destaque__texto { font-size: 28px; }
+    .card-email__pendente { font-size: 17px; }
     .card-email__icone { flex-basis: 48px; width: 48px; height: 48px; }
     .card-email a { font-size: 17px; }
     .praca__colunas { grid-template-columns: repeat(2, minmax(0, 1fr)); }

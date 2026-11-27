@@ -2,7 +2,7 @@
  * Coleções de conteúdo do site Home. TODO o texto editável fica em src/content/:
  *
  *   paginas/inicio.md, paginas/sobre.md, paginas/comunicacao.md, paginas/publicacoes.md,
- *   paginas/produtos-digitais.md
+ *   paginas/produtos-digitais.md, paginas/parcerias-governamentais.md
  *                         → textos fixos de cada página (no cabeçalho "---" do arquivo)
  *   noticias/*.md         → uma notícia por arquivo (o nome do arquivo vira o endereço)
  *   categorias.yaml       → categorias das notícias (os filtros da página Comunicação)
@@ -222,4 +222,30 @@ const produtosDigitais = defineCollection({
   }),
 });
 
-export const collections = { eixos, noticias, categorias, destaques, publicacoes, inicio, sobre, comunicacao, paginaPublicacoes, produtosDigitais };
+/** Página Parcerias governamentais (Figma 966:21749). */
+const parceriasGovernamentais = defineCollection({
+  loader: glob({ pattern: 'parcerias-governamentais.md', base: './src/content/paginas' }),
+  schema: ({ image }) => z.object({
+    titulo: z.string(),
+    descricao: z.string(),
+    hero: z.object({ etiqueta: z.string(), titulo: z.string(), texto: z.string() }),
+    destaque: z.string(),
+    projetos: z.array(z.object({
+      id: z.string().regex(/^[a-z0-9-]+$/, 'id: só letras minúsculas, números e hífens (vira a âncora #id)'),
+      titulo: z.string(),
+      texto: z.string(),
+      botao: botao.optional(),
+      /** Com 2 ou mais fotos, vira carrossel com pontinhos. */
+      fotos: z.array(z.object({ imagem: image(), alt: z.string() })).min(1),
+    })).min(1),
+    contato: z.object({
+      titulo: z.string(),
+      texto: z.string(),
+      rotulo: z.string(),
+      /** '' = pendente: mostra o texto provisório do Figma, sem link. */
+      email: z.union([z.email(), z.literal('')]).default(''),
+    }),
+  }),
+});
+
+export const collections = { eixos, noticias, categorias, destaques, publicacoes, inicio, sobre, comunicacao, paginaPublicacoes, produtosDigitais, parceriasGovernamentais };

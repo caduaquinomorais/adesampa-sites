@@ -11,9 +11,25 @@ O que foi feito em cada commit, do mais recente para o mais antigo, com os arqui
 
 ---
 
-## Commit pendente — Mapa do Teia carrega sozinho (26/11/2026)
+## Commit pendente — Página Parcerias governamentais (27/11/2026)
 
-**Mensagem sugerida:** "Mapa do Teia carrega sozinho ao chegar na seção (Início e Teia)"
+**Mensagem sugerida:** "Página Parcerias governamentais a partir do Figma (Smart Sampa e Espaço Motoboy)"
+
+A página provisória "Em construção" foi trocada pela página definitiva do Figma: banner, faixa azul, os projetos Smart Sampa e Espaço Motoboy (texto + carrossel de 3 fotos) e o card de contato (decisão H-19). Ficam pendentes o e-mail de contato e o link do botão do Espaço Motoboy (P-H9). Também foram corrigidos números de decisão repetidos no `DECISOES_HOME.md` (hover dos eixos virou H-17; filtro das notícias, H-18).
+
+| Arquivo | Linhas | O quê |
+|---|---|---|
+| `sites/home/src/pages/parcerias-governamentais/index.astro` | 1–81 (reescrito) | A página, no lugar da provisória |
+| `sites/home/src/content/paginas/parcerias-governamentais.md` | arquivo novo | Textos, projetos, fotos, botão e e-mail |
+| `sites/home/src/assets/fotos/parcerias/` (6 fotos) | arquivos novos | Fotos do Smart Sampa e do Espaço Motoboy, baixadas do Figma |
+| `sites/home/src/content.config.ts` | 5, 225–251 | Regra dos campos da página |
+| `sites/home/src/styles/site.css` | 144, 480–499, 522–526, 571–572 | Estilos da página (procure `.parceria-`) e celular/tablet |
+| `tests/visual/figma-home.json` | 53–63 | Página incluída na comparação com o Figma |
+| `tests/visual/reference/home/parcerias-1440.png` | arquivo novo | Print do Figma usado no teste |
+| `sites/home/src/components/Eixos.astro` · `scripts/noticias.ts` | 6 · 11 | Números de decisão corrigidos (H-17, H-18) |
+| `docs/DECISOES_HOME.md` · `docs/CONTEUDO_HOME.md` · `docs/FIGMA.md` · `docs/TESTES.md` · `README.md` · `base-de-conhecimento/01-mapa-home.md` | H-11, H-17, H-18, H-19, P-H9 · tabela · frames · Figma · sites · páginas | Documentação |
+
+## 891847d e e8c415c — Mapa do Teia carrega sozinho, só com o mapa (26/11/2026)
 
 O mapa do Google (My Maps) deixou de precisar de clique: ele aparece interativo quando a pessoa rola até perto dele, na Início e na página do Teia. No Teia, o cartão passou a mostrar só o mapa: o painel com a unidade de exemplo do Figma saiu (os dados continuam no `teia.md`). Decisão H-16; pendência de privacidade P-H8.
 
@@ -25,11 +41,9 @@ O mapa do Google (My Maps) deixou de precisar de clique: ele aparece interativo 
 | `docs/DECISOES_HOME.md` · `docs/DECISOES_TEIA.md` | H-04, H-16, P-H8 · TE-01 | Documentação |
 | `base-de-conhecimento/03-mapa-teia.md` | 41–45 | Documentação para a equipe |
 
-## Commit pendente — Filtro das notícias sem recarregar a página (26/11/2026)
+## 891847d — Filtro das notícias sem recarregar a página (26/11/2026)
 
-**Mensagem sugerida:** "Filtro e paginação das notícias na própria página, sem recarregar"
-
-Na Comunicação e na lista de notícias, o filtro por categoria e a paginação trocam só os cards, sem recarregar a página. Na Comunicação, o endereço vira `?categoria=…`, que pode ser compartilhado, e o Voltar do navegador desfaz o filtro (decisão H-15).
+Na Comunicação e na lista de notícias, o filtro por categoria e a paginação trocam só os cards, sem recarregar a página. Na Comunicação, o endereço vira `?categoria=…`, que pode ser compartilhado, e o Voltar do navegador desfaz o filtro (decisão H-18).
 
 | Arquivo | Linhas | O quê |
 |---|---|---|
@@ -38,7 +52,7 @@ Na Comunicação e na lista de notícias, o filtro por categoria e a paginação
 | `sites/home/src/pages/comunicacao/noticias/[...lista].astro` | 57, 60–67, 71 | O mesmo, na lista de notícias |
 | `sites/home/src/styles/site.css` | 346–348 | Espaçamento do bloco e leve esmaecimento enquanto carrega |
 | `sites/home/src/components/FiltrosNoticias.astro` | 3–4 | Comentário explicando o comportamento |
-| `docs/DECISOES_HOME.md` · `base-de-conhecimento/01-mapa-home.md` | H-15 · tabela de componentes | Documentação |
+| `docs/DECISOES_HOME.md` · `base-de-conhecimento/01-mapa-home.md` | H-18 · tabela de componentes | Documentação |
 
 ## ee9f821 — Cabeçalho some ao rolar para baixo nas páginas com submenu (25/11/2026)
 
@@ -68,7 +82,7 @@ O teste do Vai Tec barrou o deploy porque as listas Temas e Dúvidas mudaram de 
 
 ## 374895b — Correção dos arquivos de texto e efeito dos cards de eixos (25/11/2026)
 
-- **Hover dos cards dos 5 eixos** (Início e Sobre): ao passar o mouse, aparece a versão branca com logo, texto e botão "Saiba mais" (decisão H-14).
+- **Hover dos cards dos 5 eixos** (Início e Sobre): ao passar o mouse, aparece a versão branca com logo, texto e botão "Saiba mais" (decisão H-17).
 - **Arquivos de texto:** foram apagados os comentários (linhas com `#`) de vários `.md` e `.yaml`; no Vai Tec, entrou um tema e saiu uma pergunta das Dúvidas.
 
 | Arquivo | Linhas |

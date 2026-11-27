@@ -117,7 +117,7 @@ Fotos, ícones e logos ficam em [sites/home/src/assets/](../sites/home/src/asset
 
 | Página | 🧱 Estrutura | Observação |
 |---|---|---|
-| **Parcerias governamentais** (provisória, "em construção") | [pages/parcerias-governamentais/index.astro](../sites/home/src/pages/parcerias-governamentais/index.astro) | Exceção: o texto está **direto no `.astro`**, por ser provisória. Quando a página definitiva for feita, o texto deve ir para um `.md` |
+| **Parcerias governamentais** (banner, faixa azul, projetos Smart Sampa e Espaço Motoboy, card de contato) | [pages/parcerias-governamentais/index.astro](../sites/home/src/pages/parcerias-governamentais/index.astro) | Textos, fotos, botão e e-mail: [parcerias-governamentais.md](../sites/home/src/content/paginas/parcerias-governamentais.md). Projeto novo = mais um item em `projetos` (o lado da foto e o fundo alternam sozinhos). Fotos em `assets/fotos/parcerias/`. Visual: `site.css`, procure `.parceria-` |
 | **Página de erro 404** | [pages/404.astro](../sites/home/src/pages/404.astro) | Visual: `404` |
 
 ---

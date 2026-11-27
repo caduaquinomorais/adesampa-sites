@@ -91,4 +91,4 @@ Cada site com páginas do Figma tem um `tests/visual/figma-<site>.json`, mais as
 **Página nova com Figma:** acrescente um bloco em `paginas`, exporte o frame do Figma para `reference/<site>/<nome>-1440.png` e meça as seções.
 **Seção nova numa página com Figma:** os seletores `nth-of-type` das seções seguintes mudam de número. Atualize-os e acrescente a seção nova.
 
-A página Produtos digitais e a página provisória de Parcerias governamentais ainda não têm referência do Figma: passam só pelos testes de páginas.
+A página Produtos digitais ainda não tem referência do Figma: passa só pelos testes de páginas.

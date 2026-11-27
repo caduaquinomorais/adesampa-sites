@@ -22,7 +22,7 @@ Como transformar uma tela do Figma em página, e como lidar com os limites de us
 | Sampa Tech | `468:12857` | `sites/tech/src/pages/index.astro` |
 | Aceleração Vai Tec | `64:2150` | `sites/tech/src/pages/vaitec/` |
 | Teia | `212:2903` | `sites/teia/src/pages/index.astro` |
-| Parcerias governamentais | `966:21749` | **ainda não implementado** (hoje é uma página provisória) |
+| Parcerias governamentais | `966:21749` | `sites/home/src/pages/parcerias-governamentais/` |
 
 Cada página `.astro` cita o frame no comentário do topo.
 
