@@ -35,7 +35,7 @@ projetos:
       Com o Espaço Motoboy, fomos responsáveis pelo projeto, implantação da edificação modular, fornecimento de mobiliário e operação do equipamento, em parceria com a Secretaria Municipal das Subprefeituras de São Paulo. A atuação envolveu a estruturação do equipamento público, com foco na oferta de melhores condições de trabalho, descanso e acolhimento aos profissionais de entrega que circulam pela cidade.
 
       Localizado na região da Avenida Paulista, o Espaço Motoboy oferece infraestrutura gratuita para motofretistas e entregadores, com área de descanso coberta, estacionamento para motocicletas e bicicletas, Wi-Fi, tomadas, sanitários, armários e espaço para refeições, equipado com micro-ondas e refrigeradores.
-    botao: { texto: 'Saiba mais sobre o espaço', link: '' } # TODO-LINK: endereço do Espaço Motoboy
+    botao: { texto: 'Saiba mais sobre o espaço', link: 'https://adesampa.com.br/espacomotoboy/' }
     fotos:
       - imagem: ../../assets/fotos/parcerias/espaco-motoboy-1.jpg
         alt: 'Fachada do Espaço Motoboy, uma construção modular com grafite colorido de um entregador de bicicleta, cercada de árvores.'
@@ -44,10 +44,10 @@ projetos:
       - imagem: ../../assets/fotos/parcerias/espaco-motoboy-3.jpg
         alt: 'Copa do Espaço Motoboy, com pia, bebedouro, micro-ondas e geladeira.'
 
-# Card azul no fim da página. email: '' = pendente (mostra o texto do Figma, sem link).
+
 contato:
   titulo: 'Tire políticas públicas do papel'
   texto: "A ADE SAMPA é a parceira ideal para executar políticas públicas, com\norganização, eficiência e atenção às necessidades da cidade e da população."
   rotulo: 'Entre em contato'
-  email: '' # TODO-LINK: e-mail de contato das parcerias (no Figma: XXXXXXX@adesampa.com.br)
+  email: 'contato@adesampa.com.br'
 ---

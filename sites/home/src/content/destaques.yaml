@@ -4,7 +4,7 @@
   etiqueta: 'Sampa Tech'
   titulo: 'Aceleração Vai Tec: edital aberto'
   texto: 'O programa oferece aporte financeiro de R$ 52 mil, mentorias e oficinas. Inscrições abertas até xx de janeiro.'
-  botao: { texto: 'Inscreva-se agora!', link: '' } # TODO-LINK
+  botao: { texto: 'Inscreva-se agora!', link: 'https://oranilom.com.br/homolog/sampa-tech/vaitec/' } # TODO-LINK
 - id: game-dev
   ordem: 2
   programa: games
