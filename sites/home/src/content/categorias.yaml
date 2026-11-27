@@ -1,8 +1,10 @@
-editais-e-chamadas:
-  nome: 'Editais e chamadas'
-eventos:
-  nome: 'Eventos'
 teia:
   nome: 'Teia'
 microcredito:
   nome: 'Microcrédito'
+produtos-financeiros:
+  nome: 'Produtos financeiros'
+cursos:
+  nome: 'Cursos'
+editais:
+  nome: 'Editais'

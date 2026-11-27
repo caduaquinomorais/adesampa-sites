@@ -37,7 +37,7 @@ export const dataIso = (d: Date): string => d.toISOString().slice(0, 10);
 /** Notícias publicadas (sem rascunhos), da mais recente para a mais antiga. */
 export async function noticiasPublicadas(): Promise<CollectionEntry<'noticias'>[]> {
   const todas = await getCollection('noticias', (n) => !n.data.rascunho);
-  return todas.sort((a, b) => b.data.data.getTime() - a.data.data.getTime() || a.id.localeCompare(b.id));
+  return todas.sort((a, b) => b.data.data.getTime() - a.data.data.getTime() || b.id.localeCompare(a.id, undefined, { numeric: true }));
 }
 
 /** Endereço de uma notícia. */
